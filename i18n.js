@@ -43,6 +43,16 @@
       imgAndroidUI: 'Android 遥控器界面',
       imgDesktopUI: 'Windows 播放器界面',
       imgConnection: '连接示意',
+      appTag: '下载播放器',
+      appTitle: '在任意设备上享受音乐',
+      appWinTitle: 'JuicyPlayer for Windows',
+      appWinDesc: '通过 Microsoft Store 安装，自动更新，安全可靠。',
+      appWinReq: 'Windows 10/11 · 64-bit',
+      appWinBtn: '在 Microsoft Store 获取',
+      appMacTitle: 'JuicyPlayer for macOS',
+      appMacDesc: 'macOS 版本正在开发中，敬请期待。',
+      appMacSoon: 'Coming Soon',
+      appMacBtn: '敬请期待',
       dlTag: '立即下载',
       dlTitle: '选择你的平台',
       dlDesc: 'Windows 桌面播放器 + Android 遥控器，搭配使用效果最佳',
@@ -109,6 +119,16 @@
       imgAndroidUI: 'Android Remote UI',
       imgDesktopUI: 'Windows Player UI',
       imgConnection: 'Connection Diagram',
+      appTag: 'Download Player',
+      appTitle: 'Enjoy Music on Any Device',
+      appWinTitle: 'JuicyPlayer for Windows',
+      appWinDesc: 'Install from Microsoft Store — auto updates, secure and reliable.',
+      appWinReq: 'Windows 10/11 · 64-bit',
+      appWinBtn: 'Get from Microsoft Store',
+      appMacTitle: 'JuicyPlayer for macOS',
+      appMacDesc: 'macOS version is in development, stay tuned.',
+      appMacSoon: 'Coming Soon',
+      appMacBtn: 'Coming Soon',
       dlTag: 'Download Now',
       dlTitle: 'Choose Your Platform',
       dlDesc: 'Windows desktop player + Android remote — best used together',
@@ -180,6 +200,36 @@
       btn.addEventListener('click', function () {
         currentLang = currentLang === 'zh' ? 'en' : 'zh';
         applyLang(currentLang);
+      });
+    }
+
+    /* ---- App Download Tab Switch + OS Detection ---- */
+    var appTabs = document.querySelectorAll('.app-tab');
+    var appPanels = document.querySelectorAll('.app-panel');
+    if (appTabs.length && appPanels.length) {
+      // Auto-detect OS
+      var ua = navigator.userAgent.toLowerCase();
+      var isMac = /macintosh|mac os x|iphone|ipad/.test(ua) && !/windows/.test(ua);
+      var defaultPlatform = isMac ? 'mac' : 'win';
+
+      function switchPlatform(platform) {
+        appTabs.forEach(function (t) {
+          t.classList.toggle('active', t.getAttribute('data-platform') === platform);
+          t.setAttribute('aria-selected', t.getAttribute('data-platform') === platform ? 'true' : 'false');
+        });
+        appPanels.forEach(function (p) {
+          p.classList.toggle('active', p.getAttribute('data-platform') === platform);
+        });
+      }
+
+      // Set default based on OS
+      switchPlatform(defaultPlatform);
+
+      // Click handlers
+      appTabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          switchPlatform(this.getAttribute('data-platform'));
+        });
       });
     }
 
