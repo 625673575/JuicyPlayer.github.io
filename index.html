@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-i18n="pageTitle">JuicyPlayer 遥控器 — 下载</title>
-  <meta name="description" content="JuicyPlayer Remote — Control your desktop audio player from your phone.">
+  <title data-i18n="pageTitle">JuicyPlayer — 优雅的桌面音乐播放器</title>
+  <meta name="description" content="JuicyPlayer — A beautiful desktop audio player with wireless remote control from your phone.">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <!-- Google Fonts -->
@@ -35,14 +35,14 @@
     <div class="hero-bg"></div>
     <div class="container hero-content">
       <div class="hero-text">
-        <div class="badge" data-i18n="heroBadge">🎵 音频播放器遥控器</div>
+        <div class="badge" data-i18n="heroBadge">🎵 桌面音乐播放器</div>
         <h1>
-          <span data-i18n="heroTitle1">用手机</span><br>
-          <span class="gradient-text" data-i18n="heroTitle2">遥控你的音乐</span>
+          <span data-i18n="heroTitle1">为你的音乐</span><br>
+          <span class="gradient-text" data-i18n="heroTitle2">带来极致体验</span>
         </h1>
-        <p class="hero-desc" data-i18n="heroDesc">JuicyPlayer 将你的 Android 手机变成桌面播放器的无线遥控器。播放、暂停、切歌、调节音量——一切尽在指尖。</p>
+        <p class="hero-desc" data-i18n="heroDesc">JuicyPlayer 是一款简洁优雅的桌面音频播放器，支持手机遥控操控。播放、暂停、切歌、调节音量——一切尽在指尖。</p>
         <div class="hero-actions">
-          <a href="#download" class="btn btn-lg btn-primary">
+          <a href="#app" class="btn btn-lg btn-primary">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             <span data-i18n="heroDownload">免费下载</span>
           </a>
@@ -51,21 +51,22 @@
         <div class="hero-stats">
           <div><strong>v1.0</strong><span data-i18n="statVersion">版本</span></div>
           <div><strong>Free</strong><span data-i18n="statFree">免费</span></div>
-          <div><strong>Wi-Fi</strong><span data-i18n="statConn">局域网</span></div>
+          <div><strong>Wi-Fi</strong><span data-i18n="statConn">遥控</span></div>
         </div>
       </div>
       <div class="hero-visual">
-        <img src="images/hero-screenshot.png" alt="JuicyPlayer 截图" class="hero-img">
+        <img src="images/showcase-windows.png" alt="JuicyPlayer 截图" class="hero-img">
       </div>
     </div>
   </header>
 
-  <!-- ========== App Download ========== -->
+  <!-- ========== Player Download (Tab) ========== -->
   <section class="app-dl" id="app">
     <div class="container">
       <div class="section-header">
         <span class="section-tag" data-i18n="appTag">下载播放器</span>
-        <h2 data-i18n="appTitle">在任意设备上享受音乐</h2>
+        <h2 data-i18n="appTitle">JuicyPlayer — 你的音乐播放器</h2>
+        <p class="section-desc" data-i18n="appDesc">简洁、专注的桌面音频播放器，支持多种格式</p>
       </div>
       <div class="app-dl-wrapper">
         <!-- Tab Bar -->
@@ -79,7 +80,7 @@
             <span>macOS</span>
           </button>
         </div>
-        <!-- Tab Panels -->
+        <!-- Tab: Windows -->
         <div class="app-panel active" data-platform="win">
           <div class="app-panel-inner">
             <div class="app-panel-preview">
@@ -100,6 +101,7 @@
             </div>
           </div>
         </div>
+        <!-- Tab: macOS -->
         <div class="app-panel" data-platform="mac">
           <div class="app-panel-inner">
             <div class="app-panel-preview app-panel-coming">
@@ -127,7 +129,7 @@
       <div class="section-header">
         <span class="section-tag" data-i18n="featureTag">核心功能</span>
         <h2 data-i18n="featureTitle">为什么选择 JuicyPlayer</h2>
-        <p class="section-desc" data-i18n="featureDesc">简洁、高效、优雅的音乐控制体验</p>
+        <p class="section-desc" data-i18n="featureDesc">简洁、高效、优雅的桌面音乐体验</p>
       </div>
       <div class="feature-grid">
         <div class="feature-card" data-reveal>
@@ -135,8 +137,8 @@
             <img src="images/feature-play.png" alt="播放控制" class="feature-img-src">
           </div>
           <div class="feature-info">
-            <h3 data-i18n="f1Title">🎵 远程播放控制</h3>
-            <p data-i18n="f1Desc">播放、暂停、上下曲、拖动进度条——手机就是你的遥控器。支持锁屏控制和通知栏快捷操作。</p>
+            <h3 data-i18n="f1Title">🎵 播放控制</h3>
+            <p data-i18n="f1Desc">播放、暂停、上下曲、拖动进度条——支持锁屏控制和通知栏快捷操作。配合 Juicy Remoter 遥控器，手机即遥控。</p>
           </div>
         </div>
         <div class="feature-card feature-card-reverse" data-reveal>
@@ -153,8 +155,8 @@
             <img src="images/feature-playlist.png" alt="播放列表" class="feature-img-src">
           </div>
           <div class="feature-info">
-            <h3 data-i18n="f3Title">📋 播放列表浏览</h3>
-            <p data-i18n="f3Desc">在手机上查看完整播放列表、搜索歌曲、查看专辑封面和歌曲信息，随时切换想听的曲目。</p>
+            <h3 data-i18n="f3Title">📋 播放列表</h3>
+            <p data-i18n="f3Desc">浏览完整播放列表、搜索歌曲、查看专辑封面和歌曲信息，随时切换想听的曲目。</p>
           </div>
         </div>
       </div>
@@ -171,16 +173,16 @@
       <div class="showcase-grid">
         <div class="showcase-card" data-reveal>
           <div class="showcase-img">
-            <img src="images/showcase-android.png" alt="Android 遥控器界面" class="showcase-img-src">
+            <img src="images/showcase-android.png" alt="Juicy Remoter 遥控器界面" class="showcase-img-src">
           </div>
-          <h3 data-i18n="sc1Title">Android 遥控器</h3>
+          <h3 data-i18n="sc1Title">Juicy Remoter 遥控器</h3>
           <p data-i18n="sc1Desc">Material Design 风格，暗色主题，手势操作</p>
         </div>
         <div class="showcase-card" data-reveal>
           <div class="showcase-img">
-            <img src="images/showcase-windows.png" alt="Windows 播放器界面" class="showcase-img-src">
+            <img src="images/showcase-windows.png" alt="JuicyPlayer 播放器界面" class="showcase-img-src">
           </div>
-          <h3 data-i18n="sc2Title">Windows 播放器</h3>
+          <h3 data-i18n="sc2Title">JuicyPlayer 播放器</h3>
           <p data-i18n="sc2Desc">极简播放器界面，专注音乐，低资源占用</p>
         </div>
         <div class="showcase-card" data-reveal>
@@ -194,33 +196,15 @@
     </div>
   </section>
 
-  <!-- ========== Download ========== -->
+  <!-- ========== Download Remoter ========== -->
   <section class="download" id="download">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag" data-i18n="dlTag">立即下载</span>
-        <h2 data-i18n="dlTitle">选择你的平台</h2>
-        <p class="section-desc" data-i18n="dlDesc">Windows 桌面播放器 + Android 遥控器，搭配使用效果最佳</p>
+        <span class="section-tag" data-i18n="dlTag">手机遥控</span>
+        <h2 data-i18n="dlTitle">Juicy Remoter — 遥控器</h2>
+        <p class="section-desc" data-i18n="dlDesc">用手机遥控 JuicyPlayer 播放器，局域网内即时响应</p>
       </div>
-      <!-- 遥控器 -->
-      <h3 class="download-group-title" data-i18n="dlRemoteTitle">遥控器</h3>
       <div class="download-grid">
-        <!-- Windows -->
-        <div class="dl-card" data-reveal>
-          <div class="dl-icon-wrap">
-            <svg viewBox="0 0 24 24" width="44" height="44" fill="#00aef0">
-              <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
-            </svg>
-          </div>
-          <h3>Windows</h3>
-          <span class="dl-version">v1.0.0</span>
-          <p class="dl-note" data-i18n="dlWinNote">Windows 10 / 11 · 64-bit</p>
-          <a href="downloads/JuicyPlayer-Setup-1.0.0.exe" class="btn btn-primary btn-block">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            <span data-i18n="dlWinBtn">下载安装包</span>
-          </a>
-          <span class="dl-size" data-i18n="dlWinSize">约 14 MB · .exe</span>
-        </div>
         <!-- Android -->
         <div class="dl-card" data-reveal>
           <div class="dl-icon-wrap">
@@ -228,14 +212,30 @@
               <path d="M17.523 15.34q-.74 0-1.26-.522-.522-.522-.522-1.263 0-.74.522-1.263.52-.522 1.26-.522.742 0 1.263.522.522.522.522 1.263 0 .74-.522 1.263-.52.522-1.263.522zm-11.046 0q-.74 0-1.263-.522Q4.692 14.298 4.692 13.557q0-.74.522-1.263.522-.522 1.263-.522.74 0 1.262.522.522.522.522 1.263 0 .74-.522 1.263-.521.522-1.262.522zm5.518 2.86q-1.752 0-3.288-.711-1.536-.71-2.69-1.915Q4.574 14.07 3.85 12.492q-.724-1.578-.724-3.387V7.5h17.748v1.605q0 1.81-.724 3.387-.724 1.578-2.167 3.083-1.154 1.204-2.69 1.915-1.536.711-3.288.711zM6.867 8.72q-.318 0-.543-.225Q6.099 8.27 6.099 7.95t.225-.543q.224-.224.543-.224.318 0 .543.224.224.225.224.543t-.224.543q-.225.225-.543.225zm10.266 0q-.318 0-.543-.225-.224-.225-.224-.543t.224-.543q.225-.224.543-.224.318 0 .543.224.224.225.224.543t-.224.543q-.225.225-.543.225z"/>
             </svg>
           </div>
-          <h3>Android</h3>
+          <h3 data-i18n="dlAndTitle">Juicy Remoter · Android</h3>
           <span class="dl-version">v1.0.0</span>
-          <p class="dl-note" data-i18n="dlAndNote">Android 7.0+ · APK</p>
+          <p class="dl-note" data-i18n="dlAndNote">Android 7.0+</p>
           <a href="downloads/JuicyPlayer-Remote-1.0.0.apk" class="btn btn-primary btn-block">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             <span data-i18n="dlAndBtn">下载 APK</span>
           </a>
           <span class="dl-size" data-i18n="dlAndSize">约 57 MB · .apk</span>
+        </div>
+        <!-- Windows Remoter -->
+        <div class="dl-card" data-reveal>
+          <div class="dl-icon-wrap">
+            <svg viewBox="0 0 24 24" width="44" height="44" fill="#00aef0">
+              <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
+            </svg>
+          </div>
+          <h3 data-i18n="dlWinTitle">Juicy Remoter · Windows</h3>
+          <span class="dl-version">v1.0.0</span>
+          <p class="dl-note" data-i18n="dlWinNote">Windows 10 / 11 · 64-bit</p>
+          <a href="downloads/JuicyPlayer-Setup-1.0.0.exe" class="btn btn-primary btn-block">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span data-i18n="dlWinBtn">下载安装包</span>
+          </a>
+          <span class="dl-size" data-i18n="dlWinSize">约 14 MB · .exe</span>
         </div>
       </div>
       <details class="history">
@@ -256,16 +256,16 @@
         <div class="step" data-reveal>
           <div class="step-num">1</div>
           <div class="step-body">
-            <h3 data-i18n="step1Title">安装桌面播放器</h3>
-            <p data-i18n="step1Desc">下载 Windows 安装包，双击运行即可完成安装。</p>
+            <h3 data-i18n="step1Title">安装 JuicyPlayer 播放器</h3>
+            <p data-i18n="step1Desc">从 Microsoft Store 下载安装 JuicyPlayer 桌面播放器。</p>
           </div>
         </div>
         <div class="step-connector"></div>
         <div class="step" data-reveal>
           <div class="step-num">2</div>
           <div class="step-body">
-            <h3 data-i18n="step2Title">安装手机遥控器</h3>
-            <p data-i18n="step2Desc">在 Android 手机上下载并安装 APK，授予局域网权限。</p>
+            <h3 data-i18n="step2Title">安装 Juicy Remoter 遥控器</h3>
+            <p data-i18n="step2Desc">在 Android 手机上下载安装 Juicy Remoter APK，授予局域网权限。</p>
           </div>
         </div>
         <div class="step-connector"></div>
@@ -273,7 +273,7 @@
           <div class="step-num">3</div>
           <div class="step-body">
             <h3 data-i18n="step3Title">连接 & 享受</h3>
-            <p data-i18n="step3Desc">确保电脑和手机在同一 Wi-Fi 下，打开遥控器自动连接，开始享受无线操控。</p>
+            <p data-i18n="step3Desc">确保电脑和手机在同一 Wi-Fi 下，打开遥控器自动连接播放器，开始无线操控。</p>
           </div>
         </div>
       </div>

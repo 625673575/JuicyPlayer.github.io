@@ -4,47 +4,41 @@
 ;(function () {
   'use strict';
 
-  const DICT = {
+  var DICT = {
     zh: {
-      pageTitle: 'JuicyPlayer 遥控器 — 下载',
+      pageTitle: 'JuicyPlayer — 优雅的桌面音乐播放器',
       navFeatures: '功能',
       navShowcase: '预览',
       navDownload: '下载',
-      heroBadge: '🎵 音频播放器遥控器',
-      heroTitle1: '用手机',
-      heroTitle2: '遥控你的音乐',
-      heroDesc: 'JuicyPlayer 将你的 Android 手机变成桌面播放器的无线遥控器。播放、暂停、切歌、调节音量——一切尽在指尖。',
+      heroBadge: '🎵 桌面音乐播放器',
+      heroTitle1: '为你的音乐',
+      heroTitle2: '带来极致体验',
+      heroDesc: 'JuicyPlayer 是一款简洁优雅的桌面音频播放器，支持手机遥控操控。播放、暂停、切歌、调节音量——一切尽在指尖。',
       heroDownload: '免费下载',
       heroLearn: '了解更多',
-      heroPlaceholder: '应用截图（替换为实际图片）',
       statVersion: '版本',
       statFree: '免费',
-      statConn: '局域网',
+      statConn: '遥控',
       featureTag: '核心功能',
       featureTitle: '为什么选择 JuicyPlayer',
-      featureDesc: '简洁、高效、优雅的音乐控制体验',
-      f1Title: '🎵 远程播放控制',
-      f1Desc: '播放、暂停、上下曲、拖动进度条——手机就是你的遥控器。支持锁屏控制和通知栏快捷操作。',
+      featureDesc: '简洁、高效、优雅的桌面音乐体验',
+      f1Title: '🎵 播放控制',
+      f1Desc: '播放、暂停、上下曲、拖动进度条——支持锁屏控制和通知栏快捷操作。配合 Juicy Remoter 遥控器，手机即遥控。',
       f2Title: '🔊 音量 & 均衡器',
       f2Desc: '实时调节系统音量和播放器音量，支持均衡器预设切换，找到最适合你的听感。',
-      f3Title: '📋 播放列表浏览',
-      f3Desc: '在手机上查看完整播放列表、搜索歌曲、查看专辑封面和歌曲信息，随时切换想听的曲目。',
-      imgPlayCtrl: '播放控制截图',
-      imgVolCtrl: '音量与均衡截图',
-      imgPlaylist: '播放列表截图',
+      f3Title: '📋 播放列表',
+      f3Desc: '浏览完整播放列表、搜索歌曲、查看专辑封面和歌曲信息，随时切换想听的曲目。',
       showcaseTag: '产品预览',
       showcaseTitle: '精致的界面设计',
-      sc1Title: 'Android 遥控器',
+      sc1Title: 'Juicy Remoter 遥控器',
       sc1Desc: 'Material Design 风格，暗色主题，手势操作',
-      sc2Title: 'Windows 播放器',
+      sc2Title: 'JuicyPlayer 播放器',
       sc2Desc: '极简播放器界面，专注音乐，低资源占用',
       sc3Title: '无缝连接',
       sc3Desc: '同一局域网自动发现，无需手动输入 IP',
-      imgAndroidUI: 'Android 遥控器界面',
-      imgDesktopUI: 'Windows 播放器界面',
-      imgConnection: '连接示意',
       appTag: '下载播放器',
-      appTitle: '在任意设备上享受音乐',
+      appTitle: 'JuicyPlayer — 你的音乐播放器',
+      appDesc: '简洁、专注的桌面音频播放器，支持多种格式',
       appWinTitle: 'JuicyPlayer for Windows',
       appWinDesc: '通过 Microsoft Store 安装，自动更新，安全可靠。',
       appWinReq: 'Windows 10/11 · 64-bit',
@@ -53,74 +47,63 @@
       appMacDesc: 'macOS 版本正在开发中，敬请期待。',
       appMacSoon: 'Coming Soon',
       appMacBtn: '敬请期待',
-      dlTag: '立即下载',
-      dlTitle: '选择你的平台',
-      dlDesc: 'Windows 桌面播放器 + Android 遥控器，搭配使用效果最佳',
-      dlAppTitle: 'JuicyPlayer 播放器',
-      dlStoreNote: 'Microsoft Store 安装',
-      dlStoreBtn: '在 Microsoft Store 获取',
-      dlMacSoon: 'Coming Soon',
-      dlMacNote: 'macOS 版本开发中',
-      dlMacBtn: '敬请期待',
-      dlRemoteTitle: '遥控器',
+      dlTag: '手机遥控',
+      dlTitle: 'Juicy Remoter — 遥控器',
+      dlDesc: '用手机遥控 JuicyPlayer 播放器，局域网内即时响应',
+      dlAndTitle: 'Juicy Remoter · Android',
+      dlAndNote: 'Android 7.0+',
+      dlAndBtn: '下载 APK',
+      dlAndSize: '约 57 MB · .apk',
+      dlWinTitle: 'Juicy Remoter · Windows',
       dlWinNote: 'Windows 10 / 11 · 64-bit',
       dlWinBtn: '下载安装包',
       dlWinSize: '约 14 MB · .exe',
-      dlAndNote: 'Android 7.0+ · APK',
-      dlAndBtn: '下载 APK',
-      dlAndSize: '约 57 MB · .apk',
       historySummary: '📜 历史版本',
       historyEmpty: '暂无历史版本',
       howtoTag: '使用指南',
       howtoTitle: '三步开始使用',
-      step1Title: '安装桌面播放器',
-      step1Desc: '下载 Windows 安装包，双击运行即可完成安装。',
-      step2Title: '安装手机遥控器',
-      step2Desc: '在 Android 手机上下载并安装 APK，授予局域网权限。',
+      step1Title: '安装 JuicyPlayer 播放器',
+      step1Desc: '从 Microsoft Store 下载安装 JuicyPlayer 桌面播放器。',
+      step2Title: '安装 Juicy Remoter 遥控器',
+      step2Desc: '在 Android 手机上下载安装 Juicy Remoter APK，授予局域网权限。',
       step3Title: '连接 & 享受',
-      step3Desc: '确保电脑和手机在同一 Wi-Fi 下，打开遥控器自动连接，开始享受无线操控。',
-      footerRights: '保留所有权利。'
+      step3Desc: '确保电脑和手机在同一 Wi-Fi 下，打开遥控器自动连接播放器，开始无线操控。',
+      footerRights: 'All rights reserved.'
     },
     en: {
-      pageTitle: 'JuicyPlayer Remote — Download',
+      pageTitle: 'JuicyPlayer — Elegant Desktop Music Player',
       navFeatures: 'Features',
       navShowcase: 'Preview',
       navDownload: 'Download',
-      heroBadge: '🎵 Audio Player Remote',
-      heroTitle1: 'Control Your Music',
-      heroTitle2: 'From Your Phone',
-      heroDesc: 'JuicyPlayer turns your Android phone into a wireless remote for your desktop audio player. Play, pause, skip tracks, and adjust volume — all from the palm of your hand.',
+      heroBadge: '🎵 Desktop Music Player',
+      heroTitle1: 'The Ultimate',
+      heroTitle2: 'Music Experience',
+      heroDesc: 'JuicyPlayer is a clean, elegant desktop audio player with wireless remote control from your phone. Play, pause, skip, and adjust volume — all at your fingertips.',
       heroDownload: 'Free Download',
       heroLearn: 'Learn More',
-      heroPlaceholder: 'App Screenshot (replace with actual image)',
       statVersion: 'Version',
       statFree: 'Free',
-      statConn: 'LAN',
+      statConn: 'Remote',
       featureTag: 'Core Features',
       featureTitle: 'Why JuicyPlayer',
-      featureDesc: 'Simple, efficient, and elegant music control',
-      f1Title: '🎵 Remote Playback Control',
-      f1Desc: 'Play, pause, skip tracks, seek through progress bar — your phone is the remote. Supports lock-screen controls and notification bar shortcuts.',
+      featureDesc: 'Simple, efficient, and elegant desktop music experience',
+      f1Title: '🎵 Playback Control',
+      f1Desc: 'Play, pause, skip tracks, seek through the progress bar — with lock-screen and notification bar support. Pair with Juicy Remoter for phone control.',
       f2Title: '🔊 Volume & Equalizer',
       f2Desc: 'Adjust system and player volume in real-time, switch equalizer presets to find your perfect sound.',
-      f3Title: '📋 Playlist Browsing',
-      f3Desc: 'View the full playlist on your phone, search songs, browse album art and track info, and switch tracks anytime.',
-      imgPlayCtrl: 'Playback Control',
-      imgVolCtrl: 'Volume & Equalizer',
-      imgPlaylist: 'Playlist View',
+      f3Title: '📋 Playlist',
+      f3Desc: 'Browse the full playlist, search songs, view album art and track info — switch tracks anytime.',
       showcaseTag: 'Preview',
       showcaseTitle: 'Elegant UI Design',
-      sc1Title: 'Android Remote',
+      sc1Title: 'Juicy Remoter',
       sc1Desc: 'Material Design, dark theme, gesture controls',
-      sc2Title: 'Windows Player',
+      sc2Title: 'JuicyPlayer',
       sc2Desc: 'Minimal player UI, music-focused, low resource usage',
       sc3Title: 'Seamless Connection',
       sc3Desc: 'Auto-discover on the same LAN — no manual IP needed',
-      imgAndroidUI: 'Android Remote UI',
-      imgDesktopUI: 'Windows Player UI',
-      imgConnection: 'Connection Diagram',
       appTag: 'Download Player',
-      appTitle: 'Enjoy Music on Any Device',
+      appTitle: 'JuicyPlayer — Your Music Player',
+      appDesc: 'A clean, focused desktop audio player supporting multiple formats',
       appWinTitle: 'JuicyPlayer for Windows',
       appWinDesc: 'Install from Microsoft Store — auto updates, secure and reliable.',
       appWinReq: 'Windows 10/11 · 64-bit',
@@ -129,32 +112,27 @@
       appMacDesc: 'macOS version is in development, stay tuned.',
       appMacSoon: 'Coming Soon',
       appMacBtn: 'Coming Soon',
-      dlTag: 'Download Now',
-      dlTitle: 'Choose Your Platform',
-      dlDesc: 'Windows desktop player + Android remote — best used together',
-      dlAppTitle: 'JuicyPlayer Player',
-      dlStoreNote: 'Install from Microsoft Store',
-      dlStoreBtn: 'Get from Microsoft Store',
-      dlMacSoon: 'Coming Soon',
-      dlMacNote: 'macOS version in development',
-      dlMacBtn: 'Coming Soon',
-      dlRemoteTitle: 'Remote',
+      dlTag: 'Mobile Remote',
+      dlTitle: 'Juicy Remoter — Remote Control',
+      dlDesc: 'Control JuicyPlayer from your phone, instant response over LAN',
+      dlAndTitle: 'Juicy Remoter · Android',
+      dlAndNote: 'Android 7.0+',
+      dlAndBtn: 'Download APK',
+      dlAndSize: '~57 MB · .apk',
+      dlWinTitle: 'Juicy Remoter · Windows',
       dlWinNote: 'Windows 10 / 11 · 64-bit',
       dlWinBtn: 'Download Installer',
       dlWinSize: '~14 MB · .exe',
-      dlAndNote: 'Android 7.0+ · APK',
-      dlAndBtn: 'Download APK',
-      dlAndSize: '~57 MB · .apk',
       historySummary: '📜 Version History',
       historyEmpty: 'No previous versions yet',
       howtoTag: 'Getting Started',
       howtoTitle: '3 Steps to Start',
-      step1Title: 'Install Desktop Player',
-      step1Desc: 'Download the Windows installer and run it — done in seconds.',
-      step2Title: 'Install Mobile Remote',
-      step2Desc: 'Download and install the APK on your Android phone, grant LAN permission.',
+      step1Title: 'Install JuicyPlayer',
+      step1Desc: 'Download and install JuicyPlayer desktop player from Microsoft Store.',
+      step2Title: 'Install Juicy Remoter',
+      step2Desc: 'Download and install Juicy Remoter APK on your Android phone, grant LAN permission.',
       step3Title: 'Connect & Enjoy',
-      step3Desc: 'Make sure your PC and phone are on the same Wi-Fi. Open the remote — it connects automatically.',
+      step3Desc: 'Make sure your PC and phone are on the same Wi-Fi. Open the remote — it auto-connects to the player.',
       footerRights: 'All rights reserved.'
     }
   };
@@ -177,15 +155,11 @@
       var key = el.getAttribute('data-i18n');
       if (dict[key] !== undefined) el.textContent = dict[key];
     });
-    // Update page title
     document.title = dict.pageTitle || document.title;
-    // Update meta description
     var meta = document.querySelector('meta[name="description"]');
     if (meta && dict.heroDesc) meta.setAttribute('content', dict.heroDesc);
-    // Update toggle button label
     var btn = document.getElementById('langToggle');
     if (btn) btn.textContent = lang === 'zh' ? 'EN' : '中文';
-    // Store
     localStorage.setItem('jp-lang', lang);
   }
 
@@ -207,7 +181,6 @@
     var appTabs = document.querySelectorAll('.app-tab');
     var appPanels = document.querySelectorAll('.app-panel');
     if (appTabs.length && appPanels.length) {
-      // Auto-detect OS
       var ua = navigator.userAgent.toLowerCase();
       var isMac = /macintosh|mac os x|iphone|ipad/.test(ua) && !/windows/.test(ua);
       var defaultPlatform = isMac ? 'mac' : 'win';
@@ -222,10 +195,8 @@
         });
       }
 
-      // Set default based on OS
       switchPlatform(defaultPlatform);
 
-      // Click handlers
       appTabs.forEach(function (tab) {
         tab.addEventListener('click', function () {
           switchPlatform(this.getAttribute('data-platform'));
@@ -243,7 +214,6 @@
       }, { threshold: 0.15 });
       els.forEach(function (el) { obs.observe(el); });
     } else {
-      // fallback: show all
       els.forEach(function (el) { el.classList.add('revealed'); });
     }
   });
