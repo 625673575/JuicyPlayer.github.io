@@ -219,6 +219,11 @@ section { padding: 100px 0; }
 
 /* ========= Download ========= */
 .download { background: var(--bg-subtle); }
+.download-group-title {
+  text-align: center; font-size: 1.15rem; font-weight: 700;
+  color: var(--text-secondary); margin-bottom: 20px; margin-top: 36px;
+}
+.download-group-title:first-of-type { margin-top: 0; }
 .download-grid {
   display: flex; justify-content: center; gap: 28px; flex-wrap: wrap;
 }
@@ -246,6 +251,12 @@ section { padding: 100px 0; }
 }
 .dl-note { color: var(--text-muted); font-size: .85rem; margin-bottom: 20px; }
 .dl-size { display: block; color: var(--text-muted); font-size: .78rem; margin-top: 12px; }
+.dl-card-coming {
+  opacity: .55; pointer-events: none;
+}
+.dl-version-soon {
+  background: rgba(255,255,255,.06); color: var(--text-muted);
+}
 
 .history { margin-top: 40px; text-align: center; }
 .history summary {
