@@ -126,16 +126,6 @@ body {
   width: 100%; max-width: 440px; aspect-ratio: 4/3; object-fit: contain;
   border-radius: var(--radius); box-shadow: var(--shadow-glow);
 }
-.img-placeholder, .img-placeholder-lg {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 12px;
-  background: var(--bg-card); border: 1px dashed rgba(255,255,255,.1);
-  border-radius: var(--radius); color: var(--text-muted); font-size: .85rem;
-  transition: border-color var(--transition);
-}
-.img-placeholder:hover {
-  border-color: rgba(124,92,252,.3);
-}
 
 /* ========= Buttons ========= */
 .btn {
@@ -188,10 +178,6 @@ section { padding: 100px 0; }
 }
 .feature-card-reverse { direction: rtl; }
 .feature-card-reverse > * { direction: ltr; }
-.feature-img .img-placeholder {
-  width: 100%; aspect-ratio: 16/10; border-radius: var(--radius-sm);
-  font-size: .82rem;
-}
 .feature-img-src {
   width: 100%; aspect-ratio: 16/10; object-fit: contain;
   border-radius: var(--radius-sm);
@@ -223,11 +209,6 @@ section { padding: 100px 0; }
   object-fit: cover;
 }
 
-.showcase-img .img-placeholder-lg {
-  width: 100%; aspect-ratio: 4/3; border-radius: 0;
-  border: none; border-bottom: 1px solid var(--border);
-  font-size: .8rem;
-}
 .showcase-card h3 {
   padding: 18px 20px 6px; font-size: 1.05rem; font-weight: 700;
 }
