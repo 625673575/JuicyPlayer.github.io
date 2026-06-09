@@ -3,28 +3,919 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-i18n="pageTitle">JuicyPlayer — 优雅的桌面音乐播放器</title>
+  <title>JuicyPlayer — 优雅的桌面音乐播放器</title>
   <meta name="description" content="JuicyPlayer — A beautiful desktop audio player with wireless remote control from your phone.">
-  <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ========== 基础重置与变量 ========== */
+    :root {
+      --accent: #ff6b35;
+      --accent-light: #ff8c5a;
+      --accent-glow: rgba(255, 107, 53, 0.4);
+      --bg: #0f0f1a;
+      --bg-elevated: #1a1a2e;
+      --bg-card: #16162a;
+      --text: #e8e8f0;
+      --text-secondary: #8b8ba0;
+      --border: rgba(255,255,255,0.08);
+      --glass: rgba(255,255,255,0.05);
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, sans-serif;
+      overflow-x: hidden;
+    }
+    
+    body {
+      position: relative;
+      min-height: 100vh;
+    }
+    
+    /* ========== 粒子背景 Canvas ========== */
+    #particles-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+    
+    /* ========== 鼠标跟随光斑 ========== */
+    .cursor-glow {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s;
+      mix-blend-mode: screen;
+      opacity: 0;
+    }
+    
+    /* ========== 滚动进度条 ========== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light), #ffd93d);
+      z-index: 10000;
+      width: 0%;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+    
+    /* ========== 导航栏 ========== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 0;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border-bottom: 1px solid transparent;
+    }
+    
+    .navbar.scrolled {
+      background: rgba(15, 15, 26, 0.85);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 0;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+    }
+    
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 18px;
+      transition: transform 0.3s;
+    }
+    
+    .nav-brand:hover { transform: scale(1.05); }
+    
+    .nav-logo {
+      width: 32px;
+      height: 32px;
+      filter: drop-shadow(0 0 8px var(--accent-glow));
+      animation: logoPulse 3s ease-in-out infinite;
+    }
+    
+    @keyframes logoPulse {
+      0%, 100% { filter: drop-shadow(0 0 8px var(--accent-glow)); }
+      50% { filter: drop-shadow(0 0 20px var(--accent-glow)); }
+    }
+    
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s;
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .nav-links a:hover {
+      color: var(--text);
+    }
+    
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    
+    .lang-btn {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    
+    .lang-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px var(--accent-glow);
+    }
+    
+    /* ========== Hero 区域 ========== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 0 80px;
+      overflow: hidden;
+    }
+    
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse at 20% 50%, rgba(255,107,53,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(255,140,90,0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(255,107,53,0.08) 0%, transparent 50%);
+      animation: bgShift 20s ease-in-out infinite;
+    }
+    
+    @keyframes bgShift {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(-30px, 20px) scale(1.1); }
+      66% { transform: translate(20px, -20px) scale(0.95); }
+    }
+    
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .hero-text {
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      backdrop-filter: blur(10px);
+      animation: badgePulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes badgePulse {
+      0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+      50% { box-shadow: 0 0 20px 5px var(--accent-glow); }
+    }
+    
+    .hero h1 {
+      font-size: 56px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -1.5px;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 50%, #ffd93d 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 200% 200%;
+      animation: gradientFlow 5s ease infinite;
+    }
+    
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .hero-desc {
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      max-width: 480px;
+    }
+    
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+    
+    .btn:hover::before {
+      transform: translateX(100%);
+    }
+    
+    .btn-lg { padding: 16px 32px; font-size: 16px; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      color: white;
+      box-shadow: 0 4px 20px var(--accent-glow);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px var(--accent-glow);
+    }
+    .btn-ghost {
+      background: var(--glass);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-3px);
+    }
+    .btn-block { width: 100%; }
+    
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+    }
+    .hero-stats div {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .hero-stats strong {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .hero-stats span {
+      font-size: 12px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    /* Hero 图片 3D 效果 */
+    .hero-visual {
+      position: relative;
+      perspective: 1000px;
+      opacity: 0;
+      transform: translateX(60px) rotateY(-15deg);
+      animation: heroImgIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+    }
+    
+    @keyframes heroImgIn {
+      to { opacity: 1; transform: translateX(0) rotateY(0); }
+    }
+    
+    .hero-img {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+      transition: transform 0.1s ease-out;
+      will-change: transform;
+      animation: heroFloat 6s ease-in-out infinite;
+    }
+    
+    @keyframes heroFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+    
+    .hero-visual::after {
+      content: '';
+      position: absolute;
+      inset: -20px;
+      background: linear-gradient(135deg, var(--accent-glow), transparent);
+      border-radius: 30px;
+      z-index: -1;
+      filter: blur(40px);
+      opacity: 0.6;
+      animation: glowPulse 4s ease-in-out infinite;
+    }
+    
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.05); }
+    }
+    
+    /* ========== 通用区域样式 ========== */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    
+    section {
+      position: relative;
+      z-index: 2;
+      padding: 100px 0;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .section-tag {
+      display: inline-block;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .section-header h2 {
+      font-size: 40px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+    .section-desc {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    
+    /* ========== 下载区域 ========== */
+    .app-dl { background: linear-gradient(180deg, transparent, rgba(255,107,53,0.03)); }
+    
+    .app-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 32px;
+      justify-content: center;
+    }
+    .app-tab {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .app-tab:hover {
+      background: var(--bg-elevated);
+      transform: translateY(-2px);
+    }
+    .app-tab.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+      box-shadow: 0 4px 20px var(--accent-glow);
+    }
+    
+    .app-panel {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px;
+      backdrop-filter: blur(10px);
+    }
+    .app-panel.active { display: block; animation: panelIn 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    
+    @keyframes panelIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    
+    .app-panel-inner {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .app-panel-preview {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .app-panel-img {
+      width: 100%;
+      border-radius: 16px;
+      transition: transform 0.5s;
+    }
+    .app-panel-preview:hover .app-panel-img {
+      transform: scale(1.03);
+    }
+    .app-panel-coming {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px;
+      gap: 16px;
+      background: var(--bg-elevated);
+      border-radius: 16px;
+    }
+    .app-coming-soon {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+    .app-panel-info h3 {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+    .app-panel-desc {
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .app-panel-meta {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .app-ver {
+      background: var(--accent);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .app-store-badge {
+      height: 40px;
+      margin-bottom: 20px;
+      filter: brightness(1.2);
+    }
+    
+    /* ========== 功能区域 ========== */
+    .features { background: var(--bg); }
+    
+    .feature-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+    }
+    .feature-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(60px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .feature-card.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .feature-card-reverse { direction: rtl; }
+    .feature-card-reverse > * { direction: ltr; }
+    
+    .feature-img {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.4s;
+    }
+    .feature-img:hover {
+      transform: perspective(1000px) rotateY(5deg) rotateX(-2deg) scale(1.02);
+    }
+    .feature-img-src {
+      width: 100%;
+      border-radius: 20px;
+      transition: transform 0.6s;
+    }
+    .feature-img:hover .feature-img-src {
+      transform: scale(1.05);
+    }
+    .feature-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--accent-glow), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .feature-img:hover::after {
+      opacity: 1;
+    }
+    
+    .feature-info h3 {
+      font-size: 28px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .feature-info p {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-size: 16px;
+    }
+    
+    /* ========== 预览区域 ========== */
+    .showcase {
+      background: linear-gradient(180deg, rgba(255,107,53,0.03), transparent);
+    }
+    
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .showcase-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0;
+      transform: translateY(40px) scale(0.95);
+    }
+    .showcase-card.revealed {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .showcase-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      border-color: var(--accent);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px var(--accent-glow);
+    }
+    .showcase-img {
+      overflow: hidden;
+      aspect-ratio: 16/10;
+    }
+    .showcase-img-src {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s;
+    }
+    .showcase-card:hover .showcase-img-src {
+      transform: scale(1.1);
+    }
+    .showcase-card h3 {
+      padding: 20px 20px 8px;
+      font-size: 18px;
+    }
+    .showcase-card p {
+      padding: 0 20px 20px;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+    
+    /* ========== 下载区域 ========== */
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .dl-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px;
+      text-align: center;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    .dl-card.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .dl-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3), 0 0 30px var(--accent-glow);
+    }
+    .dl-icon-wrap {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-elevated);
+      border-radius: 20px;
+      transition: all 0.4s;
+    }
+    .dl-card:hover .dl-icon-wrap {
+      transform: scale(1.1) rotate(5deg);
+      background: var(--accent);
+    }
+    .dl-card h3 { font-size: 22px; margin-bottom: 8px; }
+    .dl-version {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .dl-note { color: var(--text-secondary); font-size: 14px; margin-bottom: 24px; }
+    .dl-size { display: block; margin-top: 12px; font-size: 12px; color: var(--text-secondary); }
+    
+    .history {
+      max-width: 800px;
+      margin: 40px auto 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 24px;
+    }
+    .history summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: color 0.3s;
+    }
+    .history summary:hover { color: var(--text); }
+    .history-empty { padding: 16px 0 0; color: var(--text-secondary); font-size: 14px; }
+    
+    /* ========== 使用指南 ========== */
+    .howto { background: var(--bg); }
+    
+    .steps {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .step {
+      flex: 1;
+      text-align: center;
+      padding: 0 20px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .step.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .step-num {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      border-radius: 50%;
+      font-size: 24px;
+      font-weight: 800;
+      color: white;
+      box-shadow: 0 8px 30px var(--accent-glow);
+      position: relative;
+      z-index: 2;
+      transition: transform 0.4s;
+    }
+    .step:hover .step-num {
+      transform: scale(1.15);
+    }
+    .step-body h3 { font-size: 20px; margin-bottom: 10px; }
+    .step-body p { color: var(--text-secondary); font-size: 15px; line-height: 1.6; }
+    
+    .step-connector {
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      margin-top: 30px;
+      position: relative;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: all 0.6s ease 0.3s;
+    }
+    .step-connector.revealed {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+    .step-connector::after {
+      content: '';
+      position: absolute;
+      right: -6px;
+      top: -4px;
+      width: 0;
+      height: 0;
+      border-left: 8px solid var(--accent-light);
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+    }
+    
+    /* ========== Footer ========== */
+    footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      position: relative;
+      z-index: 2;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+    }
+    .footer-logo {
+      width: 28px;
+      height: 28px;
+    }
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+    
+    /* ========== 音频波形装饰 ========== */
+    .waveform-decoration {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100px;
+      opacity: 0.1;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    /* ========== 响应式 ========== */
+    @media (max-width: 768px) {
+      .hero-content { grid-template-columns: 1fr; text-align: center; }
+      .hero h1 { font-size: 36px; }
+      .hero-stats { justify-content: center; }
+      .hero-visual { order: -1; }
+      .feature-card, .app-panel-inner { grid-template-columns: 1fr; }
+      .feature-card-reverse { direction: ltr; }
+      .showcase-grid { grid-template-columns: 1fr; }
+      .download-grid { grid-template-columns: 1fr; }
+      .steps { flex-direction: column; gap: 40px; }
+      .step-connector { display: none; }
+      .nav-links { display: none; }
+    }
+    
+    /* ========== 滚动条美化 ========== */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--bg-elevated); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+  </style>
 </head>
 <body>
 
+  <!-- 滚动进度条 -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+  
+  <!-- 鼠标跟随光斑 -->
+  <div class="cursor-glow" id="cursorGlow"></div>
+  
+  <!-- 粒子背景 -->
+  <canvas id="particles-canvas"></canvas>
+
   <!-- ========== Navbar ========== -->
-  <nav class="navbar">
-    <div class="container nav-inner">
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
       <a href="#" class="nav-brand">
-        <img src="logo.svg" alt="JuicyPlayer" class="nav-logo">
+        <svg class="nav-logo" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="14" stroke="var(--accent)" stroke-width="2"/>
+          <circle cx="16" cy="16" r="6" fill="var(--accent)"/>
+          <path d="M16 2 L16 8 M16 24 L16 30 M2 16 L8 16 M24 16 L30 16" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
         <span>JuicyPlayer</span>
       </a>
       <div class="nav-links">
-        <a href="#features" data-i18n="navFeatures">功能</a>
-        <a href="#showcase" data-i18n="navShowcase">预览</a>
-        <a href="#download" data-i18n="navDownload">下载</a>
+        <a href="#features">功能</a>
+        <a href="#showcase">预览</a>
+        <a href="#download">下载</a>
         <button id="langToggle" class="lang-btn" aria-label="Switch language">EN</button>
       </div>
     </div>
@@ -35,41 +926,41 @@
     <div class="hero-bg"></div>
     <div class="container hero-content">
       <div class="hero-text">
-        <div class="badge" data-i18n="heroBadge">🎵 桌面音乐播放器</div>
+        <div class="badge">🎵 桌面音乐播放器</div>
         <h1>
-          <span data-i18n="heroTitle1">为你的音乐</span><br>
-          <span class="gradient-text" data-i18n="heroTitle2">带来极致体验</span>
+          <span>为你的音乐</span><br>
+          <span class="gradient-text" id="typewriter">带来极致体验</span>
         </h1>
-        <p class="hero-desc" data-i18n="heroDesc">JuicyPlayer 是一款简洁优雅的桌面音频播放器，支持手机遥控操控。播放、暂停、切歌、调节音量——一切尽在指尖。</p>
+        <p class="hero-desc">JuicyPlayer 是一款简洁优雅的桌面音频播放器，支持手机遥控操控。播放、暂停、切歌、调节音量——一切尽在指尖。</p>
         <div class="hero-actions">
           <a href="#app" class="btn btn-lg btn-primary">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            <span data-i18n="heroDownload">免费下载</span>
+            <span>免费下载</span>
           </a>
-          <a href="#showcase" class="btn btn-lg btn-ghost" data-i18n="heroLearn">了解更多</a>
+          <a href="#showcase" class="btn btn-lg btn-ghost">了解更多</a>
         </div>
         <div class="hero-stats">
-          <div><strong>v1.0</strong><span data-i18n="statVersion">版本</span></div>
-          <div><strong>Free</strong><span data-i18n="statFree">免费</span></div>
-          <div><strong>Wi-Fi</strong><span data-i18n="statConn">遥控</span></div>
+          <div><strong class="counter" data-target="1">0</strong><span>版本</span></div>
+          <div><strong>Free</strong><span>免费</span></div>
+          <div><strong>Wi-Fi</strong><span>遥控</span></div>
         </div>
       </div>
-      <div class="hero-visual">
-        <img src="images/showcase-windows.png" alt="JuicyPlayer 截图" class="hero-img">
+      <div class="hero-visual" id="heroVisual">
+        <img src="images/showcase-windows.png" alt="JuicyPlayer 截图" class="hero-img" id="heroImg">
       </div>
     </div>
+    <canvas class="waveform-decoration" id="waveformCanvas"></canvas>
   </header>
 
   <!-- ========== Player Download (Tab) ========== -->
   <section class="app-dl" id="app">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag" data-i18n="appTag">下载播放器</span>
-        <h2 data-i18n="appTitle">JuicyPlayer — 你的音乐播放器</h2>
-        <p class="section-desc" data-i18n="appDesc">简洁、专注的桌面音频播放器，支持多种格式</p>
+        <span class="section-tag">下载播放器</span>
+        <h2>JuicyPlayer — 你的音乐播放器</h2>
+        <p class="section-desc">简洁、专注的桌面音频播放器，支持多种格式</p>
       </div>
       <div class="app-dl-wrapper">
-        <!-- Tab Bar -->
         <div class="app-tabs" role="tablist">
           <button class="app-tab active" role="tab" data-platform="win" aria-selected="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
@@ -80,7 +971,6 @@
             <span>macOS</span>
           </button>
         </div>
-        <!-- Tab: Windows -->
         <div class="app-panel active" data-platform="win">
           <div class="app-panel-inner">
             <div class="app-panel-preview">
@@ -88,33 +978,32 @@
             </div>
             <div class="app-panel-info">
               <img src="images/Microsoft_Store.png" alt="Microsoft Store" class="app-store-badge">
-              <h3 data-i18n="appWinTitle">JuicyPlayer for Windows</h3>
-              <p class="app-panel-desc" data-i18n="appWinDesc">通过 Microsoft Store 安装，自动更新，安全可靠。</p>
+              <h3>JuicyPlayer for Windows</h3>
+              <p class="app-panel-desc">通过 Microsoft Store 安装，自动更新，安全可靠。</p>
               <div class="app-panel-meta">
                 <span class="app-ver">v1.0.0</span>
-                <span data-i18n="appWinReq">Windows 10/11 · 64-bit</span>
+                <span>Windows 10/11 · 64-bit</span>
               </div>
               <a href="https://apps.microsoft.com/detail/9PK77MF93KZM" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                <span data-i18n="appWinBtn">在 Microsoft Store 获取</span>
+                <span>在 Microsoft Store 获取</span>
               </a>
             </div>
           </div>
         </div>
-        <!-- Tab: macOS -->
         <div class="app-panel" data-platform="mac">
           <div class="app-panel-inner">
             <div class="app-panel-preview app-panel-coming">
               <svg viewBox="0 0 24 24" width="80" height="80" fill="#6b6b82">
                 <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
               </svg>
-              <span class="app-coming-soon" data-i18n="appMacSoon">Coming Soon</span>
+              <span class="app-coming-soon">Coming Soon</span>
             </div>
             <div class="app-panel-info">
-              <h3 data-i18n="appMacTitle">JuicyPlayer for macOS</h3>
-              <p class="app-panel-desc" data-i18n="appMacDesc">macOS 版本正在开发中，敬请期待。</p>
+              <h3>JuicyPlayer for macOS</h3>
+              <p class="app-panel-desc">macOS 版本正在开发中，敬请期待。</p>
               <button class="btn btn-primary btn-lg" disabled style="opacity:.5;cursor:not-allowed;">
-                <span data-i18n="appMacBtn">敬请期待</span>
+                <span>敬请期待</span>
               </button>
             </div>
           </div>
@@ -127,9 +1016,9 @@
   <section class="features" id="features">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag" data-i18n="featureTag">核心功能</span>
-        <h2 data-i18n="featureTitle">为什么选择 JuicyPlayer</h2>
-        <p class="section-desc" data-i18n="featureDesc">简洁、高效、优雅的桌面音乐体验</p>
+        <span class="section-tag">核心功能</span>
+        <h2>为什么选择 JuicyPlayer</h2>
+        <p class="section-desc">简洁、高效、优雅的桌面音乐体验</p>
       </div>
       <div class="feature-grid">
         <div class="feature-card" data-reveal>
@@ -137,8 +1026,8 @@
             <img src="images/feature-play.png" alt="播放控制" class="feature-img-src">
           </div>
           <div class="feature-info">
-            <h3 data-i18n="f1Title">🎵 播放控制</h3>
-            <p data-i18n="f1Desc">播放、暂停、上下曲、拖动进度条——支持锁屏控制和通知栏快捷操作。配合 Juicy Remoter 遥控器，手机即遥控。</p>
+            <h3>🎵 播放控制</h3>
+            <p>播放、暂停、上下曲、拖动进度条——支持锁屏控制和通知栏快捷操作。配合 Juicy Remoter 遥控器，手机即遥控。</p>
           </div>
         </div>
         <div class="feature-card feature-card-reverse" data-reveal>
@@ -146,8 +1035,8 @@
             <img src="images/feature-volume.png" alt="音量与均衡" class="feature-img-src">
           </div>
           <div class="feature-info">
-            <h3 data-i18n="f2Title">🔊 音量 & 均衡器</h3>
-            <p data-i18n="f2Desc">实时调节系统音量和播放器音量，支持均衡器预设切换，找到最适合你的听感。</p>
+            <h3>🔊 音量 & 均衡器</h3>
+            <p>实时调节系统音量和播放器音量，支持均衡器预设切换，找到最适合你的听感。</p>
           </div>
         </div>
         <div class="feature-card" data-reveal>
@@ -155,8 +1044,8 @@
             <img src="images/feature-playlist.png" alt="播放列表" class="feature-img-src">
           </div>
           <div class="feature-info">
-            <h3 data-i18n="f3Title">📋 播放列表</h3>
-            <p data-i18n="f3Desc">浏览完整播放列表、搜索歌曲、查看专辑封面和歌曲信息，随时切换想听的曲目。</p>
+            <h3>📋 播放列表</h3>
+            <p>浏览完整播放列表、搜索歌曲、查看专辑封面和歌曲信息，随时切换想听的曲目。</p>
           </div>
         </div>
       </div>
@@ -167,30 +1056,30 @@
   <section class="showcase" id="showcase">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag" data-i18n="showcaseTag">产品预览</span>
-        <h2 data-i18n="showcaseTitle">精致的界面设计</h2>
+        <span class="section-tag">产品预览</span>
+        <h2>精致的界面设计</h2>
       </div>
       <div class="showcase-grid">
         <div class="showcase-card" data-reveal>
           <div class="showcase-img">
             <img src="images/showcase-android.png" alt="Juicy Remoter 遥控器界面" class="showcase-img-src">
           </div>
-          <h3 data-i18n="sc1Title">Juicy Remoter 遥控器</h3>
-          <p data-i18n="sc1Desc">Material Design 风格，暗色主题，手势操作</p>
+          <h3>Juicy Remoter 遥控器</h3>
+          <p>Material Design 风格，暗色主题，手势操作</p>
         </div>
         <div class="showcase-card" data-reveal>
           <div class="showcase-img">
             <img src="images/showcase-windows.png" alt="JuicyPlayer 播放器界面" class="showcase-img-src">
           </div>
-          <h3 data-i18n="sc2Title">JuicyPlayer 播放器</h3>
-          <p data-i18n="sc2Desc">极简播放器界面，专注音乐，低资源占用</p>
+          <h3>JuicyPlayer 播放器</h3>
+          <p>极简播放器界面，专注音乐，低资源占用</p>
         </div>
         <div class="showcase-card" data-reveal>
           <div class="showcase-img">
             <img src="images/connect.png" alt="无缝连接" class="showcase-img-src">
           </div>
-          <h3 data-i18n="sc3Title">无缝连接</h3>
-          <p data-i18n="sc3Desc">同一局域网自动发现，无需手动输入 IP</p>
+          <h3>无缝连接</h3>
+          <p>同一局域网自动发现，无需手动输入 IP</p>
         </div>
       </div>
     </div>
@@ -200,47 +1089,45 @@
   <section class="download" id="download">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag" data-i18n="dlTag">手机遥控</span>
-        <h2 data-i18n="dlTitle">Juicy Remoter — 遥控器</h2>
-        <p class="section-desc" data-i18n="dlDesc">用手机遥控 JuicyPlayer 播放器，局域网内即时响应</p>
+        <span class="section-tag">手机遥控</span>
+        <h2>Juicy Remoter — 遥控器</h2>
+        <p class="section-desc">用手机遥控 JuicyPlayer 播放器，局域网内即时响应</p>
       </div>
       <div class="download-grid">
-        <!-- Android -->
         <div class="dl-card" data-reveal>
           <div class="dl-icon-wrap">
             <svg viewBox="0 0 24 24" width="44" height="44" fill="#3ddc84">
               <path d="M17.523 15.34q-.74 0-1.26-.522-.522-.522-.522-1.263 0-.74.522-1.263.52-.522 1.26-.522.742 0 1.263.522.522.522.522 1.263 0 .74-.522 1.263-.52.522-1.263.522zm-11.046 0q-.74 0-1.263-.522Q4.692 14.298 4.692 13.557q0-.74.522-1.263.522-.522 1.263-.522.74 0 1.262.522.522.522.522 1.263 0 .74-.522 1.263-.521.522-1.262.522zm5.518 2.86q-1.752 0-3.288-.711-1.536-.71-2.69-1.915Q4.574 14.07 3.85 12.492q-.724-1.578-.724-3.387V7.5h17.748v1.605q0 1.81-.724 3.387-.724 1.578-2.167 3.083-1.154 1.204-2.69 1.915-1.536.711-3.288.711zM6.867 8.72q-.318 0-.543-.225Q6.099 8.27 6.099 7.95t.225-.543q.224-.224.543-.224.318 0 .543.224.224.225.224.543t-.224.543q-.225.225-.543.225zm10.266 0q-.318 0-.543-.225-.224-.225-.224-.543t.224-.543q.225-.224.543-.224.318 0 .543.224.224.225.224.543t-.224.543q-.225.225-.543.225z"/>
             </svg>
           </div>
-          <h3 data-i18n="dlAndTitle">Juicy Remoter · Android</h3>
+          <h3>Juicy Remoter · Android</h3>
           <span class="dl-version">v1.0.0</span>
-          <p class="dl-note" data-i18n="dlAndNote">Android 7.0+</p>
+          <p class="dl-note">Android 7.0+</p>
           <a href="downloads/JuicyPlayer-Remote-1.0.0.apk" class="btn btn-primary btn-block">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            <span data-i18n="dlAndBtn">下载 APK</span>
+            <span>下载 APK</span>
           </a>
-          <span class="dl-size" data-i18n="dlAndSize">约 57 MB · .apk</span>
+          <span class="dl-size">约 57 MB · .apk</span>
         </div>
-        <!-- Windows Remoter -->
         <div class="dl-card" data-reveal>
           <div class="dl-icon-wrap">
             <svg viewBox="0 0 24 24" width="44" height="44" fill="#00aef0">
               <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
             </svg>
           </div>
-          <h3 data-i18n="dlWinTitle">Juicy Remoter · Windows</h3>
+          <h3>Juicy Remoter · Windows</h3>
           <span class="dl-version">v1.0.0</span>
-          <p class="dl-note" data-i18n="dlWinNote">Windows 10 / 11 · 64-bit</p>
+          <p class="dl-note">Windows 10 / 11 · 64-bit</p>
           <a href="downloads/JuicyPlayer-Setup-1.0.0.exe" class="btn btn-primary btn-block">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            <span data-i18n="dlWinBtn">下载安装包</span>
+            <span>下载安装包</span>
           </a>
-          <span class="dl-size" data-i18n="dlWinSize">约 14 MB · .exe</span>
+          <span class="dl-size">约 14 MB · .exe</span>
         </div>
       </div>
       <details class="history">
-        <summary data-i18n="historySummary">📜 历史版本</summary>
-        <p class="history-empty" data-i18n="historyEmpty">暂无历史版本</p>
+        <summary>📜 历史版本</summary>
+        <p class="history-empty">暂无历史版本</p>
       </details>
     </div>
   </section>
@@ -249,31 +1136,31 @@
   <section class="howto">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag" data-i18n="howtoTag">使用指南</span>
-        <h2 data-i18n="howtoTitle">三步开始使用</h2>
+        <span class="section-tag">使用指南</span>
+        <h2>三步开始使用</h2>
       </div>
       <div class="steps">
         <div class="step" data-reveal>
           <div class="step-num">1</div>
           <div class="step-body">
-            <h3 data-i18n="step1Title">安装 JuicyPlayer 播放器</h3>
-            <p data-i18n="step1Desc">从 Microsoft Store 下载安装 JuicyPlayer 桌面播放器。</p>
+            <h3>安装 JuicyPlayer 播放器</h3>
+            <p>从 Microsoft Store 下载安装 JuicyPlayer 桌面播放器。</p>
           </div>
         </div>
-        <div class="step-connector"></div>
+        <div class="step-connector" data-reveal-connector></div>
         <div class="step" data-reveal>
           <div class="step-num">2</div>
           <div class="step-body">
-            <h3 data-i18n="step2Title">安装 Juicy Remoter 遥控器</h3>
-            <p data-i18n="step2Desc">在 Android 手机上下载安装 Juicy Remoter APK，授予局域网权限。</p>
+            <h3>安装 Juicy Remoter 遥控器</h3>
+            <p>在 Android 手机上下载安装 Juicy Remoter APK，授予局域网权限。</p>
           </div>
         </div>
-        <div class="step-connector"></div>
+        <div class="step-connector" data-reveal-connector></div>
         <div class="step" data-reveal>
           <div class="step-num">3</div>
           <div class="step-body">
-            <h3 data-i18n="step3Title">连接 & 享受</h3>
-            <p data-i18n="step3Desc">确保电脑和手机在同一 Wi-Fi 下，打开遥控器自动连接播放器，开始无线操控。</p>
+            <h3>连接 & 享受</h3>
+            <p>确保电脑和手机在同一 Wi-Fi 下，打开遥控器自动连接播放器，开始无线操控。</p>
           </div>
         </div>
       </div>
@@ -284,17 +1171,286 @@
   <footer>
     <div class="container footer-inner">
       <div class="footer-brand">
-        <img src="logo.svg" alt="JuicyPlayer" class="footer-logo">
+        <svg class="footer-logo" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="14" stroke="var(--accent)" stroke-width="2"/>
+          <circle cx="16" cy="16" r="6" fill="var(--accent)"/>
+        </svg>
         <span>JuicyPlayer</span>
       </div>
-      <p>&copy; 2026 JuicyPlayer. <span data-i18n="footerRights">All rights reserved.</span></p>
+      <p>&copy; 2026 JuicyPlayer. All rights reserved.</p>
       <div class="footer-links">
         <a href="https://github.com/625673575/JuicyPlayer.github.io" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
   </footer>
 
-  <!-- i18n Script -->
-  <script src="i18n.js"></script>
+  <script>
+    // ========== 粒子系统 ==========
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    const particleCount = 60;
+    
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.5;
+        this.opacity = Math.random() * 0.5 + 0.1;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+          this.reset();
+        }
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 107, 53, ${this.opacity})`;
+        ctx.fill();
+      }
+    }
+    
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+    
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      // 连线
+      particles.forEach((p1, i) => {
+        particles.slice(i + 1).forEach(p2 => {
+          const dx = p1.x - p2.x;
+          const dy = p1.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 150) {
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(255, 107, 53, ${0.1 * (1 - dist / 150)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        });
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+    
+    // ========== 鼠标跟随光斑 ==========
+    const cursorGlow = document.getElementById('cursorGlow');
+    let mouseX = 0, mouseY = 0;
+    let glowX = 0, glowY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursorGlow.style.opacity = '1';
+    });
+    document.addEventListener('mouseleave', () => {
+      cursorGlow.style.opacity = '0';
+    });
+    
+    function animateGlow() {
+      glowX += (mouseX - glowX) * 0.1;
+      glowY += (mouseY - glowY) * 0.1;
+      cursorGlow.style.left = glowX + 'px';
+      cursorGlow.style.top = glowY + 'px';
+      requestAnimationFrame(animateGlow);
+    }
+    animateGlow();
+    
+    // ========== 滚动进度条 ==========
+    const scrollProgress = document.getElementById('scrollProgress');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (scrollTop / docHeight) * 100;
+      scrollProgress.style.width = progress + '%';
+    });
+    
+    // ========== 导航栏滚动效果 ==========
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+    
+    // ========== 滚动揭示动画 ==========
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          // 如果是步骤，同时激活连接线
+          if (entry.target.hasAttribute('data-reveal')) {
+            const index = Array.from(document.querySelectorAll('[data-reveal]')).indexOf(entry.target);
+            const connectors = document.querySelectorAll('[data-reveal-connector]');
+            if (connectors[index - 1]) {
+              setTimeout(() => connectors[index - 1].classList.add('revealed'), 400);
+            }
+          }
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+    
+    document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+    document.querySelectorAll('[data-reveal-connector]').forEach(el => revealObserver.observe(el));
+    
+    // ========== Hero 图片 3D 倾斜 ==========
+    const heroVisual = document.getElementById('heroVisual');
+    const heroImg = document.getElementById('heroImg');
+    
+    heroVisual.addEventListener('mousemove', (e) => {
+      const rect = heroVisual.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      heroImg.style.transform = `perspective(1000px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) scale(1.02)`;
+    });
+    heroVisual.addEventListener('mouseleave', () => {
+      heroImg.style.transform = '';
+    });
+    
+    // ========== 数字计数动画 ==========
+    const counters = document.querySelectorAll('.counter');
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = parseInt(entry.target.dataset.target);
+          let current = 0;
+          const increment = target / 50;
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              entry.target.textContent = target;
+              clearInterval(timer);
+            } else {
+              entry.target.textContent = Math.floor(current);
+            }
+          }, 30);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(c => counterObserver.observe(c));
+    
+    // ========== Tab 切换 ==========
+    const tabs = document.querySelectorAll('.app-tab');
+    const panels = document.querySelectorAll('.app-panel');
+    
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const platform = tab.dataset.platform;
+        tabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        panels.forEach(p => {
+          if (p.dataset.platform === platform) {
+            p.classList.add('active');
+          } else {
+            p.classList.remove('active');
+          }
+        });
+      });
+    });
+    
+    // ========== 底部波形装饰 ==========
+    const waveCanvas = document.getElementById('waveformCanvas');
+    const waveCtx = waveCanvas.getContext('2d');
+    let waveTime = 0;
+    
+    function resizeWave() {
+      const rect = waveCanvas.parentElement.getBoundingClientRect();
+      waveCanvas.width = rect.width;
+      waveCanvas.height = 100;
+    }
+    resizeWave();
+    window.addEventListener('resize', resizeWave);
+    
+    function drawWave() {
+      waveCtx.clearRect(0, 0, waveCanvas.width, waveCanvas.height);
+      const bars = 100;
+      const barWidth = waveCanvas.width / bars;
+      
+      for (let i = 0; i < bars; i++) {
+        const x = i * barWidth;
+        const height = Math.sin(i * 0.2 + waveTime) * 20 + 
+                       Math.sin(i * 0.05 + waveTime * 0.5) * 15 + 
+                       Math.cos(i * 0.1 + waveTime * 1.5) * 10 + 30;
+        const gradient = waveCtx.createLinearGradient(0, 50 - height/2, 0, 50 + height/2);
+        gradient.addColorStop(0, 'rgba(255,107,53,0.3)');
+        gradient.addColorStop(0.5, 'rgba(255,140,90,0.6)');
+        gradient.addColorStop(1, 'rgba(255,107,53,0.3)');
+        waveCtx.fillStyle = gradient;
+        waveCtx.fillRect(x, 50 - height/2, barWidth - 1, height);
+      }
+      waveTime += 0.05;
+      requestAnimationFrame(drawWave);
+    }
+    drawWave();
+    
+    // ========== 按钮涟漪效果 ==========
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+        ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+        ripple.style.position = 'absolute';
+        ripple.style.borderRadius = '50%';
+        ripple.style.background = 'rgba(255,255,255,0.3)';
+        ripple.style.transform = 'scale(0)';
+        ripple.style.animation = 'ripple 0.6s ease-out';
+        ripple.style.pointerEvents = 'none';
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+    
+    // 添加涟漪动画样式
+    const rippleStyle = document.createElement('style');
+    rippleStyle.textContent = `
+      @keyframes ripple {
+        to { transform: scale(4); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(rippleStyle);
+    
+    // ========== 平滑滚动增强 ==========
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
 </body>
 </html>
