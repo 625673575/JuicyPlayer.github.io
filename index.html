@@ -16,6 +16,7 @@
       --accent: #ff6b35;
       --accent-light: #ff8c5a;
       --accent-glow: rgba(255, 107, 53, 0.4);
+      --accent-glow-strong: rgba(255, 107, 53, 0.6);
       --bg: #0f0f1a;
       --bg-elevated: #1a1a2e;
       --bg-card: #16162a;
@@ -39,6 +40,52 @@
     body {
       position: relative;
       min-height: 100vh;
+    }
+    
+    /* ========== 页面加载遮罩 ========== */
+    .page-loader {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 24px;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    .page-loader.done {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .loader-logo {
+      width: 64px;
+      height: 64px;
+      animation: loaderPulse 1.5s ease-in-out infinite;
+    }
+    @keyframes loaderPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.7; }
+    }
+    .loader-bar {
+      width: 120px;
+      height: 3px;
+      background: var(--bg-elevated);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .loader-bar-inner {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      border-radius: 3px;
+      animation: loaderProgress 1.2s ease forwards;
+    }
+    @keyframes loaderProgress {
+      0% { width: 0%; }
+      100% { width: 100%; }
     }
     
     /* ========== 粒子背景 Canvas ========== */
@@ -79,6 +126,54 @@
       width: 0%;
       transition: width 0.1s linear;
       box-shadow: 0 0 10px var(--accent-glow);
+    }
+    
+    /* ========== 浮动装饰几何体 ========== */
+    .floating-shapes {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .float-shape {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      opacity: 0.15;
+      animation: floatShapeMove 20s ease-in-out infinite;
+    }
+    .float-shape:nth-child(1) {
+      width: 300px; height: 300px;
+      top: 10%; left: -5%;
+      animation-delay: 0s;
+      animation-duration: 25s;
+    }
+    .float-shape:nth-child(2) {
+      width: 200px; height: 200px;
+      top: 60%; right: -3%;
+      animation-delay: -5s;
+      animation-duration: 30s;
+      background: radial-gradient(circle, rgba(255,140,90,0.2) 0%, transparent 70%);
+    }
+    .float-shape:nth-child(3) {
+      width: 150px; height: 150px;
+      top: 30%; right: 20%;
+      animation-delay: -10s;
+      animation-duration: 22s;
+      background: radial-gradient(circle, rgba(255,217,61,0.15) 0%, transparent 70%);
+    }
+    .float-shape:nth-child(4) {
+      width: 250px; height: 250px;
+      bottom: 20%; left: 10%;
+      animation-delay: -15s;
+      animation-duration: 28s;
+    }
+    @keyframes floatShapeMove {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(30px, -40px) scale(1.1); }
+      50% { transform: translate(-20px, 20px) scale(0.9); }
+      75% { transform: translate(40px, 30px) scale(1.05); }
     }
     
     /* ========== 导航栏 ========== */
@@ -231,7 +326,7 @@
     .hero-text {
       opacity: 0;
       transform: translateY(40px);
-      animation: fadeUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      animation: fadeUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
     }
     
     @keyframes fadeUp {
@@ -373,7 +468,7 @@
       perspective: 1000px;
       opacity: 0;
       transform: translateX(60px) rotateY(-15deg);
-      animation: heroImgIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+      animation: heroImgIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
     }
     
     @keyframes heroImgIn {
@@ -647,6 +742,7 @@
       transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       opacity: 0;
       transform: translateY(40px) scale(0.95);
+      position: relative;
     }
     .showcase-card.revealed {
       opacity: 1;
@@ -656,6 +752,31 @@
       transform: translateY(-10px) scale(1.02);
       border-color: var(--accent);
       box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px var(--accent-glow);
+    }
+    /* 卡片边框流光 */
+    .showcase-card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 20px;
+      padding: 1px;
+      background: linear-gradient(135deg, transparent, transparent, var(--accent), var(--accent-light), transparent, transparent);
+      background-size: 300% 300%;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.5s;
+      animation: borderGlow 3s linear infinite;
+      pointer-events: none;
+    }
+    .showcase-card:hover::before {
+      opacity: 1;
+    }
+    @keyframes borderGlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
     .showcase-img {
       overflow: hidden;
@@ -697,6 +818,8 @@
       transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       opacity: 0;
       transform: translateY(40px);
+      position: relative;
+      overflow: hidden;
     }
     .dl-card.revealed {
       opacity: 1;
@@ -706,6 +829,27 @@
       transform: translateY(-8px);
       border-color: var(--accent);
       box-shadow: 0 20px 50px rgba(0,0,0,0.3), 0 0 30px var(--accent-glow);
+    }
+    /* DL 卡片流光 */
+    .dl-card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent 40%,
+        rgba(255,107,53,0.03) 50%,
+        transparent 60%
+      );
+      animation: cardShine 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes cardShine {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
     }
     .dl-icon-wrap {
       width: 80px;
@@ -717,12 +861,14 @@
       background: var(--bg-elevated);
       border-radius: 20px;
       transition: all 0.4s;
+      position: relative;
+      z-index: 1;
     }
     .dl-card:hover .dl-icon-wrap {
       transform: scale(1.1) rotate(5deg);
       background: var(--accent);
     }
-    .dl-card h3 { font-size: 22px; margin-bottom: 8px; }
+    .dl-card h3 { font-size: 22px; margin-bottom: 8px; position: relative; z-index: 1; }
     .dl-version {
       display: inline-block;
       background: var(--accent);
@@ -732,9 +878,11 @@
       font-size: 12px;
       font-weight: 700;
       margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
     }
-    .dl-note { color: var(--text-secondary); font-size: 14px; margin-bottom: 24px; }
-    .dl-size { display: block; margin-top: 12px; font-size: 12px; color: var(--text-secondary); }
+    .dl-note { color: var(--text-secondary); font-size: 14px; margin-bottom: 24px; position: relative; z-index: 1; }
+    .dl-size { display: block; margin-top: 12px; font-size: 12px; color: var(--text-secondary); position: relative; z-index: 1; }
     
     .history {
       max-width: 800px;
@@ -863,10 +1011,40 @@
       bottom: 0;
       left: 0;
       right: 0;
-      height: 100px;
-      opacity: 0.1;
+      height: 120px;
+      opacity: 0.15;
       pointer-events: none;
       z-index: 1;
+    }
+    
+    /* ========== 视差装饰层 ========== */
+    .parallax-orbs {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .parallax-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      will-change: transform;
+    }
+    .parallax-orb-1 {
+      width: 400px; height: 400px;
+      background: rgba(255,107,53,0.12);
+      top: 20%; left: -10%;
+    }
+    .parallax-orb-2 {
+      width: 300px; height: 300px;
+      background: rgba(255,140,90,0.08);
+      top: 50%; right: -5%;
+    }
+    .parallax-orb-3 {
+      width: 250px; height: 250px;
+      background: rgba(255,217,61,0.06);
+      bottom: 10%; left: 30%;
     }
     
     /* ========== 响应式 ========== */
@@ -882,6 +1060,7 @@
       .steps { flex-direction: column; gap: 40px; }
       .step-connector { display: none; }
       .nav-links { display: none; }
+      .floating-shapes { display: none; }
     }
     
     /* ========== 滚动条美化 ========== */
@@ -889,15 +1068,51 @@
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--bg-elevated); border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+    
+    /* ========== 涟漪动画 ========== */
+    @keyframes ripple {
+      to { transform: scale(4); opacity: 0; }
+    }
+    
+    /* ========== 打字机光标 ========== */
+    .typewriter-cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1em;
+      background: var(--accent);
+      margin-left: 4px;
+      animation: cursorBlink 1s step-end infinite;
+      vertical-align: text-bottom;
+    }
+    @keyframes cursorBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- 页面加载动画 -->
+  <div class="page-loader" id="pageLoader">
+    <img src="images/icon_256.png" alt="Juicy Player" class="loader-logo">
+    <div class="loader-bar">
+      <div class="loader-bar-inner"></div>
+    </div>
+  </div>
 
   <!-- 滚动进度条 -->
   <div class="scroll-progress" id="scrollProgress"></div>
   
   <!-- 鼠标跟随光斑 -->
   <div class="cursor-glow" id="cursorGlow"></div>
+  
+  <!-- 浮动装饰几何体 -->
+  <div class="floating-shapes">
+    <div class="float-shape"></div>
+    <div class="float-shape"></div>
+    <div class="float-shape"></div>
+    <div class="float-shape"></div>
+  </div>
   
   <!-- 粒子背景 -->
   <canvas id="particles-canvas"></canvas>
@@ -921,12 +1136,18 @@
   <!-- ========== Hero ========== -->
   <header class="hero" id="hero">
     <div class="hero-bg"></div>
+    <!-- 视差装饰 -->
+    <div class="parallax-orbs" id="parallaxOrbs">
+      <div class="parallax-orb parallax-orb-1" data-speed="0.3"></div>
+      <div class="parallax-orb parallax-orb-2" data-speed="-0.2"></div>
+      <div class="parallax-orb parallax-orb-3" data-speed="0.15"></div>
+    </div>
     <div class="container hero-content">
       <div class="hero-text">
         <div class="badge">🎵 桌面音乐播放器</div>
         <h1>
           <span>为你的音乐</span><br>
-          <span class="gradient-text" id="typewriter">带来极致体验</span>
+          <span class="gradient-text" id="typewriter"></span><span class="typewriter-cursor" id="typeCursor"></span>
         </h1>
         <p class="hero-desc">Juicy Player 是一款简洁优雅的桌面音频播放器，支持手机遥控操控。播放、暂停、切歌、调节音量——一切尽在指尖。</p>
         <div class="hero-actions">
@@ -1172,7 +1393,7 @@
           <circle cx="16" cy="16" r="6" fill="var(--accent)"/>
         </svg>
         <span>Juicy Player</span>
-      </a>
+      </div>
       <p>&copy; 2026 Juicy Player. All rights reserved.</p>
       <div class="footer-links">
         <a href="https://github.com/625673575/JuicyPlayer.github.io" target="_blank" rel="noopener">GitHub</a>
@@ -1181,11 +1402,42 @@
   </footer>
 
   <script>
-    // ========== 粒子系统 ==========
+    // ========== 页面加载动画 ==========
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('pageLoader').classList.add('done');
+      }, 1400);
+    });
+
+    // ========== 打字机效果 ==========
+    const typewriterText = '带来极致体验';
+    const typewriterEl = document.getElementById('typewriter');
+    const typeCursor = document.getElementById('typeCursor');
+    let typeIndex = 0;
+    let typeDelay = 1500; // 等待页面加载后开始
+    
+    function typeWriter() {
+      if (typeIndex < typewriterText.length) {
+        typewriterEl.textContent += typewriterText.charAt(typeIndex);
+        typeIndex++;
+        setTimeout(typeWriter, 100 + Math.random() * 50);
+      } else {
+        // 打字完成后，光标闪烁几次后消失
+        setTimeout(() => {
+          typeCursor.style.animation = 'none';
+          typeCursor.style.opacity = '0';
+        }, 2000);
+      }
+    }
+    setTimeout(typeWriter, typeDelay);
+
+    // ========== 增强粒子系统（鼠标互动） ==========
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
-    const particleCount = 60;
+    const particleCount = 80;
+    let mouseParticleX = -1000;
+    let mouseParticleY = -1000;
     
     function resizeCanvas() {
       canvas.width = window.innerWidth;
@@ -1194,6 +1446,16 @@
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
     
+    // 鼠标影响粒子
+    document.addEventListener('mousemove', (e) => {
+      mouseParticleX = e.clientX;
+      mouseParticleY = e.clientY;
+    });
+    document.addEventListener('mouseleave', () => {
+      mouseParticleX = -1000;
+      mouseParticleY = -1000;
+    });
+    
     class Particle {
       constructor() {
         this.reset();
@@ -1201,12 +1463,27 @@
       reset() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 0.5;
-        this.speedX = (Math.random() - 0.5) * 0.5;
-        this.speedY = (Math.random() - 0.5) * 0.5;
+        this.size = Math.random() * 2.5 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.6;
+        this.speedY = (Math.random() - 0.5) * 0.6;
         this.opacity = Math.random() * 0.5 + 0.1;
+        this.baseOpacity = this.opacity;
+        this.hue = Math.random() * 30 - 15; // 橙色附近偏移
       }
       update() {
+        // 鼠标排斥效果
+        const dx = this.x - mouseParticleX;
+        const dy = this.y - mouseParticleY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 150 && dist > 0) {
+          const force = (150 - dist) / 150;
+          this.x += (dx / dist) * force * 2;
+          this.y += (dy / dist) * force * 2;
+          this.opacity = Math.min(1, this.baseOpacity + force * 0.5);
+        } else {
+          this.opacity += (this.baseOpacity - this.opacity) * 0.05;
+        }
+        
         this.x += this.speedX;
         this.y += this.speedY;
         if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
@@ -1216,7 +1493,10 @@
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 107, 53, ${this.opacity})`;
+        const r = 255;
+        const g = 107 + this.hue;
+        const b = 53 + this.hue;
+        ctx.fillStyle = `rgba(${r}, ${Math.floor(g)}, ${Math.floor(b)}, ${this.opacity})`;
         ctx.fill();
       }
     }
@@ -1231,18 +1511,19 @@
         p.update();
         p.draw();
       });
-      // 连线
+      // 增强连线效果
       particles.forEach((p1, i) => {
         particles.slice(i + 1).forEach(p2 => {
           const dx = p1.x - p2.x;
           const dy = p1.y - p2.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 150) {
+          if (dist < 180) {
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(255, 107, 53, ${0.1 * (1 - dist / 150)})`;
-            ctx.lineWidth = 0.5;
+            const alpha = 0.12 * (1 - dist / 180);
+            ctx.strokeStyle = `rgba(255, 140, 90, ${alpha})`;
+            ctx.lineWidth = 0.8;
             ctx.stroke();
           }
         });
@@ -1266,13 +1547,23 @@
     });
     
     function animateGlow() {
-      glowX += (mouseX - glowX) * 0.1;
-      glowY += (mouseY - glowY) * 0.1;
+      glowX += (mouseX - glowX) * 0.08;
+      glowY += (mouseY - glowY) * 0.08;
       cursorGlow.style.left = glowX + 'px';
       cursorGlow.style.top = glowY + 'px';
       requestAnimationFrame(animateGlow);
     }
     animateGlow();
+    
+    // ========== 视差滚动效果 ==========
+    const parallaxOrbs = document.querySelectorAll('.parallax-orb');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      parallaxOrbs.forEach(orb => {
+        const speed = parseFloat(orb.dataset.speed) || 0.1;
+        orb.style.transform = `translateY(${scrollY * speed}px)`;
+      });
+    });
     
     // ========== 滚动进度条 ==========
     const scrollProgress = document.getElementById('scrollProgress');
@@ -1300,7 +1591,8 @@
           entry.target.classList.add('revealed');
           // 如果是步骤，同时激活连接线
           if (entry.target.hasAttribute('data-reveal')) {
-            const index = Array.from(document.querySelectorAll('[data-reveal]')).indexOf(entry.target);
+            const allReveals = Array.from(document.querySelectorAll('[data-reveal]'));
+            const index = allReveals.indexOf(entry.target);
             const connectors = document.querySelectorAll('[data-reveal-connector]');
             if (connectors[index - 1]) {
               setTimeout(() => connectors[index - 1].classList.add('revealed'), 400);
@@ -1322,9 +1614,11 @@
       const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
       heroImg.style.transform = `perspective(1000px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) scale(1.02)`;
+      heroImg.style.animation = 'none';
     });
     heroVisual.addEventListener('mouseleave', () => {
       heroImg.style.transform = '';
+      heroImg.style.animation = 'heroFloat 6s ease-in-out infinite';
     });
     
     // ========== 数字计数动画 ==========
@@ -1373,7 +1667,7 @@
       });
     });
     
-    // ========== 底部波形装饰 ==========
+    // ========== 增强音频波形装饰 ==========
     const waveCanvas = document.getElementById('waveformCanvas');
     const waveCtx = waveCanvas.getContext('2d');
     let waveTime = 0;
@@ -1381,29 +1675,37 @@
     function resizeWave() {
       const rect = waveCanvas.parentElement.getBoundingClientRect();
       waveCanvas.width = rect.width;
-      waveCanvas.height = 100;
+      waveCanvas.height = 120;
     }
     resizeWave();
     window.addEventListener('resize', resizeWave);
     
     function drawWave() {
       waveCtx.clearRect(0, 0, waveCanvas.width, waveCanvas.height);
-      const bars = 100;
+      const bars = 120;
       const barWidth = waveCanvas.width / bars;
       
       for (let i = 0; i < bars; i++) {
         const x = i * barWidth;
-        const height = Math.sin(i * 0.2 + waveTime) * 20 + 
-                       Math.sin(i * 0.05 + waveTime * 0.5) * 15 + 
-                       Math.cos(i * 0.1 + waveTime * 1.5) * 10 + 30;
-        const gradient = waveCtx.createLinearGradient(0, 50 - height/2, 0, 50 + height/2);
-        gradient.addColorStop(0, 'rgba(255,107,53,0.3)');
-        gradient.addColorStop(0.5, 'rgba(255,140,90,0.6)');
-        gradient.addColorStop(1, 'rgba(255,107,53,0.3)');
+        const height = Math.sin(i * 0.15 + waveTime) * 25 + 
+                       Math.sin(i * 0.05 + waveTime * 0.7) * 18 + 
+                       Math.cos(i * 0.08 + waveTime * 1.3) * 12 + 
+                       Math.sin(i * 0.3 + waveTime * 2) * 8 + 35;
+        const gradient = waveCtx.createLinearGradient(0, 60 - height/2, 0, 60 + height/2);
+        gradient.addColorStop(0, 'rgba(255,107,53,0.2)');
+        gradient.addColorStop(0.3, 'rgba(255,140,90,0.5)');
+        gradient.addColorStop(0.5, 'rgba(255,217,61,0.6)');
+        gradient.addColorStop(0.7, 'rgba(255,140,90,0.5)');
+        gradient.addColorStop(1, 'rgba(255,107,53,0.2)');
         waveCtx.fillStyle = gradient;
-        waveCtx.fillRect(x, 50 - height/2, barWidth - 1, height);
+        
+        const barH = Math.max(height, 4);
+        const radius = Math.min(barWidth / 2 - 0.5, 2);
+        waveCtx.beginPath();
+        waveCtx.roundRect(x, 60 - barH/2, barWidth - 1, barH, radius);
+        waveCtx.fill();
       }
-      waveTime += 0.05;
+      waveTime += 0.04;
       requestAnimationFrame(drawWave);
     }
     drawWave();
@@ -1427,15 +1729,6 @@
         setTimeout(() => ripple.remove(), 600);
       });
     });
-    
-    // 添加涟漪动画样式
-    const rippleStyle = document.createElement('style');
-    rippleStyle.textContent = `
-      @keyframes ripple {
-        to { transform: scale(4); opacity: 0; }
-      }
-    `;
-    document.head.appendChild(rippleStyle);
     
     // ========== 平滑滚动增强 ==========
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
