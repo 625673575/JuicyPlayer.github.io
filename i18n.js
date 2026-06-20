@@ -165,10 +165,33 @@
 
   /* ---- Init ---- */
   var currentLang = detectLang();
-  applyLang(currentLang);
+  
+  /* ---- Apply translations ---- */
+  function applyLang(lang) {
+    var dict = DICT[lang];
+    if (!dict) return;
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n');
+      if (dict[key] !== undefined) el.textContent = dict[key];
+    });
+    document.title = dict.pageTitle || document.title;
+    var meta = document.querySelector('meta[name="description"]');
+    if (meta && dict.heroDesc) meta.setAttribute('content', dict.heroDesc);
+    var btn = document.getElementById('langToggle');
+    if (btn) btn.textContent = lang === 'zh' ? 'EN' : '中文';
+    localStorage.setItem('jp-lang', lang);
+    
+    // 更新打字机效果
+    if (window.updateTypewriter) {
+      window.updateTypewriter(lang);
+    }
+  }
 
   /* ---- Toggle ---- */
   document.addEventListener('DOMContentLoaded', function () {
+    applyLang(currentLang);
+    
     var btn = document.getElementById('langToggle');
     if (btn) {
       btn.addEventListener('click', function () {
