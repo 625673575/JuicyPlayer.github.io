@@ -5,10 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Juicy Player — 优雅的桌面音乐播放器</title>
   <meta name="description" content="Juicy Player — A beautiful desktop audio player with wireless remote control from your phone.">
+  <link rel="canonical" href="https://625673575.github.io/JuicyPlayer.github.io/">
+
+  <!-- PWA / 移动端优化 -->
+  <meta name="theme-color" content="#0f0f1a">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="images/icon_256.png">
+
+  <!-- Open Graph（社交分享预览） -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Juicy Player">
+  <meta property="og:title" content="Juicy Player — 优雅的桌面音乐播放器">
+  <meta property="og:description" content="Juicy Player — A beautiful desktop audio player with wireless remote control from your phone.">
+  <meta property="og:url" content="https://625673575.github.io/JuicyPlayer.github.io/">
+  <meta property="og:image" content="https://625673575.github.io/JuicyPlayer.github.io/images/hero-screenshot.png">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:locale:alternate" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Juicy Player — 优雅的桌面音乐播放器">
+  <meta name="twitter:description" content="Juicy Player — A beautiful desktop audio player with wireless remote control from your phone.">
+  <meta name="twitter:image" content="https://625673575.github.io/JuicyPlayer.github.io/images/hero-screenshot.png">
+
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="features.css">
   
   <style>
     /* ========== 基础重置与变量 ========== */
@@ -1089,6 +1113,25 @@
       50% { opacity: 0; }
     }
   </style>
+
+  <!-- 结构化数据：帮助搜索引擎理解这是一个软件应用 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Juicy Player",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Windows, Android",
+    "url": "https://625673575.github.io/JuicyPlayer.github.io/",
+    "description": "A beautiful desktop audio player with wireless remote control from your phone.",
+    "image": "https://625673575.github.io/JuicyPlayer.github.io/images/hero-screenshot.png",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
 </head>
 <body>
 
@@ -1124,11 +1167,27 @@
         <img src="images/icon_256.png" alt="Juicy Player" class="nav-logo">
         <span>Juicy Player</span>
       </a>
-      <div class="nav-links">
-        <a href="#features" data-i18n="navFeatures">功能</a>
-        <a href="#showcase" data-i18n="navShowcase">预览</a>
-        <a href="#download" data-i18n="navDownload">下载</a>
-        <button id="langToggle" class="lang-btn" aria-label="Switch language">EN</button>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#features" data-i18n="navFeatures">功能</a>
+          <a href="#showcase" data-i18n="navShowcase">预览</a>
+          <a href="#download" data-i18n="navDownload">下载</a>
+        </div>
+        <div class="nav-extra">
+          <button id="searchToggle" class="icon-btn" aria-label="搜索 / 命令面板">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </button>
+          <button id="themeToggle" class="icon-btn" aria-label="切换深色 / 浅色" aria-pressed="false">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </button>
+          <div class="accent-picker" aria-label="强调色">
+            <button class="accent-dot active" data-accent="orange" style="background:#ff6b35" aria-label="橙色"></button>
+            <button class="accent-dot" data-accent="purple" style="background:#8b5cf6" aria-label="紫色"></button>
+            <button class="accent-dot" data-accent="green" style="background:#16c784" aria-label="绿色"></button>
+            <button class="accent-dot" data-accent="pink" style="background:#ff4d8d" aria-label="粉色"></button>
+          </div>
+          <button id="langToggle" class="lang-btn" aria-label="Switch language">EN</button>
+        </div>
       </div>
     </div>
   </nav>
@@ -1164,11 +1223,37 @@
         </div>
       </div>
       <div class="hero-visual" id="heroVisual">
-        <img src="images/showcase-windows.png" alt="Juicy Player 截图" class="hero-img" id="heroImg">
+        <div class="live-player" id="livePlayer">
+          <div class="lp-top">
+            <div class="lp-art" id="lpArt">♪</div>
+            <div class="lp-meta">
+              <div class="lp-track" id="lpTrack">Neon Tide <span class="lp-eq"><i></i><i></i><i></i></span></div>
+              <div class="lp-artist" id="lpArtist">Juicy Player Radio</div>
+            </div>
+          </div>
+          <div class="lp-bars" id="lpBars"></div>
+          <div class="lp-controls">
+            <button class="lp-play" id="lpPlay" aria-label="播放 / 暂停"></button>
+            <div class="lp-progress" id="lpProgress"><div class="lp-progress-fill" id="lpFill"></div></div>
+            <span class="lp-time" id="lpTime">0:00</span>
+          </div>
+          <div class="lp-vol">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            <input type="range" id="lpVol" min="0" max="100" value="80" aria-label="音量">
+          </div>
+        </div>
       </div>
     </div>
     <canvas class="waveform-decoration" id="waveformCanvas"></canvas>
   </header>
+
+  <!-- ========== Format marquee ========== -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span><b>MP3</b> · FLAC · WAV · OGG · AAC · M4A · OPUS · AIFF · APE</span>
+      <span><b>MP3</b> · FLAC · WAV · OGG · AAC · M4A · OPUS · AIFF · APE</span>
+    </div>
+  </div>
 
   <!-- ========== Player Download (Tab) ========== -->
   <section class="app-dl" id="app">
@@ -1384,6 +1469,38 @@
     </div>
   </section>
 
+  <!-- ========== FAQ ========== -->
+  <section class="howto" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="faqTag">常见问题</span>
+        <h2 data-i18n="faqTitle">你可能想问</h2>
+      </div>
+      <div class="faq">
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false"><span data-i18n="faqQ1">手机和电脑连不上怎么办？</span><span class="faq-ico">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner" data-i18n="faqA1">先确认电脑和手机连的是同一个 Wi-Fi，且电脑端 Juicy Player 正在运行。遥控器会在局域网内自动发现播放器；若仍搜不到，多半是系统防火墙拦了它，到防火墙设置里允许 Juicy Player 通过专用网络即可。</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false"><span data-i18n="faqQ2">支持哪些音频格式？</span><span class="faq-ico">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner" data-i18n="faqA2">常见格式基本全覆盖：MP3、FLAC、WAV、OGG、AAC、M4A、OPUS、AIFF、APE。无损格式（FLAC / APE / WAV）原样输出，不做转码，保留细节。</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false"><span data-i18n="faqQ3">Juicy Player 收费吗？</span><span class="faq-ico">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner" data-i18n="faqA3">完全免费，无广告、无内购。我们也不收集你的听歌记录——播放历史只存在你自己的电脑上。</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false"><span data-i18n="faqQ4">遥控器需要注册账号吗？</span><span class="faq-ico">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner" data-i18n="faqA4">不需要。遥控走纯局域网点对点连接，数据不出你的路由器，自然也用不着登录。</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false"><span data-i18n="faqQ5">macOS 版什么时候出？</span><span class="faq-ico">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner" data-i18n="faqA5">正在开发中。给 GitHub 仓库点个 Watch / Star，版本一发布你就能第一时间收到通知。</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ========== Footer ========== -->
   <footer>
     <div class="container footer-inner">
@@ -1400,6 +1517,20 @@
       </div>
     </div>
   </footer>
+
+  <!-- ========== Command palette ========== -->
+  <div class="palette-backdrop" id="palette" role="dialog" aria-modal="true" aria-label="命令面板">
+    <div class="palette">
+      <input class="palette-input" id="paletteInput" type="text" placeholder="搜索功能或跳转…  (Ctrl/⌘ + K)" autocomplete="off" aria-label="搜索">
+      <div class="palette-list" id="paletteList"></div>
+      <div class="palette-hint">
+        <span><kbd>↑</kbd><kbd>↓</kbd> 选择</span>
+        <span><kbd>↵</kbd> 跳转</span>
+        <span><kbd>esc</kbd> 关闭</span>
+        <span><kbd>⌘</kbd>/<kbd>Ctrl</kbd> <kbd>K</kbd> 打开</span>
+      </div>
+    </div>
+  </div>
 
   <script>
     // ========== 页面加载动画 ==========
@@ -1628,21 +1759,23 @@
     document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
     document.querySelectorAll('[data-reveal-connector]').forEach(el => revealObserver.observe(el));
     
-    // ========== Hero 图片 3D 倾斜 ==========
+    // ========== Hero 卡片 3D 倾斜（作用于真实播放器卡片） ==========
     const heroVisual = document.getElementById('heroVisual');
-    const heroImg = document.getElementById('heroImg');
-    
-    heroVisual.addEventListener('mousemove', (e) => {
-      const rect = heroVisual.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      heroImg.style.transform = `perspective(1000px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) scale(1.02)`;
-      heroImg.style.animation = 'none';
-    });
-    heroVisual.addEventListener('mouseleave', () => {
-      heroImg.style.transform = '';
-      heroImg.style.animation = 'heroFloat 6s ease-in-out infinite';
-    });
+    const heroCard = document.getElementById('livePlayer');
+
+    if (heroVisual && heroCard) {
+      heroVisual.addEventListener('mousemove', (e) => {
+        const rect = heroVisual.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        heroCard.style.transform = `perspective(1000px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) scale(1.02)`;
+        heroCard.style.animation = 'none';
+      });
+      heroVisual.addEventListener('mouseleave', () => {
+        heroCard.style.transform = '';
+        heroCard.style.animation = '';
+      });
+    }
     
     // ========== 数字计数动画 ==========
     const counters = document.querySelectorAll('.counter');
@@ -1692,8 +1825,9 @@
     
     // ========== 增强音频波形装饰 ==========
     const waveCanvas = document.getElementById('waveformCanvas');
-    const waveCtx = waveCanvas.getContext('2d');
-    let waveTime = 0;
+    if (waveCanvas) {
+      const waveCtx = waveCanvas.getContext('2d');
+      let waveTime = 0;
     
     function resizeWave() {
       const rect = waveCanvas.parentElement.getBoundingClientRect();
@@ -1732,6 +1866,7 @@
       requestAnimationFrame(drawWave);
     }
     drawWave();
+    }
     
     // ========== 按钮涟漪效果 ==========
     document.querySelectorAll('.btn').forEach(btn => {
@@ -1765,5 +1900,6 @@
     });
   </script>
   <script src="i18n.js"></script>
+  <script src="features.js"></script>
 </body>
 </html>

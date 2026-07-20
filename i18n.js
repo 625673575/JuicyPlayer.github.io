@@ -68,7 +68,24 @@
       step2Desc: '在 Android 手机上下载安装 Juicy Remoter APK，授予局域网权限。',
       step3Title: '连接 & 享受',
       step3Desc: '确保电脑和手机在同一 Wi-Fi 下，打开遥控器自动连接播放器，开始无线操控。',
-      footerRights: 'All rights reserved.'
+      footerRights: 'All rights reserved.',
+      vizTag: '声音可视化',
+      vizTitle: '看见每一个音符',
+      vizDesc: '播放器内置实时频谱分析。点下方按钮，亲耳（和亲眼）感受波形如何随声音跃动——声音完全在浏览器里实时合成，不联网、不下载。',
+      vizNote: '纯演示音 · 建议戴耳机',
+      faqTag: '常见问题',
+      faqTitle: '你可能想问',
+      faqQ1: '手机和电脑连不上怎么办？',
+      faqA1: '先确认电脑和手机连的是同一个 Wi-Fi，且电脑端 Juicy Player 正在运行。遥控器会在局域网内自动发现播放器；若仍搜不到，多半是系统防火墙拦了它，到防火墙设置里允许 Juicy Player 通过专用网络即可。',
+      faqQ2: '支持哪些音频格式？',
+      faqA2: '常见格式基本全覆盖：MP3、FLAC、WAV、OGG、AAC、M4A、OPUS、AIFF、APE。无损格式（FLAC / APE / WAV）原样输出，不做转码，保留细节。',
+      faqQ3: 'Juicy Player 收费吗？',
+      faqA3: '完全免费，无广告、无内购。我们也不收集你的听歌记录——播放历史只存在你自己的电脑上。',
+      faqQ4: '遥控器需要注册账号吗？',
+      faqA4: '不需要。遥控走纯局域网点对点连接，数据不出你的路由器，自然也用不着登录。',
+      faqQ5: 'macOS 版什么时候出？',
+      faqA5: '正在开发中。给 GitHub 仓库点个 Watch / Star，版本一发布你就能第一时间收到通知。',
+      paletteEmpty: '没有找到结果'
     },
     en: {
       pageTitle: 'JuicyPlayer — Elegant Desktop Music Player',
@@ -133,7 +150,24 @@
       step2Desc: 'Download and install Juicy Remoter APK on your Android phone, grant LAN permission.',
       step3Title: 'Connect & Enjoy',
       step3Desc: 'Make sure your PC and phone are on the same Wi-Fi. Open the remote — it auto-connects to the player.',
-      footerRights: 'All rights reserved.'
+      footerRights: 'All rights reserved.',
+      vizTag: 'Sound Visualization',
+      vizTitle: 'See every note',
+      vizDesc: 'Real-time spectrum analysis built in. Hit play and watch the waveform dance to the sound — fully synthesized in your browser, no download, no network.',
+      vizNote: 'Synthesized demo · headphones recommended',
+      faqTag: 'FAQ',
+      faqTitle: 'Questions, answered',
+      faqQ1: 'My phone can\'t connect to the PC?',
+      faqA1: 'Make sure both are on the same Wi-Fi and Juicy Player is running on the PC. The remote auto-discovers on the LAN; if it still fails, your firewall is likely blocking it — allow Juicy Player through private networks.',
+      faqQ2: 'Which formats are supported?',
+      faqA2: 'All common formats: MP3, FLAC, WAV, OGG, AAC, M4A, OPUS, AIFF, APE. Lossless formats (FLAC / APE / WAV) play bit-perfect, no transcoding.',
+      faqQ3: 'Is Juicy Player free?',
+      faqA3: 'Completely free — no ads, no in-app purchases. We don\'t track what you listen to either; your history stays on your own PC.',
+      faqQ4: 'Does the remote need an account?',
+      faqA4: 'No. It\'s pure LAN peer-to-peer — your data never leaves your router, so there\'s nothing to log into.',
+      faqQ5: 'When is the macOS version coming?',
+      faqA5: 'In development. Watch / Star the GitHub repo and you\'ll be notified the moment it ships.',
+      paletteEmpty: 'No results'
     }
   };
 
@@ -180,6 +214,18 @@
     if (meta && dict.heroDesc) meta.setAttribute('content', dict.heroDesc);
     var btn = document.getElementById('langToggle');
     if (btn) btn.textContent = lang === 'zh' ? 'EN' : '中文';
+    // 同步 Open Graph / Twitter 社交元信息
+    var ogTitle = document.querySelector('meta[property="og:title"]');
+    var ogDesc = document.querySelector('meta[property="og:description"]');
+    var twTitle = document.querySelector('meta[name="twitter:title"]');
+    var twDesc = document.querySelector('meta[name="twitter:description"]');
+    var ogLocale = document.querySelector('meta[property="og:locale"]');
+    if (ogTitle) ogTitle.setAttribute('content', dict.pageTitle || ogTitle.getAttribute('content'));
+    if (ogDesc && dict.heroDesc) ogDesc.setAttribute('content', dict.heroDesc);
+    if (twTitle) twTitle.setAttribute('content', dict.pageTitle || twTitle.getAttribute('content'));
+    if (twDesc && dict.heroDesc) twDesc.setAttribute('content', dict.heroDesc);
+    if (ogLocale) ogLocale.setAttribute('content', lang === 'zh' ? 'zh_CN' : 'en_US');
+
     localStorage.setItem('jp-lang', lang);
     
     // 更新打字机效果

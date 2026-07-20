@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://625673575.github.io/JuicyPlayer.github.io/sitemap.xml

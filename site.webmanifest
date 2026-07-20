@@ -1,0 +1,20 @@
+{
+  "name": "Juicy Player",
+  "short_name": "JuicyPlayer",
+  "description": "A beautiful desktop audio player with wireless remote control from your phone.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f0f1a",
+  "theme_color": "#ff6b35",
+  "lang": "zh-CN",
+  "categories": ["music", "multimedia"],
+  "icons": [
+    {
+      "src": "images/icon_256.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
