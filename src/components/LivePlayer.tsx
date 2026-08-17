@@ -1,15 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-
-const ICON_PLAY = (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M8 5v14l11-7z" />
-  </svg>
-)
-const ICON_PAUSE = (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M6 5h4v14H6zM14 5h4v14h-4z" />
-  </svg>
-)
+import { motion } from 'framer-motion'
+import { Play, Pause, Volume2 } from 'lucide-react'
 
 const BAR_COUNT = 28
 const DURATION = 214 // 秒
@@ -82,14 +73,16 @@ export default function LivePlayer() {
         ))}
       </div>
       <div className="lp-controls">
-        <button
+        <motion.button
           className="lp-play"
           id="lpPlay"
           aria-label="播放 / 暂停"
           onClick={() => setPlaying((p) => !p)}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
         >
-          {playing ? ICON_PAUSE : ICON_PLAY}
-        </button>
+          {playing ? <Pause width={18} height={18} /> : <Play width={18} height={18} />}
+        </motion.button>
         <div className="lp-progress" id="lpProgress">
           <div
             className="lp-progress-fill"
@@ -102,10 +95,7 @@ export default function LivePlayer() {
         </span>
       </div>
       <div className="lp-vol">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M11 5 6 9H2v6h4l5 4z" />
-          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
-        </svg>
+        <Volume2 width={18} height={18} />
         <input
           type="range"
           id="lpVol"

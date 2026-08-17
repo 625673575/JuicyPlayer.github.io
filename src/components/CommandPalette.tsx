@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Search, CornerDownLeft, ArrowUpDown } from 'lucide-react'
 
 interface PaletteItem {
   label: string
@@ -23,6 +25,16 @@ interface CommandPaletteProps {
   onToggleTheme: () => void
 }
 
+const backdropVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+}
+
+const panelVariants = {
+  hidden: { opacity: 0, y: -12, scale: 0.96 },
+  visible: { opacity: 1, y: 0, scale: 1 },
+}
+
 export default function CommandPalette({ open, onClose, onToggleLang, onToggleTheme }: CommandPaletteProps) {
   const [query, setQuery] = useState('')
   const [activeIdx, setActiveIdx] = useState(0)
@@ -34,7 +46,6 @@ export default function CommandPalette({ open, onClose, onToggleLang, onToggleTh
     return q ? ITEMS.filter((it) => it.label.toLowerCase().includes(q)) : ITEMS
   }, [query])
 
-  // 打开时聚焦输入框，过滤变化时重置选中项
   useEffect(() => {
     if (open) {
       setQuery('')
@@ -46,12 +57,6 @@ export default function CommandPalette({ open, onClose, onToggleLang, onToggleTh
   useEffect(() => {
     setActiveIdx(0)
   }, [filtered.length])
-
-  // 全局 Ctrl/Cmd+K 快捷键
-  useEffect(() => {
-    // 打开/关闭由父组件控制，这里不重复绑定
-    return () => {}
-  }, [])
 
   const activate = (item: PaletteItem) => {
     onClose()
@@ -78,7 +83,6 @@ export default function CommandPalette({ open, onClose, onToggleLang, onToggleTh
     }
   }
 
-  // 滚动选中项到可视区域
   useEffect(() => {
     if (!listRef.current) return
     const active = listRef.current.children[activeIdx] as HTMLElement | undefined
@@ -86,63 +90,75 @@ export default function CommandPalette({ open, onClose, onToggleLang, onToggleTh
   }, [activeIdx])
 
   return (
-    <div
-      className={`palette-backdrop${open ? ' show' : ''}`}
-      id="palette"
-      role="dialog"
-      aria-modal="true"
-      aria-label="命令面板"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose()
-      }}
-    >
-      <div className="palette">
-        <input
-          ref={inputRef}
-          className="palette-input"
-          id="paletteInput"
-          type="text"
-          placeholder="搜索功能或跳转…  (Ctrl/⌘ + K)"
-          autoComplete="off"
-          aria-label="搜索"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={handleKeyDown}
-        />
-        <div className="palette-list" id="paletteList" ref={listRef}>
-          {filtered.length === 0 ? (
-            <div className="palette-empty" data-i18n="paletteEmpty">
-              没有找到结果
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          className="palette-backdrop show"
+          id="palette"
+          role="dialog"
+          aria-modal="true"
+          aria-label="命令面板"
+          variants={backdropVariants}
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+          transition={{ duration: 0.2 }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) onClose()
+          }}
+        >
+          <motion.div
+            className="palette"
+            variants={panelVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+          >
+            <div style={{ position: 'relative' }}>
+              <Search width={18} style={{ position: 'absolute', left: 20, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)', pointerEvents: 'none' }} />
+              <input
+                ref={inputRef}
+                className="palette-input"
+                id="paletteInput"
+                type="text"
+                placeholder="搜索功能或跳转…"
+                autoComplete="off"
+                aria-label="搜索"
+                style={{ paddingLeft: 46 }}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={handleKeyDown}
+              />
             </div>
-          ) : (
-            filtered.map((item, idx) => (
-              <div
-                key={item.label}
-                className={`palette-item${idx === activeIdx ? ' active' : ''}`}
-                onClick={() => activate(item)}
-              >
-                <span className="pi-ico">{item.icon}</span>
-                <span>{item.label}</span>
-              </div>
-            ))
-          )}
-        </div>
-        <div className="palette-hint">
-          <span>
-            <kbd>↑</kbd>
-            <kbd>↓</kbd> 选择
-          </span>
-          <span>
-            <kbd>↵</kbd> 跳转
-          </span>
-          <span>
-            <kbd>esc</kbd> 关闭
-          </span>
-          <span>
-            <kbd>⌘</kbd>/<kbd>Ctrl</kbd> <kbd>K</kbd> 打开
-          </span>
-        </div>
-      </div>
-    </div>
+            <div className="palette-list" id="paletteList" ref={listRef}>
+              {filtered.length === 0 ? (
+                <div className="palette-empty" data-i18n="paletteEmpty">
+                  没有找到结果
+                </div>
+              ) : (
+                filtered.map((item, idx) => (
+                  <div
+                    key={item.label}
+                    className={`palette-item${idx === activeIdx ? ' active' : ''}`}
+                    onClick={() => activate(item)}
+                    onMouseEnter={() => setActiveIdx(idx)}
+                  >
+                    <span className="pi-ico">{item.icon}</span>
+                    <span>{item.label}</span>
+                  </div>
+                ))
+              )}
+            </div>
+            <div className="palette-hint">
+              <span><ArrowUpDown width={12} height={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> 选择</span>
+              <span><CornerDownLeft width={12} height={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> 跳转</span>
+              <span><kbd>esc</kbd> 关闭</span>
+              <span><kbd>⌘</kbd>/<kbd>Ctrl</kbd> <kbd>K</kbd> 打开</span>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   )
 }

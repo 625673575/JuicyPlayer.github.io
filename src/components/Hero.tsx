@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { Download } from 'lucide-react'
 import { Lang, TYPEWRITER_TEXTS } from '../i18n/dictionary'
 import LivePlayer from './LivePlayer'
 import WaveformDecoration from './WaveformDecoration'
@@ -14,7 +16,6 @@ function useTypewriter(lang: Lang) {
   const timerRef = useRef<ReturnType<typeof setTimeout>>()
 
   useEffect(() => {
-    // 语言切换时重置
     setText('')
     indexRef.current = 0
     if (timerRef.current) clearTimeout(timerRef.current)
@@ -45,18 +46,10 @@ export default function Hero({ lang }: HeroProps) {
   const orbsRef = useRef<(HTMLDivElement | null)[]>([])
 
   // 视差圆球
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY
-      orbsRef.current.forEach((orb) => {
-        if (!orb) return
-        const speed = parseFloat(orb.dataset.speed || '0.1')
-        orb.style.transform = `translateY(${scrollY * speed}px)`
-      })
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  const { scrollY } = useScroll()
+  const orb1Y = useTransform(scrollY, [0, 500], [0, 150])
+  const orb2Y = useTransform(scrollY, [0, 500], [0, -100])
+  const orb3Y = useTransform(scrollY, [0, 500], [0, 75])
 
   // 3D 倾斜效果
   useEffect(() => {
@@ -84,44 +77,82 @@ export default function Hero({ lang }: HeroProps) {
     }
   }, [])
 
+  const textVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0 },
+  }
+
+  const visualVariants = {
+    hidden: { opacity: 0, x: 60, rotateY: -15 },
+    visible: { opacity: 1, x: 0, rotateY: 0 },
+  }
+
   return (
     <header className="hero" id="hero">
       <div className="hero-bg" />
       <div className="parallax-orbs" id="parallaxOrbs">
-        <div className="parallax-orb parallax-orb-1" data-speed="0.3" ref={(el) => { orbsRef.current[0] = el }} />
-        <div className="parallax-orb parallax-orb-2" data-speed="-0.2" ref={(el) => { orbsRef.current[1] = el }} />
-        <div className="parallax-orb parallax-orb-3" data-speed="0.15" ref={(el) => { orbsRef.current[2] = el }} />
+        <motion.div className="parallax-orb parallax-orb-1" style={{ y: orb1Y }} ref={(el) => { orbsRef.current[0] = el }} />
+        <motion.div className="parallax-orb parallax-orb-2" style={{ y: orb2Y }} ref={(el) => { orbsRef.current[1] = el }} />
+        <motion.div className="parallax-orb parallax-orb-3" style={{ y: orb3Y }} ref={(el) => { orbsRef.current[2] = el }} />
       </div>
       <div className="container hero-content">
-        <div className="hero-text">
-          <div className="badge" data-i18n="heroBadge">
+        <motion.div
+          className="hero-text"
+          variants={textVariants}
+          initial="hidden"
+          animate="visible"
+          transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1], delay: 0.3 }}
+        >
+          <motion.div
+            className="badge"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            data-i18n="heroBadge"
+          >
             🎵 桌面音乐播放器
-          </div>
-          <h1>
+          </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+          >
             <span data-i18n="heroTitle1">为你的音乐</span>
             <br />
             <span className="gradient-text" id="typewriter">
               {typewriterText}
             </span>
             <span className="typewriter-cursor" id="typeCursor" />
-          </h1>
-          <p className="hero-desc" data-i18n="heroDesc">
+          </motion.h1>
+          <motion.p
+            className="hero-desc"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
+            data-i18n="heroDesc"
+          >
             Juicy Player 是一款简洁优雅的桌面音频播放器，支持手机遥控操控。播放、暂停、切歌、调节音量——一切尽在指尖。
-          </p>
-          <div className="hero-actions">
+          </motion.p>
+          <motion.div
+            className="hero-actions"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.1 }}
+          >
             <a href="#app" className="btn btn-lg btn-primary">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
-              </svg>
+              <Download width={20} height={20} />
               <span data-i18n="heroDownload">免费下载</span>
             </a>
             <a href="#showcase" className="btn btn-lg btn-ghost" data-i18n="heroLearn">
               了解更多
             </a>
-          </div>
-          <div className="hero-stats">
+          </motion.div>
+          <motion.div
+            className="hero-stats"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 1.3 }}
+          >
             <div>
               <strong>1</strong>
               <span data-i18n="statVersion">版本</span>
@@ -134,13 +165,21 @@ export default function Hero({ lang }: HeroProps) {
               <strong>Wi-Fi</strong>
               <span data-i18n="statConn">遥控</span>
             </div>
-          </div>
-        </div>
-        <div className="hero-visual" id="heroVisual" ref={heroVisualRef}>
+          </motion.div>
+        </motion.div>
+        <motion.div
+          className="hero-visual"
+          id="heroVisual"
+          ref={heroVisualRef}
+          variants={visualVariants}
+          initial="hidden"
+          animate="visible"
+          transition={{ duration: 1, ease: [0.4, 0, 0.2, 1], delay: 0.5 }}
+        >
           <div ref={livePlayerRef}>
             <LivePlayer />
           </div>
-        </div>
+        </motion.div>
       </div>
       <WaveformDecoration />
     </header>

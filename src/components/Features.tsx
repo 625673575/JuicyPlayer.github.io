@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 
 interface Feature {
   img: string
@@ -36,28 +36,22 @@ const FEATURES: Feature[] = [
   },
 ]
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 60 },
+  visible: { opacity: 1, y: 0 },
+}
+
 export default function Features() {
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([])
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('revealed')
-        })
-      },
-      { threshold: 0.15, rootMargin: '0px 0px -50px 0px' },
-    )
-    cardsRef.current.forEach((el) => {
-      if (el) observer.observe(el)
-    })
-    return () => observer.disconnect()
-  }, [])
-
   return (
     <section className="features" id="features">
       <div className="container">
-        <div className="section-header">
+        <motion.div
+          className="section-header"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '0px 0px -50px 0px' }}
+          transition={{ duration: 0.6 }}
+        >
           <span className="section-tag" data-i18n="featureTag">
             核心功能
           </span>
@@ -65,14 +59,17 @@ export default function Features() {
           <p className="section-desc" data-i18n="featureDesc">
             简洁、高效、优雅的桌面音乐体验
           </p>
-        </div>
+        </motion.div>
         <div className="feature-grid">
           {FEATURES.map((f, i) => (
-            <div
+            <motion.div
               key={i}
               className={`feature-card${i % 2 === 1 ? ' feature-card-reverse' : ''}`}
-              data-reveal
-              ref={(el) => { cardsRef.current[i] = el }}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '0px 0px -50px 0px' }}
+              transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
             >
               <div className="feature-img">
                 <img src={f.img} alt={f.alt} className="feature-img-src" />
@@ -81,7 +78,7 @@ export default function Features() {
                 <h3 data-i18n={f.titleKey}>{f.title}</h3>
                 <p data-i18n={f.descKey}>{f.desc}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

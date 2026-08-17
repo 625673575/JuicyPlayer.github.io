@@ -289,14 +289,6 @@ body {
   position: relative;
   z-index: 2;
 }
-.hero-text {
-  opacity: 0;
-  transform: translateY(40px);
-  animation: fadeUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
-}
-@keyframes fadeUp {
-  to { opacity: 1; transform: translateY(0); }
-}
 .badge {
   display: inline-flex;
   align-items: center;
@@ -417,12 +409,6 @@ body {
 .hero-visual {
   position: relative;
   perspective: 1000px;
-  opacity: 0;
-  transform: translateX(60px) rotateY(-15deg);
-  animation: heroImgIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
-}
-@keyframes heroImgIn {
-  to { opacity: 1; transform: translateX(0) rotateY(0); }
 }
 .hero-img {
   width: 100%;
@@ -529,11 +515,7 @@ section {
   padding: 40px;
   backdrop-filter: blur(10px);
 }
-.app-panel.active { display: block; animation: panelIn 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-@keyframes panelIn {
-  from { opacity: 0; transform: translateY(20px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
+.app-panel.active { display: block; }
 .app-panel-inner {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
@@ -607,13 +589,6 @@ section {
   grid-template-columns: 1fr 1fr;
   gap: 60px;
   align-items: center;
-  opacity: 0;
-  transform: translateY(60px);
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.feature-card.revealed {
-  opacity: 1;
-  transform: translateY(0);
 }
 .feature-card-reverse { direction: rtl; }
 .feature-card-reverse > * { direction: ltr; }
@@ -668,17 +643,9 @@ section {
   border: 1px solid var(--border);
   border-radius: 20px;
   overflow: hidden;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0;
-  transform: translateY(40px) scale(0.95);
   position: relative;
 }
-.showcase-card.revealed {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
 .showcase-card:hover {
-  transform: translateY(-10px) scale(1.02);
   border-color: var(--accent);
   box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px var(--accent-glow);
 }
@@ -729,18 +696,10 @@ section {
   border-radius: 24px;
   padding: 40px;
   text-align: center;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0;
-  transform: translateY(40px);
   position: relative;
   overflow: hidden;
 }
-.dl-card.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
 .dl-card:hover {
-  transform: translateY(-8px);
   border-color: var(--accent);
   box-shadow: 0 20px 50px rgba(0,0,0,0.3), 0 0 30px var(--accent-glow);
 }
@@ -822,11 +781,7 @@ section {
   flex: 1;
   text-align: center;
   padding: 0 20px;
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.step.revealed { opacity: 1; transform: translateY(0); }
 .step-num {
   width: 60px;
   height: 60px;
@@ -853,12 +808,8 @@ section {
   background: linear-gradient(90deg, var(--accent), var(--accent-light));
   margin-top: 30px;
   position: relative;
-  opacity: 0;
-  transform: scaleX(0);
   transform-origin: left;
-  transition: all 0.6s ease 0.3s;
 }
-.step-connector.revealed { opacity: 1; transform: scaleX(1); }
 .step-connector::after {
   content: '';
   position: absolute;

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 
 const ITEMS = [
   {
@@ -27,47 +27,45 @@ const ITEMS = [
   },
 ]
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.95 },
+  visible: { opacity: 1, y: 0, scale: 1 },
+}
+
 export default function Showcase() {
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([])
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('revealed')
-        })
-      },
-      { threshold: 0.15, rootMargin: '0px 0px -50px 0px' },
-    )
-    cardsRef.current.forEach((el) => {
-      if (el) observer.observe(el)
-    })
-    return () => observer.disconnect()
-  }, [])
-
   return (
     <section className="showcase" id="showcase">
       <div className="container">
-        <div className="section-header">
+        <motion.div
+          className="section-header"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '0px 0px -50px 0px' }}
+          transition={{ duration: 0.6 }}
+        >
           <span className="section-tag" data-i18n="showcaseTag">
             产品预览
           </span>
           <h2 data-i18n="showcaseTitle">精致的界面设计</h2>
-        </div>
+        </motion.div>
         <div className="showcase-grid">
           {ITEMS.map((item, i) => (
-            <div
+            <motion.div
               key={i}
               className="showcase-card"
-              data-reveal
-              ref={(el) => { cardsRef.current[i] = el }}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              whileHover={{ y: -10, scale: 1.02 }}
+              viewport={{ once: true, margin: '0px 0px -50px 0px' }}
+              transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
             >
               <div className="showcase-img">
                 <img src={item.img} alt={item.alt} className="showcase-img-src" />
               </div>
               <h3 data-i18n={item.titleKey}>{item.title}</h3>
               <p data-i18n={item.descKey}>{item.desc}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

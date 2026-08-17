@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
+import { Search, Moon, Sun } from 'lucide-react'
 import { Accent } from '../hooks/useAccent'
 import { Lang } from '../i18n/dictionary'
 
@@ -37,7 +39,13 @@ export default function Navbar({
   }, [])
 
   return (
-    <nav className={`navbar${scrolled ? ' scrolled' : ''}`} id="navbar">
+    <motion.nav
+      className={`navbar${scrolled ? ' scrolled' : ''}`}
+      id="navbar"
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
+    >
       <div className="nav-inner">
         <a href="#" className="nav-brand">
           <img src="/JuicyPlayer.github.io/images/icon_256.png" alt="Juicy Player" className="nav-logo" />
@@ -50,50 +58,57 @@ export default function Navbar({
             <a href="#download" data-i18n="navDownload">下载</a>
           </div>
           <div className="nav-extra">
-            <button
-              id="searchToggle"
+            <motion.button
               className="icon-btn"
               aria-label="搜索 / 命令面板"
               onClick={onOpenPalette}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="11" cy="11" r="7" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
-            </button>
-            <button
-              id="themeToggle"
+              <Search width={18} height={18} />
+            </motion.button>
+            <motion.button
               className="icon-btn"
               aria-label="切换深色 / 浅色"
               aria-pressed={theme === 'light' ? 'true' : 'false'}
               onClick={onToggleTheme}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-              </svg>
-            </button>
+              <motion.div
+                key={theme}
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                {theme === 'light' ? <Sun width={18} height={18} /> : <Moon width={18} height={18} />}
+              </motion.div>
+            </motion.button>
             <div className="accent-picker" aria-label="强调色">
               {ACCENTS.map((a) => (
-                <button
+                <motion.button
                   key={a.id}
                   className={`accent-dot${accent === a.id ? ' active' : ''}`}
                   style={{ background: a.color }}
                   aria-label={a.label}
                   onClick={() => onChangeAccent(a.id)}
+                  whileHover={{ scale: 1.3 }}
+                  whileTap={{ scale: 0.9 }}
                 />
               ))}
             </div>
-            <button
-              id="langToggle"
+            <motion.button
               className="lang-btn"
               aria-label="Switch language"
               onClick={onToggleLang}
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
             >
               {lang === 'zh' ? 'EN' : '中文'}
-            </button>
+            </motion.button>
           </div>
         </div>
       </div>
-    </nav>
+    </motion.nav>
   )
 }
