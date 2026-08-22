@@ -15,10 +15,10 @@ interface NavbarProps {
 }
 
 const ACCENTS: { id: Accent; color: string; label: string }[] = [
-  { id: 'red', color: '#ef233c', label: '红色' },
-  { id: 'crimson', color: '#dc143c', label: '深红' },
-  { id: 'pink', color: '#ff4d8d', label: '粉色' },
-  { id: 'purple', color: '#8b5cf6', label: '紫色' },
+  { id: 'lime', color: '#ccff00', label: '青柠' },
+  { id: 'emerald', color: '#10b981', label: '翡翠' },
+  { id: 'cyan', color: '#22d3ee', label: '青色' },
+  { id: 'violet', color: '#a78bfa', label: '紫罗兰' },
 ]
 
 export default function Navbar({

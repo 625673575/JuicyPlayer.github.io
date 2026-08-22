@@ -4,22 +4,22 @@
 
 :root { --ease: cubic-bezier(.4, 0, .2, 1); }
 
-/* ---------- Accent palettes (stay on dark base) ---------- */
-[data-accent="red"] {
-  --accent: #ef233c; --accent-light: #ff4d6a;
-  --accent-glow: rgba(239, 35, 60, .4); --accent-glow-strong: rgba(239, 35, 60, .6);
+/* ---------- Accent palettes（黑曜石 + 霓虹） ---------- */
+[data-accent="lime"] {
+  --accent: #ccff00; --accent-light: #e0ff66;
+  --accent-glow: rgba(204, 255, 0, .35); --accent-glow-strong: rgba(204, 255, 0, .55);
 }
-[data-accent="crimson"] {
-  --accent: #dc143c; --accent-light: #ff2d55;
-  --accent-glow: rgba(220, 20, 60, .4); --accent-glow-strong: rgba(220, 20, 60, .6);
+[data-accent="emerald"] {
+  --accent: #10b981; --accent-light: #34d399;
+  --accent-glow: rgba(16, 185, 129, .35); --accent-glow-strong: rgba(16, 185, 129, .55);
 }
-[data-accent="pink"] {
-  --accent: #ff4d8d; --accent-light: #ff7eb3;
-  --accent-glow: rgba(255, 77, 141, .4); --accent-glow-strong: rgba(255, 77, 141, .6);
+[data-accent="cyan"] {
+  --accent: #22d3ee; --accent-light: #67e8f9;
+  --accent-glow: rgba(34, 211, 238, .35); --accent-glow-strong: rgba(34, 211, 238, .55);
 }
-[data-accent="purple"] {
-  --accent: #8b5cf6; --accent-light: #a78bfa;
-  --accent-glow: rgba(139, 92, 246, .4); --accent-glow-strong: rgba(139, 92, 246, .6);
+[data-accent="violet"] {
+  --accent: #a78bfa; --accent-light: #c4b5fd;
+  --accent-glow: rgba(167, 139, 250, .35); --accent-glow-strong: rgba(167, 139, 250, .55);
 }
 
 /* ---------- Light theme ---------- */

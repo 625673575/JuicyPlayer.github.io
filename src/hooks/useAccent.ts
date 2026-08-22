@@ -1,15 +1,15 @@
 import { useEffect } from 'react'
 
-export type Accent = 'red' | 'crimson' | 'pink' | 'purple'
+export type Accent = 'lime' | 'emerald' | 'cyan' | 'violet'
 
 const STORAGE_KEY = 'jp-accent'
 
 function getInitialAccent(): Accent {
   const saved = localStorage.getItem(STORAGE_KEY)
-  if (saved === 'red' || saved === 'crimson' || saved === 'pink' || saved === 'purple') {
+  if (saved === 'lime' || saved === 'emerald' || saved === 'cyan' || saved === 'violet') {
     return saved
   }
-  return 'red'
+  return 'lime'
 }
 
 /** 管理强调色，将状态写入 <html data-accent> 和 localStorage */

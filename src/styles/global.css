@@ -1,16 +1,16 @@
-/* ========== 基础重置与变量 ========== */
+/* ========== 基础重置与变量（黑曜石 + 青柠） ========== */
 :root {
-  --accent: #ef233c;
-  --accent-light: #ff4d6a;
-  --accent-glow: rgba(239, 35, 60, 0.4);
-  --accent-glow-strong: rgba(239, 35, 60, 0.6);
-  --bg: #050508;
-  --bg-elevated: #0a0a12;
-  --bg-card: #10101a;
-  --text: #e8e8f0;
-  --text-secondary: #8b8ba0;
-  --border: rgba(255,255,255,0.08);
-  --glass: rgba(255,255,255,0.05);
+  --accent: #ccff00;
+  --accent-light: #e0ff66;
+  --accent-glow: rgba(204, 255, 0, 0.35);
+  --accent-glow-strong: rgba(204, 255, 0, 0.55);
+  --bg: #000000;
+  --bg-elevated: #0c0c0c;
+  --bg-card: #0c0c0c;
+  --text: #ebebeb;
+  --text-secondary: rgba(235, 235, 235, 0.6);
+  --border: rgba(255,255,255,0.1);
+  --glass: rgba(255,255,255,0.03);
 }
 
 /* ========== 红色暗黑全局背景 ========== */
@@ -25,7 +25,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, #1a0505, #050508);
+  background: linear-gradient(to bottom, #0c0c0c, #000000);
 }
 .global-bg-glow {
   position: absolute;
@@ -34,7 +34,7 @@
   transform: translate(-50%, -50%);
   width: 800px;
   height: 800px;
-  background: radial-gradient(circle, rgba(239, 35, 60, 0.08), transparent 70%);
+  background: radial-gradient(circle, rgba(204, 255, 0, 0.06), transparent 70%);
   filter: blur(120px);
 }
 .global-bg-grid {
@@ -106,28 +106,29 @@
   overflow: hidden;
   border-radius: 9999px;
   padding: 1rem 2.5rem;
-  background: linear-gradient(#050508, #050508) padding-box,
-    conic-gradient(from var(--gradient-angle), transparent 0%, #ef233c 5%, #ef233c 15%, #ef233c 30%, transparent 40%, transparent 100%) border-box;
+  background: linear-gradient(#000000, #000000) padding-box,
+    conic-gradient(from var(--gradient-angle), transparent 0%, #ccff00 5%, #ccff00 15%, #ccff00 30%, transparent 40%, transparent 100%) border-box;
   border: 2px solid transparent;
   cursor: pointer;
   isolation: isolate;
   animation: border-spin 2.5s linear infinite;
-  color: white;
-  font-weight: 500;
+  color: #000000;
+  font-weight: 700;
   font-size: 15px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   transition: transform 0.2s;
+  box-shadow: 0 0 30px rgba(204, 255, 0, 0.3);
 }
-.shiny-cta:hover { transform: translateY(-2px); }
+.shiny-cta:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(204, 255, 0, 0.5); }
 .shiny-cta::before {
   content: '';
   position: absolute;
   inset: 0;
   background: radial-gradient(circle at 50% 50%, white 0.5px, transparent 0);
   background-size: 4px 4px;
-  opacity: 0.08;
+  opacity: 0.06;
   z-index: 0;
 }
 .shiny-cta > * { position: relative; z-index: 1; }
