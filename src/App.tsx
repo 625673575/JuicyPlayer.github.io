@@ -4,6 +4,7 @@ import { useAccent, getInitialAccent, type Accent } from './hooks/useAccent'
 import { useI18n, detectLang } from './hooks/useI18n'
 import { Lang } from './i18n/dictionary'
 
+import GlobalBackground from './components/GlobalBackground'
 import PageLoader from './components/PageLoader'
 import ParticleBackground from './components/ParticleBackground'
 import CursorGlow from './components/CursorGlow'
@@ -72,6 +73,7 @@ export default function App() {
 
   return (
     <>
+      <GlobalBackground />
       <PageLoader />
       <ScrollProgress />
       <CursorGlow />

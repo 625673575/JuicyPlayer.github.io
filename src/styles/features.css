@@ -5,21 +5,21 @@
 :root { --ease: cubic-bezier(.4, 0, .2, 1); }
 
 /* ---------- Accent palettes (stay on dark base) ---------- */
-[data-accent="purple"] {
-  --accent: #8b5cf6; --accent-light: #a78bfa;
-  --accent-glow: rgba(139, 92, 246, .4); --accent-glow-strong: rgba(139, 92, 246, .6);
+[data-accent="red"] {
+  --accent: #ef233c; --accent-light: #ff4d6a;
+  --accent-glow: rgba(239, 35, 60, .4); --accent-glow-strong: rgba(239, 35, 60, .6);
 }
-[data-accent="green"] {
-  --accent: #16c784; --accent-light: #3ddc97;
-  --accent-glow: rgba(22, 199, 132, .4); --accent-glow-strong: rgba(22, 199, 132, .6);
+[data-accent="crimson"] {
+  --accent: #dc143c; --accent-light: #ff2d55;
+  --accent-glow: rgba(220, 20, 60, .4); --accent-glow-strong: rgba(220, 20, 60, .6);
 }
 [data-accent="pink"] {
   --accent: #ff4d8d; --accent-light: #ff7eb3;
   --accent-glow: rgba(255, 77, 141, .4); --accent-glow-strong: rgba(255, 77, 141, .6);
 }
-[data-accent="blue"] {
-  --accent: #3b9dff; --accent-light: #6fc0ff;
-  --accent-glow: rgba(59, 157, 255, .4); --accent-glow-strong: rgba(59, 157, 255, .6);
+[data-accent="purple"] {
+  --accent: #8b5cf6; --accent-light: #a78bfa;
+  --accent-glow: rgba(139, 92, 246, .4); --accent-glow-strong: rgba(139, 92, 246, .6);
 }
 
 /* ---------- Light theme ---------- */

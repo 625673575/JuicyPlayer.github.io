@@ -104,13 +104,13 @@ export default function Hero({ lang }: HeroProps) {
           transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1], delay: 0.3 }}
         >
           <motion.div
-            className="badge"
+            className="badge badge-pulse"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.5 }}
-            data-i18n="heroBadge"
           >
-            🎵 桌面音乐播放器
+            <span className="pulse-dot" />
+            <span data-i18n="heroBadge">🎵 桌面音乐播放器</span>
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -139,7 +139,7 @@ export default function Hero({ lang }: HeroProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.1 }}
           >
-            <a href="#app" className="btn btn-lg btn-primary">
+            <a href="#app" className="shiny-cta">
               <Download width={20} height={20} />
               <span data-i18n="heroDownload">免费下载</span>
             </a>

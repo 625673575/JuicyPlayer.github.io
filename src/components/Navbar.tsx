@@ -15,10 +15,10 @@ interface NavbarProps {
 }
 
 const ACCENTS: { id: Accent; color: string; label: string }[] = [
-  { id: 'orange', color: '#ff6b35', label: '橙色' },
-  { id: 'purple', color: '#8b5cf6', label: '紫色' },
-  { id: 'green', color: '#16c784', label: '绿色' },
+  { id: 'red', color: '#ef233c', label: '红色' },
+  { id: 'crimson', color: '#dc143c', label: '深红' },
   { id: 'pink', color: '#ff4d8d', label: '粉色' },
+  { id: 'purple', color: '#8b5cf6', label: '紫色' },
 ]
 
 export default function Navbar({
@@ -30,7 +30,7 @@ export default function Navbar({
   onChangeAccent,
   onOpenPalette,
 }: NavbarProps) {
-  const [scrolled, setScrolled] = useState(false)
+  const [_scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -40,24 +40,23 @@ export default function Navbar({
 
   return (
     <motion.nav
-      className={`navbar${scrolled ? ' scrolled' : ''}`}
+      className="navbar"
       id="navbar"
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, delay: 0.2 }}
     >
-      <div className="nav-inner">
+      <div className="nav-pill">
         <a href="#" className="nav-brand">
           <img src="/JuicyPlayer.github.io/images/icon_256.png" alt="Juicy Player" className="nav-logo" />
           <span>Juicy Player</span>
         </a>
-        <div className="nav-right">
-          <div className="nav-links">
-            <a href="#features" data-i18n="navFeatures">功能</a>
-            <a href="#showcase" data-i18n="navShowcase">预览</a>
-            <a href="#download" data-i18n="navDownload">下载</a>
-          </div>
-          <div className="nav-extra">
+        <div className="nav-links">
+          <a href="#features" data-i18n="navFeatures">功能</a>
+          <a href="#showcase" data-i18n="navShowcase">预览</a>
+          <a href="#download" data-i18n="navDownload">下载</a>
+        </div>
+        <div className="nav-extra">
             <motion.button
               className="icon-btn"
               aria-label="搜索 / 命令面板"
@@ -108,7 +107,6 @@ export default function Navbar({
             </motion.button>
           </div>
         </div>
-      </div>
     </motion.nav>
   )
 }
