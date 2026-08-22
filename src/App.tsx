@@ -90,14 +90,17 @@ export default function App() {
         onOpenPalette={openPalette}
       />
 
-      <Hero lang={lang} />
-      <FormatMarquee />
-      <PlayerDownload />
-      <Features />
-      <Showcase />
-      <DownloadRemoter />
-      <HowItWorks />
-      <FAQ />
+      <main className="site-shell">
+        <Hero lang={lang} />
+        <FormatMarquee />
+        <PlayerDownload />
+        <Features />
+        <Showcase />
+        <DownloadRemoter />
+        <HowItWorks />
+        <FAQ />
+      </main>
+
       <Footer />
 
       <CommandPalette
