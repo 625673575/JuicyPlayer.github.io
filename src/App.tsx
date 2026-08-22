@@ -7,7 +7,6 @@ import { Lang } from './i18n/dictionary'
 import GlobalBackground from './components/GlobalBackground'
 import PageLoader from './components/PageLoader'
 import ParticleBackground from './components/ParticleBackground'
-import CursorGlow from './components/CursorGlow'
 import FloatingShapes from './components/FloatingShapes'
 import ScrollProgress from './components/ScrollProgress'
 import Navbar from './components/Navbar'
@@ -76,7 +75,6 @@ export default function App() {
       <GlobalBackground />
       <PageLoader />
       <ScrollProgress />
-      <CursorGlow />
       <FloatingShapes />
       <ParticleBackground />
 
