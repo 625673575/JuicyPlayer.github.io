@@ -856,14 +856,19 @@ section {
     grid-row: span 1;
   }
 }
-/* ========== 预览区域 ========== */
+/* ========== 预览区域（艺术性错位排列） ========== */
 .showcase {
-  background: linear-gradient(180deg, rgba(255,107,53,0.03), transparent);
+  background: linear-gradient(180deg, rgba(204,255,0,0.02), transparent);
 }
-.showcase-grid {
+.showcase-art {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.showcase-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  grid-template-columns: 340px 1fr;
+  gap: 20px;
 }
 .showcase-card {
   background: var(--bg-card);
@@ -871,6 +876,7 @@ section {
   border-radius: 20px;
   overflow: hidden;
   position: relative;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 .showcase-card:hover {
   border-color: var(--accent);
@@ -898,16 +904,56 @@ section {
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
-.showcase-img { overflow: hidden; aspect-ratio: 16/10; }
-.showcase-img-src {
+.showcase-img-wrap {
+  overflow: hidden;
+  position: relative;
+}
+.showcase-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.6s;
 }
-.showcase-card:hover .showcase-img-src { transform: scale(1.1); }
-.showcase-card h3 { padding: 20px 20px 8px; font-size: 18px; }
-.showcase-card p { padding: 0 20px 20px; color: var(--text-secondary); font-size: 14px; }
+.showcase-card:hover .showcase-img { transform: scale(1.05); }
+.showcase-info {
+  padding: 20px;
+}
+.showcase-card h3 { font-size: 18px; margin-bottom: 6px; }
+.showcase-card p { color: var(--text-secondary); font-size: 14px; }
+
+/* 宽幅卡片 — Windows 截图 */
+.showcase-wide .showcase-img-wrap {
+  aspect-ratio: 16/9;
+}
+
+/* 竖长卡片 — Android 截图 */
+.showcase-tall {
+  display: flex;
+  flex-direction: column;
+}
+.showcase-tall .showcase-img-wrap {
+  flex: 1;
+  min-height: 320px;
+}
+.showcase-tall .showcase-img {
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* 中方卡片 — Connect */
+.showcase-square .showcase-img-wrap {
+  aspect-ratio: 4/3;
+}
+
+@media (max-width: 768px) {
+  .showcase-row {
+    grid-template-columns: 1fr;
+  }
+  .showcase-tall .showcase-img-wrap {
+    min-height: 240px;
+  }
+}
 
 /* ========== 下载区域 ========== */
 .download-grid {
@@ -1126,7 +1172,6 @@ footer {
   .hero-stats { justify-content: center; }
   .hero-visual { order: -1; }
   .app-panel-inner { grid-template-columns: 1fr; }
-  .showcase-grid { grid-template-columns: 1fr; }
   .download-grid { grid-template-columns: 1fr; }
   .steps { flex-direction: column; gap: 40px; }
   .step-connector { display: none; }
