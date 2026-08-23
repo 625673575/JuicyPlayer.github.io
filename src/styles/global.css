@@ -432,7 +432,7 @@ body {
   position: absolute;
   inset: 0;
   background: url('/JuicyPlayer.github.io/images/superdesign-bg.jpg') center top / cover no-repeat;
-  opacity: 0.35;
+  opacity: 0.85;
   z-index: 0;
 }
 .hero-centered-inner {
@@ -635,6 +635,27 @@ body {
   transform: translateY(-3px);
 }
 .btn-block { width: 100%; }
+
+/* ========== 耳机大图展示 ========== */
+.headphone-showcase {
+  position: relative;
+  z-index: 2;
+  padding: 40px 0 80px;
+  display: flex;
+  justify-content: center;
+}
+.headphone-image-wrap {
+  max-width: 800px;
+  width: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+.headphone-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
 /* ========== 浮动外壳容器 ========== */
 .site-shell {

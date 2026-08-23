@@ -8,6 +8,7 @@ import GlobalBackground from './components/GlobalBackground'
 import PageLoader from './components/PageLoader'
 import ParticleBackground from './components/ParticleBackground'
 import FloatingShapes from './components/FloatingShapes'
+import HeadphoneShowcase from './components/HeadphoneShowcase'
 import ScrollProgress from './components/ScrollProgress'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -99,6 +100,7 @@ export default function App() {
         <FAQ />
       </main>
 
+      <HeadphoneShowcase />
       <Footer />
 
       <CommandPalette
