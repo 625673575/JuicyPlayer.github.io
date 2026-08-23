@@ -427,6 +427,14 @@ body {
   text-align: center;
   overflow: hidden;
 }
+.hero-centered::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('/JuicyPlayer.github.io/images/superdesign-bg.jpg') center top / cover no-repeat;
+  opacity: 0.35;
+  z-index: 0;
+}
 .hero-centered-inner {
   position: relative;
   z-index: 2;
@@ -627,14 +635,6 @@ body {
   transform: translateY(-3px);
 }
 .btn-block { width: 100%; }
-  filter: blur(40px);
-  opacity: 0.6;
-  animation: glowPulse 4s ease-in-out infinite;
-}
-@keyframes glowPulse {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(1.05); }
-}
 
 /* ========== 浮动外壳容器 ========== */
 .site-shell {
