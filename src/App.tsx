@@ -98,7 +98,7 @@ export default function App() {
         <FAQ />
       </main>
 
-      <HeadphoneShowcase />
+      <HeadphoneShowcase lang={lang} />
       <Footer />
 
       <CommandPalette

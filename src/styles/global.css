@@ -640,9 +640,16 @@ body {
 .headphone-showcase {
   position: relative;
   z-index: 2;
-  padding: 40px 0 0;
+  padding: 80px 0 0;
   display: flex;
   justify-content: center;
+}
+.ultimate-banner {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.ultimate-headline {
+  align-items: center;
 }
 .headphone-image-wrap {
   width: 100%;
