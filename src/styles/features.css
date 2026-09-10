@@ -4,39 +4,6 @@
 
 :root { --ease: cubic-bezier(.4, 0, .2, 1); }
 
-/* ---------- Accent palettes (obsidian + neon) ---------- */
-[data-accent="lime"] {
-  --accent: #ccff00; --accent-light: #e0ff66;
-  --accent-glow: rgba(204, 255, 0, .35); --accent-glow-strong: rgba(204, 255, 0, .55);
-}
-[data-accent="emerald"] {
-  --accent: #10b981; --accent-light: #34d399;
-  --accent-glow: rgba(16, 185, 129, .35); --accent-glow-strong: rgba(16, 185, 129, .55);
-}
-[data-accent="cyan"] {
-  --accent: #22d3ee; --accent-light: #67e8f9;
-  --accent-glow: rgba(34, 211, 238, .35); --accent-glow-strong: rgba(34, 211, 238, .55);
-}
-[data-accent="violet"] {
-  --accent: #a78bfa; --accent-light: #c4b5fd;
-  --accent-glow: rgba(167, 139, 250, .35); --accent-glow-strong: rgba(167, 139, 250, .55);
-}
-
-/* ---------- Light theme ---------- */
-[data-theme="light"] {
-  --bg: #f5f6fb;
-  --bg-elevated: #ffffff;
-  --bg-card: #ffffff;
-  --text: #15161f;
-  --text-secondary: #5b5d72;
-  --border: rgba(0, 0, 0, .09);
-  --glass: rgba(255, 255, 255, .65);
-}
-[data-theme="light"] .hero-bg,
-[data-theme="light"] .parallax-orb { opacity: .6; }
-[data-theme="light"] .page-loader,
-[data-theme="light"] .navbar.scrolled { background: rgba(245, 246, 251, .85); }
-
 /* ---------- Navbar extras ---------- */
 .nav-right { display: flex; align-items: center; gap: 18px; }
 @media (max-width: 768px) { .nav-links { display: none; } .nav-right { gap: 10px; } }
@@ -49,15 +16,6 @@
   transition: all .3s var(--ease);
 }
 .icon-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; transform: translateY(-2px); }
-.accent-picker { display: flex; gap: 6px; align-items: center; }
-.accent-dot {
-  width: 16px; height: 16px; border-radius: 50%;
-  border: 2px solid transparent; cursor: pointer; padding: 0;
-  transition: transform .2s var(--ease);
-}
-.accent-dot:hover { transform: scale(1.2); }
-.accent-dot.active { border-color: var(--text); }
-@media (max-width: 900px) { .accent-picker { display: none; } }
 
 /* ---------- Hero live player ---------- */
 .live-player {
@@ -68,7 +26,6 @@
   box-shadow: 0 30px 80px rgba(0, 0, 0, .5);
   position: relative; overflow: hidden;
 }
-[data-theme="light"] .live-player { box-shadow: 0 30px 80px rgba(0, 0, 0, .15); }
 .live-player::before {
   content: ''; position: absolute; inset: 0;
   background: radial-gradient(circle at 85% -10%, var(--accent-glow), transparent 55%);
@@ -150,7 +107,6 @@
   transition: transform .55s var(--ease); opacity: .96;
 }
 .np-bar.show { transform: translateX(-50%) translateY(0); }
-[data-theme="light"] .np-bar { background: rgba(255, 255, 255, .9); }
 .np-art { width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0; background: linear-gradient(135deg, var(--accent), var(--accent-light)); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; }
 .np-meta { flex: 1; min-width: 0; }
 .np-title { font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

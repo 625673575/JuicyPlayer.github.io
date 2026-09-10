@@ -1,6 +1,4 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useTheme, getInitialTheme, type Theme } from './hooks/useTheme'
-import { useAccent, getInitialAccent, type Accent } from './hooks/useAccent'
 import { useI18n, detectLang } from './hooks/useI18n'
 import { Lang } from './i18n/dictionary'
 
@@ -23,21 +21,11 @@ import Footer from './components/Footer'
 import CommandPalette from './components/CommandPalette'
 
 export default function App() {
-  const [theme, setTheme] = useState<Theme>(getInitialTheme)
-  const [accent, setAccent] = useState<Accent>(getInitialAccent)
   const [lang] = useState<Lang>(detectLang)
   const [paletteOpen, setPaletteOpen] = useState(false)
 
-  // Sync theme / accent color to <html> attributes
-  useTheme(theme)
-  useAccent(accent)
-
   // Sync language to [data-i18n] elements
   useI18n(lang)
-
-  const toggleTheme = useCallback(() => {
-    setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
-  }, [])
 
   const openPalette = useCallback(() => setPaletteOpen(true), [])
   const closePalette = useCallback(() => setPaletteOpen(false), [])
@@ -79,16 +67,10 @@ export default function App() {
       <FloatingShapes />
       <ParticleBackground />
 
-      <Navbar
-        theme={theme}
-        onToggleTheme={toggleTheme}
-        accent={accent}
-        onChangeAccent={setAccent}
-        onOpenPalette={openPalette}
-      />
+      <Navbar onOpenPalette={openPalette} />
 
       <main className="site-shell">
-        <Hero lang={lang} />
+        <Hero />
         <FormatMarquee />
         <PlayerDownload />
         <Features />
@@ -101,11 +83,7 @@ export default function App() {
       <HeadphoneShowcase lang={lang} />
       <Footer />
 
-      <CommandPalette
-        open={paletteOpen}
-        onClose={closePalette}
-        onToggleTheme={toggleTheme}
-      />
+      <CommandPalette open={paletteOpen} onClose={closePalette} />
     </>
   )
 }

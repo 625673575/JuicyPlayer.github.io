@@ -6,7 +6,6 @@ interface PaletteItem {
   label: string
   icon: string
   target?: string
-  action?: 'lang' | 'theme'
 }
 
 const ITEMS: PaletteItem[] = [
@@ -14,13 +13,11 @@ const ITEMS: PaletteItem[] = [
   { label: 'Preview', icon: '◈', target: '#showcase' },
   { label: 'Download', icon: '↓', target: '#download' },
   { label: 'FAQ', icon: '?', target: '#faq' },
-  { label: 'Toggle theme', icon: '☾', action: 'theme' },
 ]
 
 interface CommandPaletteProps {
   open: boolean
   onClose: () => void
-  onToggleTheme: () => void
 }
 
 const backdropVariants = {
@@ -33,7 +30,7 @@ const panelVariants = {
   visible: { opacity: 1, y: 0, scale: 1 },
 }
 
-export default function CommandPalette({ open, onClose, onToggleTheme }: CommandPaletteProps) {
+export default function CommandPalette({ open, onClose }: CommandPaletteProps) {
   const [query, setQuery] = useState('')
   const [activeIdx, setActiveIdx] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -58,8 +55,7 @@ export default function CommandPalette({ open, onClose, onToggleTheme }: Command
 
   const activate = (item: PaletteItem) => {
     onClose()
-    if (item.action === 'theme') onToggleTheme()
-    else if (item.target) {
+    if (item.target) {
       const el = document.querySelector(item.target)
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }

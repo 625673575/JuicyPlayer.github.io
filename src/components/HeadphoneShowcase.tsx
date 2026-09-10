@@ -43,26 +43,6 @@ export default function HeadphoneShowcase({ lang }: HeadphoneShowcaseProps) {
     <section className="headphone-showcase">
       <div className="container">
         <motion.div
-          className="ultimate-banner"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '0px 0px -50px 0px' }}
-          transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-        >
-          <h2 className="hero-headline ultimate-headline">
-            <span className="hero-line-1" data-i18n="heroTitle1">
-              The Ultimate
-            </span>
-            <span className="hero-line-2">
-              <span className="hero-gradient-text" id="typewriter">
-                {typewriterText}
-              </span>
-              <span className="typewriter-cursor" id="typeCursor" />
-            </span>
-          </h2>
-        </motion.div>
-
-        <motion.div
           className="headphone-image-wrap"
           initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -74,6 +54,25 @@ export default function HeadphoneShowcase({ lang }: HeadphoneShowcaseProps) {
             alt="Encore One Headphones"
             className="headphone-image"
           />
+          <div className="headphone-overlay">
+            <motion.h2
+              className="hero-headline ultimate-headline"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '0px 0px -50px 0px' }}
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            >
+              <span className="hero-line-1" data-i18n="heroTitle1">
+                The Ultimate
+              </span>
+              <span className="hero-line-2">
+                <span className="hero-gradient-text" id="typewriter">
+                  {typewriterText}
+                </span>
+                <span className="typewriter-cursor" id="typeCursor" />
+              </span>
+            </motion.h2>
+          </div>
         </motion.div>
       </div>
     </section>

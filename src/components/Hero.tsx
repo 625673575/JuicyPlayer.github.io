@@ -1,12 +1,7 @@
 import { motion } from 'framer-motion'
 import { Play } from 'lucide-react'
-import { Lang } from '../i18n/dictionary'
 
-interface HeroProps {
-  lang: Lang
-}
-
-export default function Hero({ lang }: HeroProps) {
+export default function Hero() {
   return (
     <header className="hero-centered" id="hero">
       <div className="hero-centered-inner">

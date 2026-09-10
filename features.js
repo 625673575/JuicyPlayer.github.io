@@ -11,34 +11,6 @@
   /* shared playback state */
   var state = { playing: false, volume: 0.8, progress: 0, duration: 214, track: 'Neon Tide', artist: 'Juicy Player Radio' };
 
-  /* ---------- Theme + accent ---------- */
-  function applyTheme(t) {
-    doc.documentElement.setAttribute('data-theme', t);
-    try { localStorage.setItem('jp-theme', t); } catch (e) {}
-    var b = doc.getElementById('themeToggle');
-    if (b) b.setAttribute('aria-pressed', t === 'light' ? 'true' : 'false');
-  }
-  function applyAccent(a) {
-    doc.documentElement.setAttribute('data-accent', a);
-    try { localStorage.setItem('jp-accent', a); } catch (e) {}
-    doc.querySelectorAll('.accent-dot').forEach(function (d) {
-      d.classList.toggle('active', d.dataset.accent === a);
-    });
-  }
-  var savedTheme = 'dark', savedAccent = 'orange';
-  try { savedTheme = localStorage.getItem('jp-theme') || 'dark'; } catch (e) {}
-  try { savedAccent = localStorage.getItem('jp-accent') || 'orange'; } catch (e) {}
-  applyTheme(savedTheme);
-  applyAccent(savedAccent);
-
-  var themeBtn = doc.getElementById('themeToggle');
-  if (themeBtn) themeBtn.addEventListener('click', function () {
-    applyTheme(doc.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
-  });
-  doc.querySelectorAll('.accent-dot').forEach(function (d) {
-    d.addEventListener('click', function () { applyAccent(d.dataset.accent); });
-  });
-
   /* ---------- shared play control (drives hero + now-playing) ---------- */
   var lp, lpPlay, lpBars, lpFill, lpTime, lpVol, lpArt;
   var heroEl = doc.getElementById('hero');
@@ -111,8 +83,7 @@
       { label: 'Preview', icon: '◈', target: '#showcase' },
 
       { label: 'Download', icon: '↓', target: '#download' },
-      { label: 'FAQ', icon: '?', target: '#faq' },
-      { label: 'Toggle theme', icon: '☾', action: 'theme' }
+      { label: 'FAQ', icon: '?', target: '#faq' }
     ];
     var activeIdx = 0;
 
@@ -147,7 +118,6 @@
       if (!it) return;
       closePalette();
       if (it.action === 'lang') { var b = doc.getElementById('langToggle'); if (b) b.click(); }
-      else if (it.action === 'theme') { if (themeBtn) themeBtn.click(); }
       else if (it.target) {
         var t = doc.querySelector(it.target);
         if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
