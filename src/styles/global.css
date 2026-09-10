@@ -433,12 +433,19 @@ body {
     padding: 120px 20px 72px;
   }
 }
+/* Hero cover image + dark scrim so the overlaid text stays readable */
 .hero-centered::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: url('/JuicyPlayer.github.io/images/superdesign-bg.jpg') center top / cover no-repeat;
-  opacity: 0.85;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.45) 45%,
+      rgba(0, 0, 0, 0.72) 100%
+    ),
+    url('/JuicyPlayer.github.io/images/superdesign-bg.jpg') center top / cover no-repeat;
   z-index: 0;
 }
 .hero-centered-inner {
@@ -455,8 +462,8 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: var(--glass);
-  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   padding: 8px 20px;
   border-radius: 100px;
   margin-bottom: 32px;
@@ -467,7 +474,8 @@ body {
   font-weight: 500;
   letter-spacing: 0.4em;
   text-transform: uppercase;
-  color: var(--text-secondary);
+  color: #ffffff;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
 }
 .pulse-dot-cyan {
   width: 8px;
@@ -526,10 +534,11 @@ body {
 .hero-desc-centered {
   font-size: 1.125rem;
   line-height: 1.8;
-  color: var(--text-secondary);
+  color: #ffffff;
   max-width: 36rem;
   margin-bottom: 40px;
   font-weight: 300;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85);
 }
 
 /* Dual CTA buttons */
