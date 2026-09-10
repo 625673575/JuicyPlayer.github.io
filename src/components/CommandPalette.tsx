@@ -10,18 +10,16 @@ interface PaletteItem {
 }
 
 const ITEMS: PaletteItem[] = [
-  { label: '功能 Features', icon: '◆', target: '#features' },
-  { label: '预览 Showcase', icon: '◈', target: '#showcase' },
-  { label: '下载 Download', icon: '↓', target: '#download' },
-  { label: '常见问题 FAQ', icon: '?', target: '#faq' },
-  { label: '切换语言 Toggle language', icon: '文', action: 'lang' },
-  { label: '切换主题 Toggle theme', icon: '☾', action: 'theme' },
+  { label: 'Features', icon: '◆', target: '#features' },
+  { label: 'Preview', icon: '◈', target: '#showcase' },
+  { label: 'Download', icon: '↓', target: '#download' },
+  { label: 'FAQ', icon: '?', target: '#faq' },
+  { label: 'Toggle theme', icon: '☾', action: 'theme' },
 ]
 
 interface CommandPaletteProps {
   open: boolean
   onClose: () => void
-  onToggleLang: () => void
   onToggleTheme: () => void
 }
 
@@ -35,7 +33,7 @@ const panelVariants = {
   visible: { opacity: 1, y: 0, scale: 1 },
 }
 
-export default function CommandPalette({ open, onClose, onToggleLang, onToggleTheme }: CommandPaletteProps) {
+export default function CommandPalette({ open, onClose, onToggleTheme }: CommandPaletteProps) {
   const [query, setQuery] = useState('')
   const [activeIdx, setActiveIdx] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -60,8 +58,7 @@ export default function CommandPalette({ open, onClose, onToggleLang, onToggleTh
 
   const activate = (item: PaletteItem) => {
     onClose()
-    if (item.action === 'lang') onToggleLang()
-    else if (item.action === 'theme') onToggleTheme()
+    if (item.action === 'theme') onToggleTheme()
     else if (item.target) {
       const el = document.querySelector(item.target)
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -97,7 +94,7 @@ export default function CommandPalette({ open, onClose, onToggleLang, onToggleTh
           id="palette"
           role="dialog"
           aria-modal="true"
-          aria-label="命令面板"
+          aria-label="Command palette"
           variants={backdropVariants}
           initial="hidden"
           animate="visible"
@@ -122,9 +119,9 @@ export default function CommandPalette({ open, onClose, onToggleLang, onToggleTh
                 className="palette-input"
                 id="paletteInput"
                 type="text"
-                placeholder="搜索功能或跳转…"
+                placeholder="Search features or jump…"
                 autoComplete="off"
-                aria-label="搜索"
+                aria-label="Search"
                 style={{ paddingLeft: 46 }}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
@@ -134,7 +131,7 @@ export default function CommandPalette({ open, onClose, onToggleLang, onToggleTh
             <div className="palette-list" id="paletteList" ref={listRef}>
               {filtered.length === 0 ? (
                 <div className="palette-empty" data-i18n="paletteEmpty">
-                  没有找到结果
+                  No results
                 </div>
               ) : (
                 filtered.map((item, idx) => (
@@ -151,10 +148,10 @@ export default function CommandPalette({ open, onClose, onToggleLang, onToggleTh
               )}
             </div>
             <div className="palette-hint">
-              <span><ArrowUpDown width={12} height={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> 选择</span>
-              <span><CornerDownLeft width={12} height={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> 跳转</span>
-              <span><kbd>esc</kbd> 关闭</span>
-              <span><kbd>⌘</kbd>/<kbd>Ctrl</kbd> <kbd>K</kbd> 打开</span>
+              <span><ArrowUpDown width={12} height={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> Select</span>
+              <span><CornerDownLeft width={12} height={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> Go</span>
+              <span><kbd>esc</kbd> Close</span>
+              <span><kbd>⌘</kbd>/<kbd>Ctrl</kbd> <kbd>K</kbd> Open</span>
             </div>
           </motion.div>
         </motion.div>

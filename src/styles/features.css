@@ -4,7 +4,7 @@
 
 :root { --ease: cubic-bezier(.4, 0, .2, 1); }
 
-/* ---------- Accent palettes（黑曜石 + 霓虹） ---------- */
+/* ---------- Accent palettes (obsidian + neon) ---------- */
 [data-accent="lime"] {
   --accent: #ccff00; --accent-light: #e0ff66;
   --accent-glow: rgba(204, 255, 0, .35); --accent-glow-strong: rgba(204, 255, 0, .55);

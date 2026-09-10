@@ -2,11 +2,8 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Search, Moon, Sun } from 'lucide-react'
 import { Accent } from '../hooks/useAccent'
-import { Lang } from '../i18n/dictionary'
 
 interface NavbarProps {
-  lang: Lang
-  onToggleLang: () => void
   theme: string
   onToggleTheme: () => void
   accent: Accent
@@ -15,15 +12,13 @@ interface NavbarProps {
 }
 
 const ACCENTS: { id: Accent; color: string; label: string }[] = [
-  { id: 'lime', color: '#ccff00', label: '青柠' },
-  { id: 'emerald', color: '#10b981', label: '翡翠' },
-  { id: 'cyan', color: '#22d3ee', label: '青色' },
-  { id: 'violet', color: '#a78bfa', label: '紫罗兰' },
+  { id: 'lime', color: '#ccff00', label: 'Lime' },
+  { id: 'emerald', color: '#10b981', label: 'Emerald' },
+  { id: 'cyan', color: '#22d3ee', label: 'Cyan' },
+  { id: 'violet', color: '#a78bfa', label: 'Violet' },
 ]
 
 export default function Navbar({
-  lang,
-  onToggleLang,
   theme,
   onToggleTheme,
   accent,
@@ -52,14 +47,14 @@ export default function Navbar({
           <span>Juicy Player</span>
         </a>
         <div className="nav-links">
-          <a href="#features" data-i18n="navFeatures">功能</a>
-          <a href="#showcase" data-i18n="navShowcase">预览</a>
-          <a href="#download" data-i18n="navDownload">下载</a>
+          <a href="#features" data-i18n="navFeatures">Features</a>
+          <a href="#showcase" data-i18n="navShowcase">Preview</a>
+          <a href="#download" data-i18n="navDownload">Download</a>
         </div>
         <div className="nav-extra">
             <motion.button
               className="icon-btn"
-              aria-label="搜索 / 命令面板"
+              aria-label="Search / command palette"
               onClick={onOpenPalette}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
@@ -68,7 +63,7 @@ export default function Navbar({
             </motion.button>
             <motion.button
               className="icon-btn"
-              aria-label="切换深色 / 浅色"
+              aria-label="Toggle dark / light"
               aria-pressed={theme === 'light' ? 'true' : 'false'}
               onClick={onToggleTheme}
               whileHover={{ scale: 1.1 }}
@@ -83,7 +78,7 @@ export default function Navbar({
                 {theme === 'light' ? <Sun width={18} height={18} /> : <Moon width={18} height={18} />}
               </motion.div>
             </motion.button>
-            <div className="accent-picker" aria-label="强调色">
+            <div className="accent-picker" aria-label="Accent color">
               {ACCENTS.map((a) => (
                 <motion.button
                   key={a.id}
@@ -96,15 +91,6 @@ export default function Navbar({
                 />
               ))}
             </div>
-            <motion.button
-              className="lang-btn"
-              aria-label="Switch language"
-              onClick={onToggleLang}
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {lang === 'zh' ? 'EN' : '中文'}
-            </motion.button>
           </div>
         </div>
     </motion.nav>

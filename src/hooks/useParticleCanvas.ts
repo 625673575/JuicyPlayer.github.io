@@ -13,8 +13,8 @@ interface Particle {
 }
 
 /**
- * 粒子背景：在 canvas 上绘制互相连接的粒子，
- * 鼠标靠近时粒子会被推开。
+ * Particle background: draws interconnected particles on a canvas,
+ * particles are pushed away when the mouse gets close.
  */
 export function useParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -48,7 +48,7 @@ export function useParticleCanvas() {
     document.addEventListener('mousemove', handleMouse)
     document.addEventListener('mouseleave', handleLeave)
 
-    // 创建粒子
+    // Create particles
     const particles: Particle[] = []
     for (let i = 0; i < PARTICLE_COUNT; i++) {
       const p: Particle = {
@@ -81,7 +81,7 @@ export function useParticleCanvas() {
       const my = mouseRef.current.y
 
       particles.forEach((p) => {
-        // 鼠标排斥
+        // Mouse repulsion
         const dx = p.x - mx
         const dy = p.y - my
         const dist = Math.sqrt(dx * dx + dy * dy)
@@ -106,7 +106,7 @@ export function useParticleCanvas() {
         ctx!.fill()
       })
 
-      // 连线
+      // Connect lines
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x

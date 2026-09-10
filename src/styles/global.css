@@ -1,4 +1,4 @@
-/* ========== 基础重置与变量（黑曜石 + 青柠） ========== */
+/* ========== Base reset & variables (obsidian + lime) ========== */
 :root {
   --accent: #ccff00;
   --accent-light: #e0ff66;
@@ -13,7 +13,7 @@
   --glass: rgba(255,255,255,0.03);
 }
 
-/* ========== 红色暗黑全局背景 ========== */
+/* ========== Red dark global background ========== */
 .global-bg {
   position: fixed;
   inset: 0;
@@ -48,7 +48,7 @@
   -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
 }
 
-/* ========== 星光粒子 ========== */
+/* ========== Starlight particles ========== */
 @keyframes animStar {
   from { transform: translateY(0); }
   to { transform: translateY(-2000px); }
@@ -76,7 +76,7 @@
   opacity: 0.3;
 }
 
-/* ========== 顶部渐变模糊条 ========== */
+/* ========== Top gradient blur bar ========== */
 .gradient-blur {
   position: fixed;
   z-index: 40;
@@ -90,7 +90,7 @@
   -webkit-mask-image: linear-gradient(to bottom, black, transparent);
 }
 
-/* ========== 闪亮 CTA 按钮 ========== */
+/* ========== Shiny CTA button ========== */
 @property --gradient-angle {
   syntax: "<angle>";
   initial-value: 0deg;
@@ -133,7 +133,7 @@
 }
 .shiny-cta > * { position: relative; z-index: 1; }
 
-/* ========== Hero 脉冲 Badge ========== */
+/* ========== Hero pulse badge ========== */
 .badge-pulse {
   display: inline-flex;
   align-items: center;
@@ -161,7 +161,7 @@
   100% { transform: scale(2.5); opacity: 0; }
 }
 
-/* ========== 高亮下划线（Hero 标题关键词） ========== */
+/* ========== Highlight underline (Hero title keyword) ========== */
 .text-underline-wave {
   position: relative;
   display: inline-block;
@@ -191,7 +191,7 @@ body {
   min-height: 100vh;
 }
 
-/* ========== 页面加载遮罩 ========== */
+/* ========== Page load overlay ========== */
 .page-loader {
   position: fixed;
   inset: 0;
@@ -237,7 +237,7 @@ body {
   100% { width: 100%; }
 }
 
-/* ========== 粒子背景 Canvas ========== */
+/* ========== Particle background canvas ========== */
 #particles-canvas {
   position: fixed;
   top: 0;
@@ -249,7 +249,7 @@ body {
   opacity: 0.6;
 }
 
-/* ========== 鼠标跟随光斑 ========== */
+/* ========== Mouse-follow light spot ========== */
 .cursor-glow {
   position: fixed;
   width: 400px;
@@ -264,7 +264,7 @@ body {
   opacity: 0;
 }
 
-/* ========== 滚动进度条 ========== */
+/* ========== Scroll progress bar ========== */
 .scroll-progress {
   position: fixed;
   top: 0;
@@ -277,7 +277,7 @@ body {
   box-shadow: 0 0 10px var(--accent-glow);
 }
 
-/* ========== 浮动装饰几何体 ========== */
+/* ========== Floating decorative shapes ========== */
 .floating-shapes {
   position: fixed;
   inset: 0;
@@ -325,7 +325,7 @@ body {
   75% { transform: translate(40px, 30px) scale(1.05); }
 }
 
-/* ========== 导航栏（药丸形毛玻璃） ========== */
+/* ========== Navbar (pill-shaped glassmorphism) ========== */
 .navbar {
   position: fixed;
   top: 0;
@@ -415,7 +415,7 @@ body {
   box-shadow: 0 4px 15px var(--accent-glow);
 }
 
-/* ========== Hero 居中布局 ========== */
+/* ========== Hero centered layout ========== */
 .hero-centered {
   position: relative;
   min-height: 100vh;
@@ -588,7 +588,7 @@ body {
   background: #d946ef;
 }
 
-/* ========== 通用按钮 ========== */
+/* ========== Generic buttons ========== */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -636,7 +636,7 @@ body {
 }
 .btn-block { width: 100%; }
 
-/* ========== 耳机大图展示 ========== */
+/* ========== Headphone showcase ========== */
 .headphone-showcase {
   position: relative;
   z-index: 2;
@@ -657,7 +657,7 @@ body {
   display: block;
 }
 
-/* ========== 浮动外壳容器 ========== */
+/* ========== Floating shell container ========== */
 .site-shell {
   position: relative;
   z-index: 2;
@@ -672,7 +672,7 @@ body {
   }
 }
 
-/* ========== 通用区域样式 ========== */
+/* ========== Generic section styles ========== */
 .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 section {
   position: relative;
@@ -709,7 +709,7 @@ section {
   margin: 0 auto;
 }
 
-/* ========== 下载区域（Tab 切换） ========== */
+/* ========== Download section (tab switch) ========== */
 .app-dl { background: linear-gradient(180deg, transparent, rgba(255,107,53,0.03)); }
 .app-tabs {
   display: flex;
@@ -811,7 +811,7 @@ section {
   filter: brightness(1.2);
 }
 
-/* ========== Bento 网格功能区域 ========== */
+/* ========== Bento grid features section ========== */
 .features { background: var(--bg); }
 .bento-grid {
   display: grid;
@@ -914,7 +914,7 @@ section {
     grid-row: span 1;
   }
 }
-/* ========== 预览区域（艺术性错位排列） ========== */
+/* ========== Preview section (artistic staggered layout) ========== */
 .showcase {
   background: linear-gradient(180deg, rgba(204,255,0,0.02), transparent);
 }
@@ -979,12 +979,12 @@ section {
 .showcase-card h3 { font-size: 18px; margin-bottom: 6px; }
 .showcase-card p { color: var(--text-secondary); font-size: 14px; }
 
-/* 宽幅卡片 — Windows 截图 */
+/* Wide card — Windows screenshot */
 .showcase-wide .showcase-img-wrap {
   aspect-ratio: 16/9;
 }
 
-/* 竖长卡片 — Android 截图 */
+/* Tall card — Android screenshot */
 .showcase-tall {
   display: flex;
   flex-direction: column;
@@ -999,7 +999,7 @@ section {
   object-position: top;
 }
 
-/* 中方卡片 — Connect */
+/* Middle card — Connect */
 .showcase-square .showcase-img-wrap {
   aspect-ratio: 4/3;
 }
@@ -1013,7 +1013,7 @@ section {
   }
 }
 
-/* ========== 下载区域 ========== */
+/* ========== Download section ========== */
 .download-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1098,7 +1098,7 @@ section {
 .history summary:hover { color: var(--text); }
 .history-empty { padding: 16px 0 0; color: var(--text-secondary); font-size: 14px; }
 
-/* ========== 使用指南 ========== */
+/* ========== Getting started ========== */
 .howto { background: var(--bg); }
 .steps {
   display: flex;
@@ -1181,7 +1181,7 @@ footer {
 }
 .footer-links a:hover { color: var(--accent); }
 
-/* ========== 音频波形装饰 ========== */
+/* ========== Audio waveform decoration ========== */
 .waveform-decoration {
   position: absolute;
   bottom: 0;
@@ -1193,7 +1193,7 @@ footer {
   z-index: 1;
 }
 
-/* ========== 视差装饰层 ========== */
+/* ========== Parallax decoration layer ========== */
 .parallax-orbs {
   position: absolute;
   inset: 0;
@@ -1223,7 +1223,7 @@ footer {
   bottom: 10%; left: 30%;
 }
 
-/* ========== 响应式 ========== */
+/* ========== Responsive ========== */
 @media (max-width: 768px) {
   .app-panel-inner { grid-template-columns: 1fr; }
   .download-grid { grid-template-columns: 1fr; }
@@ -1233,18 +1233,18 @@ footer {
   .floating-shapes { display: none; }
 }
 
-/* ========== 滚动条美化 ========== */
+/* ========== Scrollbar styling ========== */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--bg-elevated); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-/* ========== 涟漪动画 ========== */
+/* ========== Ripple animation ========== */
 @keyframes ripple {
   to { transform: scale(4); opacity: 0; }
 }
 
-/* ========== 打字机光标 ========== */
+/* ========== Typewriter cursor ========== */
 .typewriter-cursor {
   display: inline-block;
   width: 3px;

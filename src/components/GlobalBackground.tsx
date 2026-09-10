@@ -1,4 +1,4 @@
-/** 红色暗黑风格全局背景：星光 + 网格 + 红晕 */
+/** Red dark-style global background: starlight + grid + red glow */
 export default function GlobalBackground() {
   return (
     <>

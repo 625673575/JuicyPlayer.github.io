@@ -16,11 +16,11 @@ export default function PlayerDownload() {
           transition={{ duration: 0.6 }}
         >
           <span className="section-tag" data-i18n="appTag">
-            下载播放器
+            Download Player
           </span>
-          <h2 data-i18n="appTitle">Juicy Player — 你的音乐播放器</h2>
+          <h2 data-i18n="appTitle">JuicyPlayer — Your Music Player</h2>
           <p className="section-desc" data-i18n="appDesc">
-            简洁、专注的桌面音频播放器，支持多种格式
+            A clean, focused desktop audio player supporting multiple formats
           </p>
         </motion.div>
         <div className="app-dl-wrapper">
@@ -69,7 +69,7 @@ export default function PlayerDownload() {
                   <div className="app-panel-info">
                     <h3 data-i18n="appWinTitle">Juicy Player for Windows</h3>
                     <p className="app-panel-desc" data-i18n="appWinDesc">
-                      通过 Microsoft Store 安装，自动更新，安全可靠。
+                      Install from Microsoft Store — auto updates, secure and reliable.
                     </p>
                     <div className="app-panel-meta">
                       <span className="app-ver">v1.0.0</span>
@@ -82,7 +82,7 @@ export default function PlayerDownload() {
                       className="btn btn-primary btn-lg"
                     >
                       <ExternalLink width={20} height={20} />
-                      <span data-i18n="appWinBtn">在 Microsoft Store 获取</span>
+                      <span data-i18n="appWinBtn">Get from Microsoft Store</span>
                     </a>
                   </div>
                 </div>
@@ -107,10 +107,10 @@ export default function PlayerDownload() {
                   <div className="app-panel-info">
                     <h3 data-i18n="appMacTitle">Juicy Player for macOS</h3>
                     <p className="app-panel-desc" data-i18n="appMacDesc">
-                      macOS 版本正在开发中，敬请期待。
+                      macOS version is in development, stay tuned.
                     </p>
                     <button className="btn btn-primary btn-lg" disabled style={{ opacity: 0.5, cursor: 'not-allowed' }}>
-                      <span data-i18n="appMacBtn">敬请期待</span>
+                      <span data-i18n="appMacBtn">Coming Soon</span>
                     </button>
                   </div>
                 </div>

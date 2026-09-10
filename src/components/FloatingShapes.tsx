@@ -1,4 +1,4 @@
-/** 背景中缓慢浮动的装饰圆球 */
+/** Decorative circles slowly floating in the background */
 export default function FloatingShapes() {
   return (
     <div className="floating-shapes">

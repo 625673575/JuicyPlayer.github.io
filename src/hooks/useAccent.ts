@@ -12,7 +12,7 @@ function getInitialAccent(): Accent {
   return 'lime'
 }
 
-/** 管理强调色，将状态写入 <html data-accent> 和 localStorage */
+/** Manage accent color, writing state to <html data-accent> and localStorage */
 export function useAccent(accent: Accent) {
   useEffect(() => {
     document.documentElement.setAttribute('data-accent', accent)

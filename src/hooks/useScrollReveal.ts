@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react'
 
 /**
- * 滚动揭示动画：当元素进入视口时添加 revealed class。
- * 返回一个 ref 数组，分别绑定到每个需要揭示的元素。
+ * Scroll reveal animation: adds the `revealed` class when an element enters the viewport.
+ * Returns a ref array bound to each element that should be revealed.
  */
 export function useScrollReveal<T extends HTMLElement = HTMLElement>(_count?: number) {
   const refs = useRef<(T | null)[]>([])

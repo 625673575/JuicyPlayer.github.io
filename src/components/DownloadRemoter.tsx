@@ -18,11 +18,11 @@ export default function DownloadRemoter() {
           transition={{ duration: 0.6 }}
         >
           <span className="section-tag" data-i18n="dlTag">
-            手机遥控
+            Mobile Remote
           </span>
-          <h2 data-i18n="dlTitle">Juicy Remoter — 遥控器</h2>
+          <h2 data-i18n="dlTitle">Juicy Remoter — Remote Control</h2>
           <p className="section-desc" data-i18n="dlDesc">
-            用手机遥控 JuicyPlayer 播放器，局域网内即时响应
+            Control JuicyPlayer from your phone, instant response over LAN
           </p>
         </motion.div>
         <div className="download-grid">
@@ -44,12 +44,12 @@ export default function DownloadRemoter() {
             <p className="dl-note" data-i18n="dlAndNote">
               Android 7.0+
             </p>
-            <a href="/JuicyPlayer.github.io/downloads/JuicyPlayer-Remote-1.0.0.apk" className="btn btn-primary btn-block">
+            <a href="/JuicyPlayer.github.io/downloads/JuicyPlayer-Android-v1.0.0.apk" className="btn btn-primary btn-block">
               <Download width={18} height={18} />
-              <span data-i18n="dlAndBtn">下载 APK</span>
+              <span data-i18n="dlAndBtn">Download APK</span>
             </a>
             <span className="dl-size" data-i18n="dlAndSize">
-              约 57 MB · .apk
+              ~57 MB · .apk
             </span>
           </motion.div>
 
@@ -71,19 +71,19 @@ export default function DownloadRemoter() {
             <p className="dl-note" data-i18n="dlWinNote">
               Windows 10 / 11 · 64-bit
             </p>
-            <a href="/JuicyPlayer.github.io/downloads/JuicyPlayer-Setup-1.0.0.exe" className="btn btn-primary btn-block">
+            <a href="/JuicyPlayer.github.io/downloads/JuicyPlayer-Windows-v1.0.0-Setup.exe" className="btn btn-primary btn-block">
               <Download width={18} height={18} />
-              <span data-i18n="dlWinBtn">下载安装包</span>
+              <span data-i18n="dlWinBtn">Download Installer</span>
             </a>
             <span className="dl-size" data-i18n="dlWinSize">
-              约 14 MB · .exe
+              ~14 MB · .exe
             </span>
           </motion.div>
         </div>
         <details className="history">
-          <summary data-i18n="historySummary">📜 历史版本</summary>
+          <summary data-i18n="historySummary">📜 Version History</summary>
           <p className="history-empty" data-i18n="historyEmpty">
-            暂无历史版本
+            No previous versions yet
           </p>
         </details>
       </div>

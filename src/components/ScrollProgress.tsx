@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-/** 顶部滚动进度条 */
+/** Top scroll progress bar */
 export default function ScrollProgress() {
   const [width, setWidth] = useState(0)
 

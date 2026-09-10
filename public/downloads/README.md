@@ -1,14 +1,14 @@
 # downloads
 
-将发布文件放在此目录：
+Place release files in this directory:
 
-| 文件名 | 说明 |
+| Filename | Description |
 |---|---|
-| `JuicyPlayer-Setup-1.0.0.exe` | Windows 安装包 |
-| `JuicyPlayer-Remote-1.0.0.apk` | Android 遥控器 APK |
+| `JuicyPlayer-Windows-v1.0.0-Setup.exe` | Windows installer |
+| `JuicyPlayer-Android-v1.0.0.apk` | Android remote APK |
 
-## 发布新版本
+## Releasing a new version
 
-1. 将构建好的 `.exe` / `.apk` 放入此目录
-2. 更新 `index.html` 中的版本号和文件名
-3. 提交并推送，GitHub Pages 会自动更新
+1. Place built `.exe` / `.apk` files in this directory
+2. Update the version number and filenames in `index.html`
+3. Commit and push; GitHub Pages will update automatically

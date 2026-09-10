@@ -1,4 +1,4 @@
-/** 格式跑马灯：循环滚动的音频格式列表 */
+/** Format marquee: looping scrolling list of audio formats */
 export default function FormatMarquee() {
   const text = (
     <>

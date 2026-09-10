@@ -4,23 +4,20 @@ import { DICT, Lang } from '../i18n/dictionary'
 const STORAGE_KEY = 'jp-lang'
 
 function detectLang(): Lang {
-  const saved = localStorage.getItem(STORAGE_KEY)
-  if (saved === 'zh' || saved === 'en') return saved
-  const nav = (navigator.language || '').toLowerCase()
-  return nav.startsWith('zh') ? 'zh' : 'en'
+  return 'en'
 }
 
-/** 国际化 hook：返回当前语言、切换函数、以及翻译函数 t */
-export function useI18n(lang: Lang, setLang: (l: Lang) => void) {
+/** i18n hook: applies translations to all [data-i18n] elements */
+export function useI18n(lang: Lang) {
   const langRef = useRef(lang)
   langRef.current = lang
 
-  // 应用翻译到所有 [data-i18n] 元素
+  // Apply translations to all [data-i18n] elements
   const apply = useCallback((l: Lang) => {
     const dict = DICT[l]
     if (!dict) return
 
-    document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en'
+    document.documentElement.lang = 'en'
 
     document.querySelectorAll('[data-i18n]').forEach((el) => {
       const key = el.getAttribute('data-i18n')
@@ -32,7 +29,7 @@ export function useI18n(lang: Lang, setLang: (l: Lang) => void) {
     const metaDesc = document.querySelector('meta[name="description"]')
     if (metaDesc && dict.heroDesc) metaDesc.setAttribute('content', dict.heroDesc)
 
-    // 同步 Open Graph / Twitter 社交元信息
+    // Sync Open Graph / Twitter social meta
     const ogTitle = document.querySelector('meta[property="og:title"]')
     const ogDesc = document.querySelector('meta[property="og:description"]')
     const twTitle = document.querySelector('meta[name="twitter:title"]')
@@ -42,7 +39,7 @@ export function useI18n(lang: Lang, setLang: (l: Lang) => void) {
     if (ogDesc && dict.heroDesc) ogDesc.setAttribute('content', dict.heroDesc)
     if (twTitle) twTitle.setAttribute('content', dict.pageTitle || '')
     if (twDesc && dict.heroDesc) twDesc.setAttribute('content', dict.heroDesc)
-    if (ogLocale) ogLocale.setAttribute('content', l === 'zh' ? 'zh_CN' : 'en_US')
+    if (ogLocale) ogLocale.setAttribute('content', 'en_US')
 
     localStorage.setItem(STORAGE_KEY, l)
   }, [])
@@ -51,15 +48,11 @@ export function useI18n(lang: Lang, setLang: (l: Lang) => void) {
     apply(lang)
   }, [lang, apply])
 
-  const toggle = useCallback(() => {
-    setLang(langRef.current === 'zh' ? 'en' : 'zh')
-  }, [setLang])
-
   const t = useCallback((key: string): string => {
     return DICT[langRef.current][key] ?? key
   }, [])
 
-  return { t, toggle, lang }
+  return { t, lang }
 }
 
 export { detectLang }

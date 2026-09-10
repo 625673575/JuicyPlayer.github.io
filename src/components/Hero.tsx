@@ -7,7 +7,7 @@ interface HeroProps {
   lang: Lang
 }
 
-/** 打字机效果 hook */
+/** Typewriter effect hook */
 function useTypewriter(lang: Lang) {
   const [text, setText] = useState('')
   const indexRef = useRef(0)
@@ -52,7 +52,7 @@ export default function Hero({ lang }: HeroProps) {
         >
           <span className="pulse-dot-cyan" />
           <span className="hero-badge-text" data-i18n="heroBadge">
-            🎵 桌面音乐播放器
+            🎵 Desktop Music Player
           </span>
         </motion.div>
 
@@ -64,7 +64,7 @@ export default function Hero({ lang }: HeroProps) {
           transition={{ duration: 0.8, delay: 0.4 }}
         >
           <span className="hero-line-1" data-i18n="heroTitle1">
-            为你的音乐
+            The Ultimate
           </span>
           <span className="hero-line-2">
             <span className="hero-gradient-text" id="typewriter">
@@ -82,7 +82,7 @@ export default function Hero({ lang }: HeroProps) {
           transition={{ duration: 0.6, delay: 0.7 }}
           data-i18n="heroDesc"
         >
-          Juicy Player 是一款简洁优雅的桌面音频播放器，支持手机遥控操控。播放、暂停、切歌、调节音量——一切尽在指尖。
+          JuicyPlayer is a clean, elegant desktop audio player with wireless remote control from your phone. Play, pause, skip, and adjust volume — all at your fingertips.
         </motion.p>
 
         {/* Dual CTA */}
@@ -93,13 +93,13 @@ export default function Hero({ lang }: HeroProps) {
           transition={{ duration: 0.6, delay: 0.9 }}
         >
           <a href="#app" className="hero-btn-primary">
-            <span data-i18n="heroDownload">免费下载</span>
+            <span data-i18n="heroDownload">Free Download</span>
           </a>
           <button className="hero-btn-secondary">
             <span className="hero-btn-play-icon">
               <Play width={20} height={20} fill="currentColor" />
             </span>
-            <span data-i18n="heroLearn">观看演示</span>
+            <span data-i18n="heroLearn">Learn More</span>
           </button>
         </motion.div>
       </div>

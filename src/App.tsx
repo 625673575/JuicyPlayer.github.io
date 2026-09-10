@@ -25,15 +25,15 @@ import CommandPalette from './components/CommandPalette'
 export default function App() {
   const [theme, setTheme] = useState<Theme>(getInitialTheme)
   const [accent, setAccent] = useState<Accent>(getInitialAccent)
-  const [lang, setLang] = useState<Lang>(detectLang)
+  const [lang] = useState<Lang>(detectLang)
   const [paletteOpen, setPaletteOpen] = useState(false)
 
-  // 同步主题 / 强调色到 <html> 属性
+  // Sync theme / accent color to <html> attributes
   useTheme(theme)
   useAccent(accent)
 
-  // 同步语言到 [data-i18n] 元素
-  const { toggle: toggleLang } = useI18n(lang, setLang)
+  // Sync language to [data-i18n] elements
+  useI18n(lang)
 
   const toggleTheme = useCallback(() => {
     setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
@@ -42,7 +42,7 @@ export default function App() {
   const openPalette = useCallback(() => setPaletteOpen(true), [])
   const closePalette = useCallback(() => setPaletteOpen(false), [])
 
-  // 全局 Ctrl/Cmd+K 打开命令面板
+  // Global Ctrl/Cmd+K to open command palette
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
@@ -54,7 +54,7 @@ export default function App() {
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [])
 
-  // 平滑滚动（锚点链接）
+  // Smooth scroll (anchor links)
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       const anchor = (e.target as HTMLElement).closest('a[href^="#"]')
@@ -80,8 +80,6 @@ export default function App() {
       <ParticleBackground />
 
       <Navbar
-        lang={lang}
-        onToggleLang={toggleLang}
         theme={theme}
         onToggleTheme={toggleTheme}
         accent={accent}
@@ -106,7 +104,6 @@ export default function App() {
       <CommandPalette
         open={paletteOpen}
         onClose={closePalette}
-        onToggleLang={toggleLang}
         onToggleTheme={toggleTheme}
       />
     </>

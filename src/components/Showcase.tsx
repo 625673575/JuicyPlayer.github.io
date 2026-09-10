@@ -3,29 +3,29 @@ import { motion } from 'framer-motion'
 const ITEMS = [
   {
     img: '/JuicyPlayer.github.io/images/showcase-windows.png',
-    alt: 'Juicy Player 播放器界面',
+    alt: 'Juicy Player interface',
     titleKey: 'sc2Title',
     descKey: 'sc2Desc',
-    title: 'Juicy Player 播放器',
-    desc: '极简播放器界面，专注音乐，低资源占用',
+    title: 'JuicyPlayer',
+    desc: 'Minimal player UI, music-focused, low resource usage',
     size: 'wide' as const,
   },
   {
     img: '/JuicyPlayer.github.io/images/showcase-android.png',
-    alt: 'Juicy Remoter 遥控器界面',
+    alt: 'Juicy Remoter interface',
     titleKey: 'sc1Title',
     descKey: 'sc1Desc',
-    title: 'Juicy Remoter 遥控器',
-    desc: 'Material Design 风格，暗色主题，手势操作',
+    title: 'Juicy Remoter',
+    desc: 'Material Design, dark theme, gesture controls',
     size: 'tall' as const,
   },
   {
     img: '/JuicyPlayer.github.io/images/connect.png',
-    alt: '无缝连接',
+    alt: 'Seamless Connection',
     titleKey: 'sc3Title',
     descKey: 'sc3Desc',
-    title: '无缝连接',
-    desc: '同一局域网自动发现，无需手动输入 IP',
+    title: 'Seamless Connection',
+    desc: 'Auto-discover on the same LAN — no manual IP needed',
     size: 'square' as const,
   },
 ]
@@ -47,14 +47,14 @@ export default function Showcase() {
           transition={{ duration: 0.6 }}
         >
           <span className="section-tag" data-i18n="showcaseTag">
-            产品预览
+            Preview
           </span>
-          <h2 data-i18n="showcaseTitle">精致的界面设计</h2>
+          <h2 data-i18n="showcaseTitle">Elegant UI Design</h2>
         </motion.div>
 
-        {/* 艺术性错位排列 */}
+        {/* Artistic staggered layout */}
         <div className="showcase-art">
-          {/* 第一行：宽幅 Windows 大图 */}
+          {/* Row 1: wide Windows screenshot */}
           <motion.div
             className="showcase-card showcase-wide"
             variants={cardVariants}
@@ -73,7 +73,7 @@ export default function Showcase() {
             </div>
           </motion.div>
 
-          {/* 第二行：竖长 Android + 中方 Connect */}
+          {/* Row 2: tall Android + middle Connect */}
           <div className="showcase-row">
             <motion.div
               className="showcase-card showcase-tall"

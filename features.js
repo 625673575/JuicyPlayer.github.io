@@ -107,13 +107,12 @@
     var pList = doc.getElementById('paletteList');
     var pBtn = doc.getElementById('searchToggle');
     var items = [
-      { label: '功能 Features', icon: '◆', target: '#features' },
-      { label: '预览 Showcase', icon: '◈', target: '#showcase' },
+      { label: 'Features', icon: '◆', target: '#features' },
+      { label: 'Preview', icon: '◈', target: '#showcase' },
 
-      { label: '下载 Download', icon: '↓', target: '#download' },
-      { label: '常见问题 FAQ', icon: '?', target: '#faq' },
-      { label: '切换语言 Toggle language', icon: '文', action: 'lang' },
-      { label: '切换主题 Toggle theme', icon: '☾', action: 'theme' }
+      { label: 'Download', icon: '↓', target: '#download' },
+      { label: 'FAQ', icon: '?', target: '#faq' },
+      { label: 'Toggle theme', icon: '☾', action: 'theme' }
     ];
     var activeIdx = 0;
 
@@ -123,7 +122,7 @@
       var list = items.filter(function (it) { return it.label.toLowerCase().indexOf(filter) > -1; });
       pList._items = list;
       if (!list.length) {
-        pList.innerHTML = '<div class="palette-empty" data-i18n="paletteEmpty">没有找到结果</div>';
+        pList.innerHTML = '<div class="palette-empty" data-i18n="paletteEmpty">No results</div>';
         return;
       }
       var html = '';

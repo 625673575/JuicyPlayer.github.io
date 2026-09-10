@@ -10,7 +10,7 @@ function getInitialTheme(): Theme {
   return 'dark'
 }
 
-/** 管理深色/浅色主题，将状态写入 <html data-theme> 和 localStorage */
+/** Manage dark/light theme, writing state to <html data-theme> and localStorage */
 export function useTheme(theme: Theme) {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
