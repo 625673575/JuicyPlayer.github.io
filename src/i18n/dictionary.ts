@@ -6,7 +6,7 @@ export const DICT: Record<Lang, Record<string, string>> = {
     navFeatures: 'Features',
     navShowcase: 'Preview',
     navDownload: 'Download',
-    heroBadge: '🎵 Desktop Music Player',
+    heroBadge: 'Desktop Music Player',
     heroTitle1: 'The Ultimate',
     heroTitle2: 'Music Experience',
     heroDesc: 'JuicyPlayer is a clean, elegant desktop audio player with wireless remote control from your phone. Play, pause, skip, and adjust volume — all at your fingertips.',
@@ -18,11 +18,11 @@ export const DICT: Record<Lang, Record<string, string>> = {
     featureTag: 'Core Features',
     featureTitle: 'Why JuicyPlayer',
     featureDesc: 'Simple, efficient, and elegant desktop music experience',
-    f1Title: '🎵 Playback Control',
+    f1Title: 'Playback Control',
     f1Desc: 'Play, pause, skip tracks, seek through the progress bar — with lock-screen and notification bar support. Pair with Juicy Remoter for phone control.',
-    f2Title: '🔊 Volume & Equalizer',
+    f2Title: 'Volume & Equalizer',
     f2Desc: 'Adjust system and player volume in real-time, switch equalizer presets to find your perfect sound.',
-    f3Title: '📋 Playlist',
+    f3Title: 'Playlist',
     f3Desc: 'Browse the full playlist, search songs, view album art and track info — switch tracks anytime.',
     showcaseTag: 'Preview',
     showcaseTitle: 'Elegant UI Design',
@@ -54,7 +54,7 @@ export const DICT: Record<Lang, Record<string, string>> = {
     dlWinNote: 'Windows 10 / 11 · 64-bit',
     dlWinBtn: 'Download Installer',
     dlWinSize: '~14 MB · .exe',
-    historySummary: '📜 Version History',
+    historySummary: 'Version History',
     historyEmpty: 'No previous versions yet',
     howtoTag: 'Getting Started',
     howtoTitle: '3 Steps to Start',
@@ -87,5 +87,5 @@ export const DICT: Record<Lang, Record<string, string>> = {
 
 // Typewriter text
 export const TYPEWRITER_TEXTS: Record<Lang, string> = {
-  en: 'Ultimate Experience',
+  en: 'Music Experience',
 }

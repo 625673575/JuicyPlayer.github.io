@@ -81,7 +81,7 @@ export default function DownloadRemoter() {
           </motion.div>
         </div>
         <details className="history">
-          <summary data-i18n="historySummary">📜 Version History</summary>
+          <summary data-i18n="historySummary">Version History</summary>
           <p className="history-empty" data-i18n="historyEmpty">
             No previous versions yet
           </p>

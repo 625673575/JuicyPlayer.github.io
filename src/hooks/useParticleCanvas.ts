@@ -100,9 +100,9 @@ export function useParticleCanvas() {
 
         ctx!.beginPath()
         ctx!.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-        const g = 107 + p.hue
-        const b = 53 + p.hue
-        ctx!.fillStyle = `rgba(255, ${Math.floor(g)}, ${Math.floor(b)}, ${p.opacity})`
+        const r = 204 + p.hue
+        const b = 40 + p.hue
+        ctx!.fillStyle = `rgba(${Math.floor(r)}, 255, ${Math.floor(b)}, ${p.opacity})`
         ctx!.fill()
       })
 
@@ -116,7 +116,7 @@ export function useParticleCanvas() {
             ctx!.beginPath()
             ctx!.moveTo(particles[i].x, particles[i].y)
             ctx!.lineTo(particles[j].x, particles[j].y)
-            ctx!.strokeStyle = `rgba(255, 140, 90, ${0.12 * (1 - dist / 180)})`
+            ctx!.strokeStyle = `rgba(204, 255, 0, ${0.12 * (1 - dist / 180)})`
             ctx!.lineWidth = 0.8
             ctx!.stroke()
           }

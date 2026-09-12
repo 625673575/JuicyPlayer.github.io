@@ -12,9 +12,9 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <span className="pulse-dot-cyan" />
+          <span className="pulse-dot" />
           <span className="hero-badge-text" data-i18n="heroBadge">
-            🎵 Desktop Music Player
+            Desktop Music Player
           </span>
         </motion.div>
 

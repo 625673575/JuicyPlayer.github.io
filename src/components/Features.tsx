@@ -7,10 +7,9 @@ const FEATURES = [
     alt: 'Playback Control',
     titleKey: 'f1Title',
     descKey: 'f1Desc',
-    title: '🎵 Playback Control',
+    title: 'Playback Control',
     desc: 'Play, pause, skip tracks, seek through the progress bar — with lock-screen and notification bar support. Pair with Juicy Remoter for phone control.',
     icon: Music,
-    accent: 'red',
     big: true,
   },
   {
@@ -18,10 +17,9 @@ const FEATURES = [
     alt: 'Volume & Equalizer',
     titleKey: 'f2Title',
     descKey: 'f2Desc',
-    title: '🔊 Volume & Equalizer',
+    title: 'Volume & Equalizer',
     desc: 'Adjust system and player volume in real-time, switch equalizer presets to find your perfect sound.',
     icon: Volume2,
-    accent: 'orange',
     big: false,
   },
   {
@@ -29,21 +27,12 @@ const FEATURES = [
     alt: 'Playlist',
     titleKey: 'f3Title',
     descKey: 'f3Desc',
-    title: '📋 Playlist',
+    title: 'Playlist',
     desc: 'Browse the full playlist, search songs, view album art and track info — switch tracks anytime.',
     icon: ListMusic,
-    accent: 'purple',
     big: false,
   },
 ]
-
-const ACCENT_MAP: Record<string, string> = {
-  red: 'rgba(239, 35, 60, 0.1)',
-  orange: 'rgba(255, 107, 53, 0.1)',
-  purple: 'rgba(139, 92, 246, 0.1)',
-  blue: 'rgba(59, 157, 255, 0.1)',
-  green: 'rgba(22, 199, 132, 0.1)',
-}
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -101,7 +90,7 @@ export default function Features() {
                     <ArrowRight width={16} height={16} />
                   </div>
                 </div>
-                <div className="bento-glow" style={{ background: `radial-gradient(circle at top right, ${ACCENT_MAP[f.accent]}, transparent 70%)` }} />
+                <div className="bento-glow" />
               </motion.div>
             )
           })}

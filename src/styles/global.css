@@ -270,7 +270,7 @@ body {
   top: 0;
   left: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-light), #ffd93d);
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
   z-index: 10000;
   width: 0%;
   transition: width 0.1s linear;
@@ -423,7 +423,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 140px 24px 96px;
+  padding: clamp(96px, 11vh, 160px) clamp(20px, 4vw, 64px) clamp(64px, 8vh, 120px);
   text-align: center;
   overflow: hidden;
 }
@@ -433,7 +433,7 @@ body {
     padding: 120px 20px 72px;
   }
 }
-/* Hero cover image + dark scrim so the overlaid text stays readable */
+/* Full uncropped cover image (contain = nothing cut off) + light scrim */
 .hero-centered::after {
   content: '';
   position: absolute;
@@ -441,11 +441,11 @@ body {
   background:
     linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0.6) 0%,
-      rgba(0, 0, 0, 0.45) 45%,
-      rgba(0, 0, 0, 0.72) 100%
+      rgba(0, 0, 0, 0.45) 0%,
+      rgba(0, 0, 0, 0.2) 45%,
+      rgba(0, 0, 0, 0.55) 100%
     ),
-    url('/JuicyPlayer.github.io/images/superdesign-bg.jpg') center top / cover no-repeat;
+    url('/JuicyPlayer.github.io/images/superdesign-bg.jpg') center / contain no-repeat;
   z-index: 0;
 }
 .hero-centered-inner {
@@ -464,35 +464,18 @@ body {
   gap: 10px;
   background: rgba(0, 0, 0, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.25);
-  padding: 8px 20px;
+  padding: clamp(6px, 0.7vw, 12px) clamp(14px, 1.6vw, 28px);
   border-radius: 100px;
-  margin-bottom: 32px;
+  margin-bottom: clamp(20px, 3vh, 40px);
   backdrop-filter: blur(10px);
 }
 .hero-badge-text {
-  font-size: 13px;
+  font-size: clamp(11px, 0.95vw, 16px);
   font-weight: 500;
   letter-spacing: 0.4em;
   text-transform: uppercase;
   color: #ffffff;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
-}
-.pulse-dot-cyan {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #22d3ee;
-  position: relative;
-  flex-shrink: 0;
-}
-.pulse-dot-cyan::before {
-  content: '';
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  background: #22d3ee;
-  opacity: 0.75;
-  animation: pulse-ring 1.5s ease-out infinite;
 }
 @keyframes pulse-ring {
   0% { transform: scale(1); opacity: 0.75; }
@@ -517,7 +500,7 @@ body {
   display: inline-block;
 }
 .hero-gradient-text {
-  background: linear-gradient(90deg, #ccff00, #22d3ee, #e0ff66, #ccff00);
+  background: linear-gradient(90deg, #ccff00, #eaff8f, #ccff00);
   background-size: 300% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -532,11 +515,11 @@ body {
 
 /* Description */
 .hero-desc-centered {
-  font-size: 1.125rem;
+  font-size: clamp(1rem, 1.15vw, 1.5rem);
   line-height: 1.8;
   color: #ffffff;
-  max-width: 36rem;
-  margin-bottom: 40px;
+  max-width: 38rem;
+  margin-bottom: clamp(28px, 4.5vh, 56px);
   font-weight: 300;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85);
 }
@@ -545,7 +528,7 @@ body {
 .hero-cta-group {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: clamp(10px, 1.2vw, 22px);
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -553,12 +536,12 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 16px 36px;
+  padding: clamp(12px, 1.25vw, 22px) clamp(24px, 2.6vw, 52px);
   border-radius: 9999px;
   background: #ccff00;
   color: #000000;
   font-weight: 700;
-  font-size: 15px;
+  font-size: clamp(14px, 1.05vw, 19px);
   border: none;
   cursor: pointer;
   box-shadow: 0 0 30px rgba(163, 230, 53, 0.3);
@@ -572,8 +555,8 @@ body {
 .hero-btn-secondary {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 16px 12px 12px;
+  gap: clamp(8px, 0.9vw, 16px);
+  padding: clamp(9px, 0.9vw, 16px) clamp(14px, 1.5vw, 28px);
   border-radius: 9999px;
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(16px);
@@ -581,7 +564,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--text);
   font-weight: 500;
-  font-size: 15px;
+  font-size: clamp(14px, 1.05vw, 19px);
   cursor: pointer;
   transition: border-color 0.2s;
 }
@@ -592,15 +575,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: clamp(30px, 2.6vw, 48px);
+  height: clamp(30px, 2.6vw, 48px);
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.1);
   color: var(--text);
   transition: background 0.2s;
 }
 .hero-btn-secondary:hover .hero-btn-play-icon {
-  background: #d946ef;
+  background: var(--accent);
+  color: #000;
 }
 
 /* ========== Generic buttons ========== */
@@ -941,6 +925,7 @@ section {
   opacity: 0;
   transition: opacity 0.3s;
   pointer-events: none;
+  background: radial-gradient(circle at top right, var(--accent-glow), transparent 70%);
 }
 .bento-card:hover .bento-glow { opacity: 0.15; }
 
