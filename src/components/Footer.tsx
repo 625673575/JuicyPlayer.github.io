@@ -9,10 +9,11 @@ export default function Footer() {
           </svg>
           <span>Juicy Player</span>
         </div>
-        <p>
-          &copy; 2026 Juicy Player. <span data-i18n="footerRights">All rights reserved.</span>
-        </p>
-        <div className="footer-links">
+        <nav className="footer-legal">
+          <a href="terms.html" data-i18n="footerTerms">Terms</a>
+          <a href="privacy.html" data-i18n="footerPrivacy">Privacy</a>
+          <a href="remoter-privacy.html" data-i18n="footerPrivacyRemoter">Remoter Privacy</a>
+          <a href="mailto:hifior@foxmail.com" data-i18n="footerContact">Contact</a>
           <a
             href="https://github.com/625673575/JuicyPlayer.github.io"
             target="_blank"
@@ -23,7 +24,15 @@ export default function Footer() {
             </svg>
             GitHub
           </a>
-        </div>
+        </nav>
+      </div>
+      <div className="container footer-meta">
+        <p>
+          &copy; 2026 Juicy Player. <span data-i18n="footerRights">All rights reserved.</span>
+        </p>
+        <p className="footer-powered">
+          Powered by <span data-i18n="footerPoweredBrand">Juicy Player</span>
+        </p>
       </div>
     </footer>
   )

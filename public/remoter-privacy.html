@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juicy Remoter — Privacy Policy</title>
+  <meta name="description" content="Juicy Remoter privacy policy — no backend, no accounts, no analytics, no ads. All network traffic goes only to the JuicyPlayer server you choose.">
+  <link rel="icon" href="images/icon_256.png" type="image/png" sizes="256x256">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #ccff00;
+      --bg: #000000;
+      --bg-elevated: #0c0c0c;
+      --text: #ebebeb;
+      --text-secondary: rgba(235, 235, 235, 0.6);
+      --border: rgba(255,255,255,0.1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(to bottom, #0c0c0c, #000000);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+    .page {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 64px 24px 80px;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 40px;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .brand img { width: 40px; height: 40px; }
+    .brand span { font-size: 20px; font-weight: 700; }
+    h1 {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .updated { color: var(--text-secondary); font-size: 14px; margin-bottom: 40px; }
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 36px 0 12px;
+      padding-left: 14px;
+      border-left: 3px solid var(--accent);
+    }
+    p, li, td { color: var(--text-secondary); font-size: 15px; }
+    ul { padding-left: 22px; margin: 10px 0; }
+    li { margin-bottom: 6px; }
+    strong { color: var(--text); font-weight: 600; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      vertical-align: top;
+    }
+    th { color: var(--text); background: var(--bg-elevated); font-weight: 600; }
+    .page-footer {
+      margin-top: 64px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <a class="back-link" href="index.html">&larr; Back to Juicy Player</a>
+    <div class="brand">
+      <img src="images/icon_256.png" alt="Juicy Remoter logo">
+      <span>Juicy Remoter</span>
+    </div>
+    <h1>Juicy Remoter — Privacy Policy</h1>
+    <p class="updated">Last updated: September 14, 2026</p>
+
+    <p>This Privacy Policy describes how <strong>Juicy Remoter</strong> (the "App") handles information. The short version: the App has no developer-operated backend, no accounts, no analytics, and no advertising. It communicates only with the JuicyPlayer server that <strong>you</strong> choose to connect it to, and it stores your settings locally on your device.</p>
+    <p>By using the App, you agree to this policy. If you do not agree, please do not use the App.</p>
+
+    <h2>1. Overview</h2>
+    <p>Juicy Remoter is a remote control client for JuicyPlayer, a self-hosted music player server. The App acts purely as a client:</p>
+    <ul>
+      <li>It does <strong>not</strong> collect, transmit, or sell any personal data to the developer or any third party.</li>
+      <li>It contains <strong>no</strong> analytics SDKs, tracking libraries, crash-reporting services, or advertisements.</li>
+      <li>All network traffic goes directly between your device and the JuicyPlayer server you configure (which may be running on your own computer or a server you control).</li>
+    </ul>
+
+    <h2>2. Data Stored on Your Device (Local Only)</h2>
+    <p>The App stores the following information <strong>locally on your device only</strong>. This data never leaves your device except as described in Section 3, and you can remove it at any time by uninstalling the App or clearing its data.</p>
+    <table>
+      <thead>
+        <tr><th>Data</th><th>Purpose</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Server address and port</td><td>To reconnect to your JuicyPlayer server</td></tr>
+        <tr><td>Playback target preference</td><td>To remember whether playback is routed to the server or local output</td></tr>
+        <tr><td>Theme, language, and interface preferences</td><td>To restore your UI settings</td></tr>
+        <tr><td>Recent searches</td><td>To speed up repeated searches in your library</td></tr>
+        <tr><td>Library and album art caches</td><td>To display your library quickly and reduce network requests (library cache expires automatically after ~2 hours)</td></tr>
+        <tr><td>Queue and playback state</td><td>To restore your session</td></tr>
+      </tbody>
+    </table>
+    <p>The App does not store payment information, contacts, photos, location, or any identity documents.</p>
+
+    <h2>3. Network Communication</h2>
+    <p>All network communication is initiated by the App and directed at your own JuicyPlayer server or your local network:</p>
+    <ul>
+      <li><strong>mDNS / Bonjour discovery</strong> — the App broadcasts a local discovery query (<code>_juicyplayer._tcp</code>) on your LAN to find JuicyPlayer servers automatically. This traffic stays within your local network.</li>
+      <li><strong>HTTP / HTTPS</strong> — used to browse your library, fetch album art, query playback state, and send control commands to your server.</li>
+      <li><strong>WebSocket</strong> — used for live "now playing" state updates from your server.</li>
+      <li><strong>OSC over UDP</strong> — used for low-latency playback commands (play/pause, seek, volume) to your server.</li>
+      <li><strong>Audio streaming</strong> — if you enable local playback, audio is streamed from your server to your device.</li>
+    </ul>
+    <p>The App connects <strong>only</strong> to server addresses you enter or discover on your network. It never sends your data to any server operated by the developer.</p>
+
+    <h2>4. Web Version</h2>
+    <p>If you use the browser (web) build of the App, it is <strong>self-hosted</strong>: it is served either by your own JuicyPlayer server or from a location you control. The web build behaves the same as the native apps — it stores settings in your browser's local storage and communicates only with the server it was served from (or the server you explicitly configure). The developer does not host the web build and receives no data from it.</p>
+
+    <h2>5. Permissions</h2>
+    <p>The App requests only the permissions it needs to function:</p>
+    <ul>
+      <li><strong>Network access</strong> — required to communicate with your JuicyPlayer server (all platforms).</li>
+      <li><strong>Local network</strong> — required for mDNS discovery and LAN communication (iOS, macOS, Android).</li>
+      <li><strong>Media / audio playback</strong> — required for local playback and the system media notification/controls (mobile and desktop).</li>
+      <li><strong>Notifications</strong> — optional; used for media playback controls and (if enabled) sleep-timer reminders.</li>
+    </ul>
+    <p>Granting or denying a permission is under your control in your device's system settings. The App functions as a pure remote (server playback) without media permissions.</p>
+
+    <h2>6. Third-Party Services</h2>
+    <p>The App does <strong>not</strong> use any third-party analytics, advertising, crash-reporting, or data-broker services. There are no SDKs in the App that transmit data to third parties.</p>
+    <p>Note that this policy covers only the App. Your JuicyPlayer server is software you host yourself; how it handles data on its side (e.g., server logs) is governed by your own configuration and this policy does not apply to it.</p>
+
+    <h2>7. Children's Privacy</h2>
+    <p>The App does not knowingly collect any personal information from anyone, including children under 13 (or the equivalent minimum age in your jurisdiction). Since the App collects no personal data at all, no data about children is collected, used, or shared.</p>
+
+    <h2>8. Data Security</h2>
+    <p>All communication with your server occurs on infrastructure you control (typically your home LAN). The App applies the same protections as your server's configuration allows; if your server is exposed to the public internet, its security depends on your own setup and is outside the scope of this policy.</p>
+
+    <h2>9. Your Rights and Choices</h2>
+    <p>Because the developer never receives your data, there is nothing to access, correct, export, or delete on our side. You remain in full control:</p>
+    <ul>
+      <li><strong>Delete local data</strong> — clear the App's data in your system settings, use in-app options (e.g., clear search history), or uninstall the App. All local data is removed with it.</li>
+      <li><strong>Web build</strong> — clear your browser's site data / local storage for the App's origin.</li>
+    </ul>
+
+    <h2>10. Changes to This Policy</h2>
+    <p>We may update this policy as the App evolves. The "Last updated" date at the top will change whenever the policy is revised. Material changes will be reflected in the App's documentation or release notes.</p>
+
+    <h2>11. Contact</h2>
+    <p>If you have questions about this policy, please open an issue on the project's repository or contact the developer at <a href="mailto:hifior@foxmail.com">hifior@foxmail.com</a>.</p>
+
+    <div class="page-footer">
+      <span>&copy; 2026 Juicy Player. All rights reserved.</span>
+      <span>Powered by Juicy Player</span>
+    </div>
+  </main>
+</body>
+</html>

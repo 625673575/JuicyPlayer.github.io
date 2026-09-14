@@ -4,6 +4,24 @@
     <loc>https://625673575.github.io/JuicyPlayer.github.io/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <lastmod>2026-07-09</lastmod>
+    <lastmod>2026-09-14</lastmod>
+  </url>
+  <url>
+    <loc>https://625673575.github.io/JuicyPlayer.github.io/terms.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <lastmod>2026-09-14</lastmod>
+  </url>
+  <url>
+    <loc>https://625673575.github.io/JuicyPlayer.github.io/privacy.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <lastmod>2026-09-14</lastmod>
+  </url>
+  <url>
+    <loc>https://625673575.github.io/JuicyPlayer.github.io/remoter-privacy.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <lastmod>2026-09-14</lastmod>
   </url>
 </urlset>

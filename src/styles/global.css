@@ -1197,6 +1197,19 @@ footer {
   font-weight: 700;
 }
 .footer-logo { width: 28px; height: 28px; }
+.footer-legal {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.footer-legal a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s;
+}
+.footer-legal a:hover { color: var(--accent); }
 .footer-links a {
   color: var(--text-secondary);
   text-decoration: none;
@@ -1204,6 +1217,22 @@ footer {
   transition: color 0.3s;
 }
 .footer-links a:hover { color: var(--accent); }
+.footer-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+.footer-meta p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+.footer-powered span { color: var(--accent); }
 
 /* ========== Audio waveform decoration ========== */
 .waveform-decoration {
@@ -1255,6 +1284,9 @@ footer {
   .step-connector { display: none; }
   .nav-links { display: none; }
   .floating-shapes { display: none; }
+  .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
+  .footer-legal { justify-content: center; }
+  .footer-meta { flex-direction: column; }
 }
 
 /* ========== Scrollbar styling ========== */
