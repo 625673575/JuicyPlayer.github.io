@@ -71,8 +71,8 @@ export default function App() {
 
       <main className="site-shell">
         <Hero />
-        <FormatMarquee />
         <PlayerDownload />
+        <FormatMarquee />
         <Features />
         <Showcase />
         <DownloadRemoter />

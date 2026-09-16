@@ -2,7 +2,7 @@ export type Lang = 'en'
 
 export const DICT: Record<Lang, Record<string, string>> = {
   en: {
-    pageTitle: 'JuicyPlayer — Elegant Desktop Music Player',
+    pageTitle: 'Download Juicy Player — Free Desktop Music Player for Windows',
     navFeatures: 'Features',
     navShowcase: 'Preview',
     navDownload: 'Download',
@@ -12,6 +12,7 @@ export const DICT: Record<Lang, Record<string, string>> = {
     heroDesc: 'JuicyPlayer is a clean, elegant desktop audio player with wireless remote control from your phone. Play, pause, skip, and adjust volume — all at your fingertips.',
     heroDownload: 'Free Download',
     heroLearn: 'Learn More',
+    heroReq: 'Windows 10 / 11 · 64-bit & ARM64',
     statVersion: 'Version',
     statFree: 'Free',
     statConn: 'Remote',

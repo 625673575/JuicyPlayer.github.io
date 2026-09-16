@@ -1,7 +1,11 @@
 import { motion } from 'framer-motion'
-import { Play } from 'lucide-react'
+import { Play, Download } from 'lucide-react'
+import { useLatestRelease, RELEASES_PAGE_URL, formatMB } from '../hooks/useLatestRelease'
 
 export default function Hero() {
+  const release = useLatestRelease()
+  const x64 = release?.x64
+
   return (
     <header className="hero-centered" id="hero">
       <div className="hero-centered-inner">
@@ -36,15 +40,32 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.9 }}
         >
-          <a href="#app" className="hero-btn-primary">
+          <a
+            href={x64?.browser_download_url ?? RELEASES_PAGE_URL}
+            className="hero-btn-primary"
+            {...(x64 ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+          >
+            <Download width={20} height={20} />
             <span data-i18n="heroDownload">Free Download</span>
           </a>
-          <button className="hero-btn-secondary">
+          <a href="#features" className="hero-btn-secondary">
             <span className="hero-btn-play-icon">
               <Play width={20} height={20} fill="currentColor" />
             </span>
             <span data-i18n="heroLearn">Learn More</span>
-          </button>
+          </a>
+        </motion.div>
+
+        {/* Version / size meta */}
+        <motion.div
+          className="hero-dl-meta"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 1.1 }}
+        >
+          {release && <span>v{release.version}</span>}
+          {x64 && <span>{formatMB(x64.size)}</span>}
+          <span data-i18n="heroReq">Windows 10 / 11 · 64-bit &amp; ARM64</span>
         </motion.div>
       </div>
     </header>
