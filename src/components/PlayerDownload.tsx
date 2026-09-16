@@ -1,9 +1,13 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Monitor, Apple, ExternalLink } from 'lucide-react'
+import { Monitor, Apple, ExternalLink, Download } from 'lucide-react'
+import { useLatestRelease, RELEASES_PAGE_URL, formatMB } from '../hooks/useLatestRelease'
+
+const MS_STORE_URL = 'https://apps.microsoft.com/detail/9PK77MF93KZM'
 
 export default function PlayerDownload() {
   const [activePlatform, setActivePlatform] = useState<'win' | 'mac'>('win')
+  const release = useLatestRelease()
 
   return (
     <section className="app-dl" id="app">
@@ -72,11 +76,11 @@ export default function PlayerDownload() {
                       Install from Microsoft Store — auto updates, secure and reliable.
                     </p>
                     <div className="app-panel-meta">
-                      <span className="app-ver">v1.0.0</span>
+                      {release && <span className="app-ver">v{release.version}</span>}
                       <span data-i18n="appWinReq">Windows 10/11 · 64-bit</span>
                     </div>
                     <a
-                      href="https://apps.microsoft.com/detail/9PK77MF93KZM"
+                      href={MS_STORE_URL}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn btn-primary btn-lg"
@@ -84,6 +88,31 @@ export default function PlayerDownload() {
                       <ExternalLink width={20} height={20} />
                       <span data-i18n="appWinBtn">Get from Microsoft Store</span>
                     </a>
+                    <div className="app-dl-alt">
+                      <span className="app-dl-alt-label" data-i18n="appWinDirect">
+                        Or download the installer directly from GitHub Releases
+                      </span>
+                      <div className="app-dl-alt-links">
+                        <a
+                          href={release?.x64?.browser_download_url ?? RELEASES_PAGE_URL}
+                          className="btn btn-ghost app-dl-btn"
+                          {...(release?.x64 ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+                        >
+                          <Download width={16} height={16} />
+                          <span>x64</span>
+                          {release?.x64 && <span className="app-dl-size">{formatMB(release.x64.size)}</span>}
+                        </a>
+                        <a
+                          href={release?.arm64?.browser_download_url ?? RELEASES_PAGE_URL}
+                          className="btn btn-ghost app-dl-btn"
+                          {...(release?.arm64 ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+                        >
+                          <Download width={16} height={16} />
+                          <span>ARM64</span>
+                          {release?.arm64 && <span className="app-dl-size">{formatMB(release.arm64.size)}</span>}
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </motion.div>

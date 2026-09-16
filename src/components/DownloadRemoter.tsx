@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Smartphone, Monitor, Download } from 'lucide-react'
+import { useLatestRelease, RELEASES_PAGE_URL, formatMB } from '../hooks/useLatestRelease'
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -7,6 +8,10 @@ const cardVariants = {
 }
 
 export default function DownloadRemoter() {
+  const release = useLatestRelease()
+  const winAsset = release?.x64
+  const winHref = winAsset?.browser_download_url ?? RELEASES_PAGE_URL
+
   return (
     <section className="download" id="download">
       <div className="container">
@@ -67,16 +72,20 @@ export default function DownloadRemoter() {
               <Monitor width={44} height={44} color="#00aef0" />
             </div>
             <h3 data-i18n="dlWinTitle">Juicy Remoter · Windows</h3>
-            <span className="dl-version">v1.0.0</span>
+            <span className="dl-version">{release ? `v${release.version}` : 'GitHub'}</span>
             <p className="dl-note" data-i18n="dlWinNote">
               Windows 10 / 11 · 64-bit
             </p>
-            <a href="/JuicyPlayer.github.io/downloads/JuicyPlayer-Windows-v1.0.0-Setup.exe" className="btn btn-primary btn-block">
+            <a
+              href={winHref}
+              className="btn btn-primary btn-block"
+              {...(winAsset ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+            >
               <Download width={18} height={18} />
               <span data-i18n="dlWinBtn">Download Installer</span>
             </a>
-            <span className="dl-size" data-i18n="dlWinSize">
-              ~14 MB · .exe
+            <span className="dl-size">
+              {winAsset ? `${formatMB(winAsset.size)} · .exe` : '.exe · GitHub Releases'}
             </span>
           </motion.div>
         </div>

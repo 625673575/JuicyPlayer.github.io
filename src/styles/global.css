@@ -828,6 +828,34 @@ section {
   font-weight: 600;
   font-size: 12px;
 }
+/* GitHub Release 直链下载区（Store 按钮下方） */
+.app-dl-alt {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.app-dl-alt-label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+.app-dl-alt-links { display: flex; gap: 10px; }
+.app-dl-btn {
+  flex: 1;
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 10px;
+  gap: 8px;
+}
+.app-dl-btn .app-dl-size {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+}
+@media (max-width: 480px) {
+  .app-dl-alt-links { flex-direction: column; }
+}
 .app-store-badge {
   height: 40px;
   margin-bottom: 20px;
